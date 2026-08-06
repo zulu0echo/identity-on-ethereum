@@ -1,0 +1,16 @@
+{
+  "name": "identity-stack",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fixtures": "node script/generate-fixtures.mjs"
+  },
+  "dependencies": {
+    "@semaphore-protocol/contracts": "4.14.3",
+    "@zk-kit/lean-imt-sol": "npm:@zk-kit/lean-imt.sol@2.0.1",
+    "poseidon-solidity": "0.0.5"
+  },
+  "devDependencies": {
+    "@semaphore-protocol/core": "^4.14.0"
+  }
+}

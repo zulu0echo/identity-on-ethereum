@@ -1,0 +1,4 @@
+forge-std/=lib/forge-std/src/
+poseidon-solidity/=node_modules/poseidon-solidity/
+@zk-kit/lean-imt.sol/=node_modules/@zk-kit/lean-imt-sol/
+@semaphore-protocol/contracts/=node_modules/@semaphore-protocol/contracts/

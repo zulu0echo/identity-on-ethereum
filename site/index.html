@@ -1,0 +1,1301 @@
+<title>Onchain Identity Infrastructure for Governments and Institutions</title>
+
+<style>
+  /* ============ tokens ============ */
+  :root {
+    --paper:      #EEF1F3;
+    --paper-2:    #F8FAFB;
+    --paper-3:    #E3E8EB;
+    --ink:        #10161B;
+    --ink-2:      #3A4750;
+    --ink-3:      #6B7A85;
+    --rule:       #C9D3D9;
+    --rule-soft:  #DCE3E7;
+    --accent:     #0E5C63;
+    --accent-ink: #0A464C;
+    --accent-soft:rgba(14, 92, 99, .09);
+    --signal:     #9A5B22;
+    --signal-soft:rgba(154, 91, 34, .10);
+
+    --serif: ui-serif, Charter, "Bitstream Charter", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --sans:  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono:  ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+    --sheet-max: 1280px;
+    --r: 3px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:      #0C1216;
+      --paper-2:    #131C22;
+      --paper-3:    #1A252C;
+      --ink:        #E6EDF1;
+      --ink-2:      #A9B8C2;
+      --ink-3:      #74858F;
+      --rule:       #26343D;
+      --rule-soft:  #1D2930;
+      --accent:     #55B6BE;
+      --accent-ink: #7FCED4;
+      --accent-soft:rgba(85, 182, 190, .12);
+      --signal:     #D08A45;
+      --signal-soft:rgba(208, 138, 69, .13);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:      #0C1216;
+    --paper-2:    #131C22;
+    --paper-3:    #1A252C;
+    --ink:        #E6EDF1;
+    --ink-2:      #A9B8C2;
+    --ink-3:      #74858F;
+    --rule:       #26343D;
+    --rule-soft:  #1D2930;
+    --accent:     #55B6BE;
+    --accent-ink: #7FCED4;
+    --accent-soft:rgba(85, 182, 190, .12);
+    --signal:     #D08A45;
+    --signal-soft:rgba(208, 138, 69, .13);
+  }
+
+  :root[data-theme="light"] {
+    --paper:      #EEF1F3;
+    --paper-2:    #F8FAFB;
+    --paper-3:    #E3E8EB;
+    --ink:        #10161B;
+    --ink-2:      #3A4750;
+    --ink-3:      #6B7A85;
+    --rule:       #C9D3D9;
+    --rule-soft:  #DCE3E7;
+    --accent:     #0E5C63;
+    --accent-ink: #0A464C;
+    --accent-soft:rgba(14, 92, 99, .09);
+    --signal:     #9A5B22;
+    --signal-soft:rgba(154, 91, 34, .10);
+  }
+
+  /* ============ base ============ */
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: var(--sheet-max);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 600; text-wrap: balance; margin: 0; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  a { color: var(--accent); }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* ============ masthead ============ */
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper-2);
+  }
+
+  .masthead-inner {
+    padding: 40px 28px 34px;
+    max-width: var(--sheet-max);
+    margin: 0 auto;
+  }
+
+  .rule-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: baseline;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 10px;
+    margin-bottom: 26px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    font-size: clamp(30px, 4.4vw, 50px);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    max-width: 20ch;
+  }
+
+  .deck {
+    font-family: var(--serif);
+    font-size: clamp(16px, 1.7vw, 19px);
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 60ch;
+    margin-top: 18px;
+  }
+
+  .deck strong { color: var(--ink); font-weight: 600; }
+
+  /* ============ lens switch ============ */
+  .lensbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .lensbar-inner {
+    max-width: var(--sheet-max);
+    margin: 0 auto;
+    padding: 12px 28px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .lensbar .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+
+  .lens-opts { display: flex; gap: 0; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: var(--r); overflow: hidden; }
+
+  .lens-opt {
+    appearance: none;
+    border: 0;
+    border-right: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink-2);
+    font-family: var(--sans);
+    font-size: 13px;
+    padding: 7px 15px;
+    cursor: pointer;
+    transition: background .14s, color .14s;
+  }
+
+  .lens-opt:last-child { border-right: 0; }
+  .lens-opt:hover { background: var(--paper-3); color: var(--ink); }
+  .lens-opt[aria-pressed="true"] { background: var(--accent); color: var(--paper-2); }
+
+  /* ============ disclaimer ============ */
+  .disclaimer { background: var(--paper-3); border-bottom: 1px solid var(--rule); }
+  .disclaimer p {
+    margin: 0;
+    padding: 13px 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-3);
+    max-width: 96ch;
+  }
+  .disclaimer b {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-right: 10px;
+  }
+
+  /* ============ sections ============ */
+  section { padding: 56px 0; border-bottom: 1px solid var(--rule-soft); }
+
+  .sec-head {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 18px;
+    align-items: start;
+    margin-bottom: 30px;
+  }
+
+  .sec-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    padding-top: 8px;
+    border-top: 2px solid var(--accent);
+  }
+
+  .sec-head h2 { font-size: clamp(22px, 2.6vw, 30px); line-height: 1.15; }
+  .sec-head p { margin: 8px 0 0; color: var(--ink-2); max-width: 62ch; font-size: 15.5px; }
+
+  /* ============ boundary ============ */
+  .boundary { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); border-radius: var(--r); overflow: hidden; }
+  .boundary > div { padding: 24px 26px; background: var(--paper-2); }
+  .boundary > div + div { border-left: 1px solid var(--rule); background: var(--paper); }
+  .boundary h3 { font-size: 16px; margin-bottom: 4px; }
+  .boundary .sub { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; }
+  .boundary ul { margin: 0; padding-left: 0; list-style: none; }
+  .boundary li { padding: 7px 0 7px 20px; border-top: 1px solid var(--rule-soft); font-size: 14.5px; color: var(--ink-2); position: relative; }
+  .boundary li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+  .boundary.off li::before { content: "×"; color: var(--signal); font-weight: 700; }
+  .boundary .why { margin-top: 16px; font-size: 13.5px; color: var(--ink-3); font-style: italic; line-height: 1.5; }
+
+  /* ============ rollout stepper ============ */
+  .stepper { display: flex; gap: 0; border: 1px solid var(--rule); border-radius: var(--r); overflow-x: auto; background: var(--paper-2); }
+
+  .step {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-right: 1px solid var(--rule);
+    padding: 13px 16px;
+    cursor: pointer;
+    text-align: left;
+    min-width: 148px;
+    flex: 1 1 0;
+    font-family: var(--sans);
+    color: var(--ink-2);
+    transition: background .14s;
+  }
+
+  .step:last-child { border-right: 0; }
+  .step:hover { background: var(--paper-3); }
+  .step[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); box-shadow: inset 0 -3px 0 var(--accent); }
+  .step .n { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; color: var(--accent); margin-bottom: 3px; }
+  .step .t { display: block; font-size: 13.5px; line-height: 1.3; }
+
+  .phase-note {
+    margin-top: 0;
+    border: 1px solid var(--rule);
+    border-top: 0;
+    background: var(--paper-2);
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .phase-note p { margin: 0; font-family: var(--serif); font-size: 16px; line-height: 1.55; color: var(--ink-2); max-width: 68ch; }
+  .phase-note p strong { color: var(--ink); }
+  .phase-note .metric { text-align: right; white-space: nowrap; }
+  .phase-note .metric .v { font-family: var(--mono); font-size: 25px; color: var(--accent); display: block; line-height: 1; font-variant-numeric: tabular-nums; }
+  .phase-note .metric .k { font-family: var(--mono); font-size: 10px; letter-spacing: .11em; text-transform: uppercase; color: var(--ink-3); }
+
+  .advisory { margin-top: 14px; font-size: 13.5px; color: var(--ink-3); display: flex; gap: 9px; align-items: baseline; }
+  .advisory b { color: var(--signal); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+
+  /* ============ stack + detail ============ */
+  .explorer { display: grid; grid-template-columns: minmax(0, 1.32fr) minmax(0, 1fr); gap: 34px; align-items: start; }
+
+  .layer { margin-bottom: 26px; }
+
+  .layer-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 7px;
+    margin-bottom: 14px;
+  }
+
+  .layer-head .lnum { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .1em; }
+  .layer-head h3 { font-size: 17px; }
+  .layer-head .lblurb { font-size: 13px; color: var(--ink-3); margin-left: auto; text-align: right; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 12px; }
+
+  .card {
+    appearance: none;
+    text-align: left;
+    font-family: var(--sans);
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: var(--r);
+    padding: 14px 15px 15px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s, transform .15s, opacity .2s;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    position: relative;
+  }
+
+  .card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .card[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+
+  .card .cid { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .card .cname { font-family: var(--serif); font-size: 16.5px; font-weight: 600; line-height: 1.2; color: var(--ink); }
+  .card .cval { font-size: 13.3px; line-height: 1.48; color: var(--ink-2); }
+
+  .card.dim { opacity: .34; }
+  .card.dim:hover { opacity: .72; }
+
+  .card.prereq { border-color: var(--signal); box-shadow: inset 3px 0 0 var(--signal); }
+
+  .tagrow { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 1px; }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 2px;
+    border: 1px solid var(--rule);
+    color: var(--ink-3);
+  }
+
+  .tag.keystone { border-color: var(--accent); color: var(--accent); }
+  .tag.req { border-color: var(--signal); color: var(--signal); }
+
+  /* detail sheet */
+  .detail {
+    position: sticky;
+    top: 62px;
+    border: 1px solid var(--rule);
+    border-radius: var(--r);
+    background: var(--paper-2);
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
+  }
+
+  .detail-inner { padding: 22px 24px 26px; }
+
+  .detail .placeholder { color: var(--ink-3); font-family: var(--serif); font-size: 15.5px; line-height: 1.6; }
+
+  .detail h3 { font-size: 22px; line-height: 1.15; margin-bottom: 3px; }
+  .detail .dsub { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .detail .dwhat { font-family: var(--serif); font-size: 16px; line-height: 1.55; color: var(--ink-2); margin: 14px 0 0; }
+
+  .lens-block { border-top: 1px solid var(--rule-soft); padding: 14px 0 0; margin-top: 16px; }
+  .lens-block .lk { font-family: var(--mono); font-size: 10px; letter-spacing: .11em; text-transform: uppercase; color: var(--accent); margin-bottom: 5px; }
+  .lens-block p { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+  .lens-block.muted .lk { color: var(--ink-3); }
+
+  .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .chip {
+    appearance: none;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .05em;
+    padding: 4px 9px;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    background: var(--paper);
+    color: var(--ink-2);
+    cursor: pointer;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+  .chip.static { cursor: default; }
+  .chip.static:hover { border-color: var(--rule); color: var(--ink-2); }
+  .arrow { font-family: var(--mono); color: var(--ink-3); font-size: 12px; }
+  .none { font-size: 13px; color: var(--ink-3); font-style: italic; }
+
+  .callout { border-left: 2px solid var(--signal); background: var(--signal-soft); padding: 11px 14px; margin-top: 16px; border-radius: 0 var(--r) var(--r) 0; }
+  .callout .ck { font-family: var(--mono); font-size: 10px; letter-spacing: .11em; text-transform: uppercase; color: var(--signal); margin-bottom: 4px; }
+  .callout p { margin: 0; font-size: 13.8px; line-height: 1.5; color: var(--ink-2); }
+
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--r); margin-top: 18px; overflow: hidden; }
+  .meta-grid div { background: var(--paper-2); padding: 10px 12px; }
+  .meta-grid .mk { font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .meta-grid .mv { font-size: 13.5px; color: var(--ink); margin-top: 2px; }
+
+  /* ============ composability ============ */
+  .compose { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; }
+  .steps { list-style: none; counter-reset: s; margin: 0; padding: 0; }
+  .steps li { counter-increment: s; position: relative; padding: 13px 0 13px 42px; border-top: 1px solid var(--rule-soft); font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+  .steps li::before {
+    content: counter(s, decimal-leading-zero);
+    position: absolute; left: 0; top: 13px;
+    font-family: var(--mono); font-size: 11px; color: var(--accent);
+    border: 1px solid var(--rule); border-radius: 2px; padding: 1px 5px;
+  }
+  .steps li strong { color: var(--ink); font-weight: 600; }
+
+  .outcome { border: 1px solid var(--rule); border-radius: var(--r); background: var(--paper-2); padding: 22px 24px; }
+  .outcome h3 { font-size: 17px; margin-bottom: 10px; }
+  .outcome p { font-family: var(--serif); font-size: 15.5px; line-height: 1.6; color: var(--ink-2); margin: 0 0 12px; }
+  .outcome p:last-child { margin-bottom: 0; }
+
+  /* ============ resilience ============ */
+  .props { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--r); overflow: hidden; }
+  .prop { background: var(--paper-2); padding: 22px 22px 24px; }
+  .prop .pk { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  .prop h3 { font-size: 16.5px; margin: 7px 0 8px; }
+  .prop p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-2); }
+
+  /* ============ limits ============ */
+  .limits { border: 1px solid var(--rule); border-radius: var(--r); overflow: hidden; }
+  .limit { display: grid; grid-template-columns: 190px 1fr; gap: 22px; padding: 16px 22px; background: var(--paper-2); border-top: 1px solid var(--rule-soft); }
+  .limit:first-child { border-top: 0; }
+  .limit .lt { font-family: var(--mono); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--signal); padding-top: 2px; }
+  .limit p { margin: 0; font-size: 14.3px; line-height: 1.55; color: var(--ink-2); }
+
+  /* ============ colophon ============ */
+  footer { padding: 40px 0 60px; }
+  .colophon { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; font-size: 13px; color: var(--ink-3); border-top: 1px solid var(--rule); padding-top: 18px; }
+  .colophon p { margin: 0; max-width: 60ch; line-height: 1.55; }
+  .colophon .mono { font-family: var(--mono); font-size: 11px; letter-spacing: .07em; }
+
+  /* ============ responsive ============ */
+  @media (max-width: 1000px) {
+    .explorer { grid-template-columns: 1fr; }
+    .detail { position: static; max-height: none; }
+    .compose { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 700px) {
+    .wrap, .masthead-inner, .lensbar-inner { padding-left: 18px; padding-right: 18px; }
+    .boundary { grid-template-columns: 1fr; }
+    .boundary > div + div { border-left: 0; border-top: 1px solid var(--rule); }
+    .sec-head { grid-template-columns: 1fr; gap: 8px; }
+    .sec-num { border-top: 0; padding-top: 0; }
+    .phase-note { grid-template-columns: 1fr; }
+    .phase-note .metric { text-align: left; }
+    .limit { grid-template-columns: 1fr; gap: 6px; }
+    .meta-grid { grid-template-columns: 1fr; }
+    .layer-head { flex-wrap: wrap; }
+    .layer-head .lblurb { margin-left: 0; text-align: left; flex-basis: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="rule-row">
+      <span class="eyebrow">Reference architecture · Educational and informational</span>
+      <span class="eyebrow">14 registries · 4 layers · 1 reference application</span>
+    </div>
+    <h1>Onchain identity infrastructure for governments and institutions</h1>
+    <p class="deck">
+      Most components of an identity system have no reason to be recorded on a public ledger.
+      Credentials, personal data and presentation flows belong on devices and between the parties
+      concerned. A small set of functions, however, must be <strong>global, current and
+      neutral</strong>: registries of control, validity, trust and uniqueness, of which every
+      participant requires the same view, and whose availability must not depend on the party that
+      recorded them.
+    </p>
+    <p class="deck">
+      This page sets out those components and the manner in which they compose. <strong>They are
+      not adopted as a single programme.</strong> Each is useful independently, and each addition
+      increases the value of those already deployed.
+    </p>
+  </div>
+</header>
+
+<div class="disclaimer">
+  <div class="wrap">
+    <p>
+      <b>Note on scope</b>
+      This material is provided for general educational and informational purposes. It does not
+      constitute legal, regulatory, financial or other professional advice and should not be relied
+      upon as such. The implementation described is an unaudited proof of concept, intended to
+      support evaluation rather than production deployment.
+    </p>
+  </div>
+</div>
+
+<div class="lensbar">
+  <div class="lensbar-inner">
+    <span class="label">Evaluate from the perspective of</span>
+    <div class="lens-opts" role="group" aria-label="Choose a perspective">
+      <button class="lens-opt" data-lens="business"   aria-pressed="true">Business</button>
+      <button class="lens-opt" data-lens="technical"  aria-pressed="false">Technical</button>
+      <button class="lens-opt" data-lens="regulatory" aria-pressed="false">Regulatory</button>
+      <button class="lens-opt" data-lens="public"     aria-pressed="false">Public good</button>
+    </div>
+    <span class="label" id="lensHint" style="color:var(--ink-3);text-transform:none;letter-spacing:0;font-family:var(--serif);font-size:13.5px">Each component below is described in the terms of the perspective selected.</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- ===== boundary ===== -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">01</span>
+        <div>
+          <h2>What belongs on a public ledger, and what does not?</h2>
+          <p>
+            Placement is determined by a single question: is this state useful only if every
+            participant holds the same view of it, does it change over time, and must its
+            availability survive the party that recorded it? Registries of control, validity, trust
+            and uniqueness meet that test. Credential data does not, and is deliberately excluded.
+          </p>
+        </div>
+      </div>
+
+      <div class="boundary">
+        <div>
+          <div class="sub">Onchain</div>
+          <h3>Coordination state</h3>
+          <ul>
+            <li>Who controls an identifier right now</li>
+            <li>Who vouches for whom, and for what</li>
+            <li>Whether a credential is still valid</li>
+            <li>Whether a person has already acted in a context</li>
+            <li>What a verifier publicly commits to asking for</li>
+            <li>Settlement between issuers and verifiers</li>
+          </ul>
+          <p class="why">None of this constitutes personal data. No entry is meaningful in relation to an identifiable individual on its own.</p>
+        </div>
+        <div class="boundary off">
+          <div class="sub">Never onchain</div>
+          <h3>Personal data</h3>
+          <ul>
+            <li>Credential contents and attributes</li>
+            <li>Names, identifiers, document numbers</li>
+            <li>Biometrics or anything derived from them</li>
+            <li>Presentation logs — who showed what, to whom</li>
+            <li>Anything correlatable to a natural person</li>
+          </ul>
+          <p class="why">A public ledger is permanent. Personal data recorded on one cannot be withdrawn, corrected or erased, which constitutes both a compliance failure and an ethical one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== rollout ===== -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <div>
+          <h2>How should an institution sequence adoption?</h2>
+          <p>
+            The architecture is modular. Six stages are set out below, each producing an outcome
+            that is useful independently: a decommissioned system, a discontinued vendor agreement,
+            or a capability not previously available. Selecting a stage indicates what it delivers
+            and which components it requires.
+          </p>
+        </div>
+      </div>
+
+      <div class="stepper" role="group" aria-label="Rollout stage"></div>
+      <div class="phase-note" id="phaseNote"></div>
+
+      <p class="advisory">
+        <b>Note</b>
+        <span>The stages are advisory. They set out an order that reduces delivery risk and
+        establishes value early; only the dependencies recorded against each component are binding.
+        An institution requiring uniqueness alone may deploy that component independently.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== the stack ===== -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">03</span>
+        <div>
+          <h2>What does each component provide?</h2>
+          <p>
+            Selecting a component presents its case across all four perspectives, together with its
+            dependencies, what it replaces within an existing estate, and its limitations.
+            Components that must be deployed beforehand are marked in the colour used for
+            considerations throughout.
+          </p>
+        </div>
+      </div>
+
+      <div class="explorer">
+        <div id="stack"></div>
+        <aside class="detail" aria-label="Component detail">
+          <div class="detail-inner" id="detail" role="region" aria-live="polite" tabindex="-1">
+            <p class="placeholder">
+              Select a component to review its case across all four perspectives, together with its
+              dependencies, what it replaces within an existing estate, and its limitations.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== composability ===== -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">04</span>
+        <div>
+          <h2>How do the components compose?</h2>
+          <p>
+            The following worked example illustrates composition. An application distributes an
+            entitlement once per person rather than once per account, restricted to holders of a
+            credential issued by an institution that the application's chosen authority has
+            accredited, and without the application learning the identity of any claimant.
+          </p>
+        </div>
+      </div>
+
+      <div class="compose">
+        <ol class="steps">
+          <li><strong>Context binding.</strong> The proof is bound to this distribution, so the same person's activity in other contexts cannot be correlated with it.</li>
+          <li><strong>Recipient binding.</strong> The proof commits to the claimant's address, which renders a proof intercepted in transit unusable by any other party.</li>
+          <li><strong>Live policy verification.</strong> The issuer must hold a current accreditation from the chosen authority. Withdrawal of that accreditation halts claims in the following block, during the distribution.</li>
+          <li><strong>Proof and uniqueness.</strong> The pairing check executes in consensus, the credential's validity is confirmed against a recent tree root, and the uniqueness value is consumed, preventing any second claim.</li>
+        </ol>
+
+        <div class="outcome">
+          <h3>The practical implication</h3>
+          <p>
+            Approximately forty lines of application code. No allowlist administration, no vendor
+            integration, no verification service, and no personal data at any point in the system.
+          </p>
+          <p>
+            The application did not implement an identity system; it <em>inherited</em> one. Every
+            registry deployed subsequently increases the capability of applications already in
+            production, without modification to any of them.
+          </p>
+          <p>
+            This property is not reproduced by bilateral-integration architectures, and it is the
+            substantive reason to build on shared public infrastructure rather than within a single
+            institution's perimeter.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== resilience ===== -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">05</span>
+        <div>
+          <h2>What does public infrastructure provide that a hosted system does not?</h2>
+          <p>
+            The following are procurement properties rather than ideological positions. Each
+            addresses a question that arises routinely in institutional due diligence, and for
+            which hosted architectures have no satisfactory answer.
+          </p>
+        </div>
+      </div>
+
+      <div class="props">
+        <div class="prop">
+          <div class="pk">Continuity</div>
+          <h3>Infrastructure that outlives its operator</h3>
+          <p>
+            Evaluations routinely ask what becomes of issued credentials if a supplier is acquired
+            or exits the market. The registries continue to resolve after any individual participant
+            ceases to exist, because no participant hosts them.
+          </p>
+        </div>
+        <div class="prop">
+          <div class="pk">Neutrality</div>
+          <h3>No party controls access</h3>
+          <p>
+            Registration is permissionless and endorsement is recorded separately from it, so no
+            operator is able to exclude a competitor, a jurisdiction, or an institution. Each
+            relying party selects the authorities it treats as roots.
+          </p>
+        </div>
+        <div class="prop">
+          <div class="pk">Simultaneity</div>
+          <h3>Revocation ceases to be a distribution problem</h3>
+          <p>
+            Withdrawal of trust reaches every relying party at the same block. Trusted-list
+            distribution, certificate revocation lists and status endpoints each carry a propagation
+            interval during which stale information remains in circulation.
+          </p>
+        </div>
+        <div class="prop">
+          <div class="pk">Exit</div>
+          <h3>Low exit cost by construction</h3>
+          <p>
+            The implementation is open source and forkable, the data is public, and the interfaces
+            are standard. Adoption creates no position that cannot be left without a redevelopment
+            programme, which is the property distinguishing open infrastructure from a proprietary
+            stack.
+          </p>
+        </div>
+        <div class="prop">
+          <div class="pk">Verifiability</div>
+          <h3>Trust-critical logic executes in consensus</h3>
+          <p>
+            The checks on which the system depends execute where any party may audit them and no
+            party may amend them privately, rather than within a supplier's runtime, under contract,
+            evidenced by an assurance report.
+          </p>
+        </div>
+        <div class="prop">
+          <div class="pk">Shared cost</div>
+          <h3>Infrastructure funded once</h3>
+          <p>
+            Institutions presently each operate a trust list, a revocation service, and a set of
+            verifier integrations. This is the same function, implemented once, with the cost of
+            operation distributed across the participants who benefit from it.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== limits ===== -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">06</span>
+        <div>
+          <h2>What are the limitations and open questions?</h2>
+          <p>
+            The following are stated directly, as a balanced evaluation requires them. None prevents
+            a pilot deployment; each should inform its scope and design.
+          </p>
+        </div>
+      </div>
+
+      <div class="limits">
+        <div class="limit">
+          <span class="lt">Anonymity sets</span>
+          <p>
+            A privacy-preserving proof conceals the holder among the members of their credential
+            tree, and no further. A tree containing several hundred members affords correspondingly
+            limited protection, and the natural tendency to organise trees by cohort, jurisdiction
+            or issuance date causes membership itself to become the disclosure. Maintaining
+            sufficiently large anonymity sets is an operational discipline for which no party
+            currently holds responsibility.
+          </p>
+        </div>
+        <div class="limit">
+          <span class="lt">Revocation latency</span>
+          <p>
+            Recent credential-tree roots remain acceptable for a configured interval, so that a
+            proof already in flight is not invalidated by an unrelated issuance. That interval is
+            also the revocation delay. Short intervals disrupt legitimate holders; long intervals
+            leave revoked credentials briefly usable. The tension is inherent, and is tuned per tree
+            rather than resolved.
+          </p>
+        </div>
+        <div class="limit">
+          <span class="lt">Deployment domain</span>
+          <p>
+            Cost considerations favour a layer 2 network, while neutrality and permanence favour
+            layer 1, or layer 2 state checkpointed to it. Enforcing uniqueness consistently
+            <em>across</em> networks remains an open research question rather than an engineering
+            task.
+          </p>
+        </div>
+        <div class="limit">
+          <span class="lt">Settlement</span>
+          <p>
+            The settlement layer records payment per verification, but no mechanism compels a
+            verifier to settle for a verification performed off the ledger. Coupling the two — a
+            wallet releasing a presentation only against an observed settlement, for instance —
+            is an open design question.
+          </p>
+        </div>
+        <div class="limit">
+          <span class="lt">Proof cost</span>
+          <p>
+            The hash function underlying the privacy path is expensive to execute on Ethereum at
+            present. Issuance is economical on a layer 2 network and costly on layer 1. A
+            protocol-level optimisation would materially change the economics of every design in
+            this class simultaneously.
+          </p>
+        </div>
+        <div class="limit">
+          <span class="lt">Scope</span>
+          <p>
+            Proof of personhood is not included. The architecture <em>consumes</em> personhood
+            credentials; it does not issue them. The determination of who constitutes a unique
+            person remains with whichever issuers an institution chooses to accredit.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="colophon">
+        <p>
+          Each component is accompanied by a written specification covering its value case,
+          interface, invariants, and the path from proof of concept to production, together with a
+          reference implementation and tests. The implementation is deliberately minimal and has not
+          been audited. It is intended to make the mechanisms legible for evaluation, not to be
+          deployed as it stands.
+        </p>
+        <p class="mono">
+          Aligned to W3C Verifiable Credentials,<br>
+          Bitstring Status List, and ERC-1056.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  var LAYERS = [
+    { id: "control",  num: "L1", name: "Control",          blurb: "Which key controls an identifier at present" },
+    { id: "trust",    num: "L2", name: "Trust",            blurb: "Which parties vouch for whom, and on what basis" },
+    { id: "status",   num: "L3", name: "Status & privacy", blurb: "Whether a credential remains valid, and whether that is provable without disclosure" },
+    { id: "account",  num: "L4", name: "Accountability & economics", blurb: "Which party is requesting, what it commits to, and how issuance is funded" }
+  ];
+
+  var PHASES = [
+    {
+      n: "Stage 1", t: "Anchor control",
+      comps: ["did", "recovery"],
+      body: "Deploy the identifier layer and non-custodial recovery. <strong>No user-facing change is required and no personal data is involved</strong>, which allows the deployment to operate alongside existing public-key infrastructure. The capability gained is an identifier that persists across key rotation, so that key loss ceases to require re-enrolment with every counterparty."
+    },
+    {
+      n: "Stage 2", t: "Publish definitions",
+      comps: ["did", "recovery", "schema", "issuer"],
+      body: "Register the credential types the institution issues, and declare itself as their issuer. <strong>This is the interoperability step.</strong> A second institution may then issue or accept the same credential type without a bilateral integration, and wallets are able to flag credentials presented as originating from an issuer that never declared them."
+    },
+    {
+      n: "Stage 3", t: "Replace the trusted list",
+      comps: ["did", "recovery", "schema", "issuer", "trust"],
+      body: "Move accreditation onto the ledger. <strong>This is typically the stage at which the architecture begins to return its cost.</strong> Trusted-list distribution ceases to be a problem: withdrawal of an accreditation reaches every relying party in the following block rather than at the conclusion of a publication cycle, while each relying party continues to select the authorities it recognises."
+    },
+    {
+      n: "Stage 4", t: "Retire revocation infrastructure",
+      comps: ["did", "recovery", "schema", "issuer", "trust", "status", "attestation"],
+      body: "Publish credential status on the ledger and decommission the revocation-list and status-endpoint infrastructure supporting it. <strong>The associated availability obligations are removed</strong>, and the issuer ceases to learn where its credentials are presented. Public, non-personal claims may be migrated at the same stage."
+    },
+    {
+      n: "Stage 5", t: "Introduce privacy",
+      comps: ["did", "recovery", "schema", "issuer", "trust", "status", "attestation", "tree", "nullifier", "gateway"],
+      body: "Introduce the zero-knowledge path, under which holders prove that they hold a valid and unrevoked credential without disclosing which, and act at most once per context. <strong>The institution is then able to serve privacy-sensitive verification without becoming the controller</strong> of a record of who presented what, to whom, and when."
+    },
+    {
+      n: "Stage 6", t: "Accountability & settlement",
+      comps: ["did", "recovery", "schema", "issuer", "trust", "status", "attestation", "tree", "nullifier", "gateway", "verifier", "policy", "payment", "delegation"],
+      body: "Complete the architecture. Verifiers become as identifiable as the parties they query, publish immutable commitments regarding what they collect and retain, and settle per verification with the issuers carrying the cost. <strong>Data minimisation moves from retrospective audit to refusal at the point of request</strong>, and issuance acquires a sustainable economic basis."
+    }
+  ];
+
+  var COMPONENTS = [
+    {
+      id: "did", layer: "control", ref: "01", name: "Key Registry", tags: ["Foundation"],
+      what: "A single authoritative answer to the question of which key controls an identifier at present. The record persists across key rotation and key loss, and every other component in the architecture resolves control through it.",
+      deps: [], effort: "Low", replaces: "Per-system key re-enrolment",
+      lens: {
+        business: "A single rotation restores control across every registry simultaneously. The practical implication is that key loss no longer requires re-enrolment with each counterparty, removing a recurring source of onboarding cost and operational risk.",
+        technical: "One lookup, resolved by every other registry in the architecture. Every address functions as an identifier by default and at no cost; only deviations from that default consume storage.",
+        regulatory: "A durable identifier that holds no personal data. The record concerns control rather than attributes, and the full history of rotation is timestamped and independently auditable.",
+        public: "Participation is universal and costless, and no party holds the ability to remove an entry. The registry confers no advantage on institutional participants over individual ones."
+      },
+      skip: "Each remaining component is required to implement its own key management, and a single lost key becomes a migration exercise across every system at which the holder is registered.",
+      note: "In production, institutions would use the canonical ERC-1056 registry already deployed at a common address across most networks, rather than a bespoke deployment."
+    },
+    {
+      id: "recovery", layer: "control", ref: "02", name: "Guardian Recovery", tags: [],
+      what: "A designated set of guardians may rotate a lost key after a defined threshold of approvals and a mandatory waiting period. The current controller may cancel an attempt at any point during that period.",
+      deps: ["did"], effort: "Low", replaces: "Custodial key escrow, support-desk recovery",
+      lens: {
+        business: "Addresses the question of key loss without a custodian, a support function, or the liability associated with holding customer keys. Institutions gain a recovery path that does not reintroduce the intermediary the architecture is intended to remove.",
+        technical: "Threshold approval and a timelock, both enforced by the protocol. Recovery attempts are public events, which allows a legitimate controller to observe an attempt in progress and cancel it before it completes.",
+        regulatory: "Recovery policy is inspectable and provable rather than procedural. This removes the social-engineering surface that has historically been the most reliable route of attack against account recovery in institutional systems.",
+        public: "Non-custodial recovery is what distinguishes self-sovereignty in practice from a hosted account with additional steps."
+      },
+      skip: "Institutions are left to choose between permanent key loss for their users and reintroducing the custodial relationship that self-sovereign identity is intended to remove.",
+      note: "Guardian identities are public in this proof of concept. A production deployment would commit to hashed guardian sets, so that the guardians of a given identity cannot be enumerated."
+    },
+    {
+      id: "delegation", layer: "control", ref: "03", name: "Scoped Delegation", tags: ["Agents"],
+      what: "A revocable, expiring grant of narrowly scoped authority: a named agent may perform a specified action on behalf of an identifier until a stated date. The grant is verifiable by third parties who have no prior relationship with either party.",
+      deps: ["did"], effort: "Low", replaces: "Bearer tokens, signed capability assertions",
+      lens: {
+        business: "Authority may be extended to an agent, increasingly an automated or AI agent, without transferring keys, and withdrawn immediately. This is now a live procurement question for institutions deploying automation against customer data.",
+        technical: "Capability-scoped grants with single-operation revocation of all outstanding authority. A bearer credential remains valid wherever it has been copied until it expires; a registry entry does not.",
+        regulatory: "A complete and timestamped record of delegated authority: what was permitted, from when, and the point at which it was withdrawn. This addresses the question of whether a given action was authorised at the time it occurred.",
+        public: "Revocation that propagates to every relying party within a single block, rather than only within the boundaries of one provider's ecosystem."
+      },
+      skip: "Delegated authority remains invisible to third parties, and withdrawing it depends on each counterparty independently observing and acting on the change.",
+      note: "This registry records the statement of authority. Enforcement remains the responsibility of the resource being accessed."
+    },
+    {
+      id: "schema", layer: "trust", ref: "04", name: "Credential Definitions", tags: [],
+      what: "Content-addressed, permanent definitions of a credential's structure. The definition itself is held off the ledger; its cryptographic fingerprint and identifier are held on it.",
+      deps: [], effort: "Low", replaces: "Web-hosted schema documents",
+      lens: {
+        business: "Two institutions may issue and accept the same credential type without negotiating a bilateral integration. Interoperability of this kind is increasingly recognised as a determinant of operational capability rather than a developer convenience.",
+        technical: "Content-addressed and append-only. An identifier resolves to the same definition in year ten as at registration, and versioning proceeds by registering a new definition rather than amending an existing one.",
+        regulatory: "A stable, timestamped reference to precisely what was attested. This is the evidentiary anchor when a credential is examined years after issuance, which no web-hosted schema is able to provide.",
+        public: "No host is able to alter the meaning of a credential after issuance, and no party controls who may define a credential type."
+      },
+      skip: "The meaning of a credential remains mutable at the discretion of whichever party hosts the schema document, which progressively undermines every credential issued against it.",
+      note: "There is no registration fee and no content review, deliberately. Any spam control sufficient to be effective would constitute a gatekeeper deciding who may define a credential type. Filtering is therefore the responsibility of indexers and wallets, which may curate freely without preventing registration."
+    },
+    {
+      id: "issuer", layer: "trust", ref: "05", name: "Issuer Directory", tags: [],
+      what: "Permissionless self-registration by issuers, together with a public declaration of the credential types each issues. The registry supports discovery; it makes no assertion as to whether an issuer should be trusted.",
+      deps: ["did", "schema"], effort: "Low", replaces: "Bilateral issuer onboarding",
+      lens: {
+        business: "Institutions become discoverable, and are able to maintain a stable public identity over time, without applying to any party for inclusion.",
+        technical: "Registration, active status and schema declaration resolve in a single call. Entries are bound to the identifier rather than to a key, so rotation does not invalidate them.",
+        regulatory: "A public and timestamped commitment to the scope of what an institution issues, which allows a wallet to flag a credential presented as originating from an issuer that never declared that credential type.",
+        public: "Listing asserts no trustworthiness. Discovery is deliberately separated from endorsement, which means the directory itself is not a position worth capturing."
+      },
+      skip: "Verifiers are unable to discover issuers or maintain a stable reference to them across key rotation, and each relationship begins as a bilateral integration.",
+      note: null
+    },
+    {
+      id: "trust", layer: "trust", ref: "06", name: "Accreditation", tags: ["Keystone"],
+      what: "An open graph recording which authorities vouch for which subjects, in what role, and for which credential type. Multi-step hierarchies resolve in a single read, and each relying party selects the authorities it recognises.",
+      deps: ["did", "schema"], effort: "Medium", replaces: "Trusted-list publication and distribution",
+      lens: {
+        business: "The functional equivalent of a trusted list, with the distinction that withdrawal of an accreditation reaches every relying party in the following block rather than at the conclusion of a publication cycle.",
+        technical: "An open graph rather than a distributed list. A chain from a chosen root, through intermediate accreditors, to the subject resolves in one call, with no dependency on an external fetch.",
+        regulatory: "Maps closely onto eIDAS trust-list hierarchies, and accommodates jurisdictional roots without requiring participants to agree on a single global root of trust.",
+        public: "Roots are plural and inspectable. Jurisdictions in competition with one another are able to share the same infrastructure precisely because none of them owns it."
+      },
+      skip: "Accreditation reverts to closed, jurisdiction-bound trusted lists whose revocation propagates on a publication schedule rather than immediately.",
+      note: "Any identity may accredit any other. An authority carries no weight until a relying party selects it as a root, which places the trust decision with the reader rather than with the registry."
+    },
+    {
+      id: "attestation", layer: "trust", ref: "07", name: "Public Claims", tags: [],
+      what: "Claims that contain no personal data and are public by nature, such as that an entity holds a licence or that a contract has passed an audit, recorded directly and in the clear.",
+      deps: ["did", "schema"], effort: "Low", replaces: "Published registers, certificate documents",
+      lens: {
+        business: "For claims that are already public, this is the least costly representation available, and it is consumable by any other system without an integration.",
+        technical: "A single validity call on which any contract may condition its behaviour. No proof system, wallet or presentation protocol is involved.",
+        regulatory: "Restricted to non-personal claims. The boundary is explicit: any claim capable of identifying a natural person belongs on the privacy-preserving path instead.",
+        public: "A shared and permanent record of public facts, readable by any party and hosted by none."
+      },
+      skip: "Public claims remain distributed across per-institution registers, each requiring separate integration by every consumer.",
+      note: "In production, institutions would use the Ethereum Attestation Service, which is already deployed, indexed and tooled, rather than a bespoke registry."
+    },
+    {
+      id: "status", layer: "status", ref: "08", name: "Revocation Status", tags: [],
+      what: "A single bit per credential recording whether it remains valid. Revocation is permanent by construction; suspension may subsequently be lifted.",
+      deps: ["did"], effort: "Low", replaces: "Certificate revocation lists, status endpoints",
+      lens: {
+        business: "Permits decommissioning of certificate revocation list and status endpoint infrastructure, together with the associated availability obligations, at approximately one storage slot per 256 credentials.",
+        technical: "A single storage read per check. Revocation bits are one-way by contract invariant, so permanence is enforced by the protocol rather than asserted by policy.",
+        regulatory: "The issuer no longer learns where its credentials are presented. This removes a surveillance surface that status endpoints create as a matter of design rather than of intent.",
+        public: "Credential status remains available when the issuer's infrastructure, or the issuer itself, does not."
+      },
+      skip: "Revocation remains a distribution problem: lists become stale, endpoints become unavailable, and the issuer observes every verification.",
+      note: "This path is not private for the party performing the check. A check performed within a transaction records the credential's list position in public data permanently. The privacy benefit is specific and narrow: the issuer ceases to learn where its credentials are used."
+    },
+    {
+      id: "tree", layer: "status", ref: "09", name: "Private Credentials", tags: ["Privacy"],
+      what: "Each issuer maintains trees of credential commitments. Issuance inserts a commitment; revocation removes it. The ledger records no credential, no subject, and no indication of which credential is being proven.",
+      deps: ["did"], effort: "High", replaces: "Verifier-side credential disclosure",
+      lens: {
+        business: "Permits an institution to serve privacy-sensitive verification without becoming the controller of a permanent record of who presented which credential, to whom, and when.",
+        technical: "An incremental Merkle tree of commitments derived from a secret that does not leave the holder's device. A rolling window of recent roots preserves the validity of proofs already in flight.",
+        regulatory: "Data minimisation achieved by construction rather than by policy. There is no personal data on the ledger to minimise, secure, or subsequently erase, which materially changes the compliance position.",
+        public: "The primitive that reconciles public verifiability with the exclusion of personal data from a permanent public record."
+      },
+      skip: "Every validity check either discloses which credential is being verified, or requires consulting the issuer, who then learns where the credential was used.",
+      note: "The anonymity set is precisely the tree. A small tree, or one organised by cohort, jurisdiction or issuance date, causes membership itself to become the disclosure. Commitments additionally appear in issuance and revocation events, which makes each commitment a durable pseudonym linking a credential's issuance to its revocation."
+    },
+    {
+      id: "nullifier", layer: "status", ref: "10", name: "Uniqueness", tags: [],
+      what: "A value derived from a holder's secret and a given context, unlinkable to the holder and consumable once. It enforces one action per person per context without identifying the person.",
+      deps: [], effort: "Low", replaces: "Account-based deduplication, identity collection",
+      lens: {
+        business: "Sybil resistance, meaning one action per person rather than per account, without biometrics, a coordinator, or the collection and retention of identity data.",
+        technical: "A single mapping. Distinct contexts produce distinct and unlinkable values, so participation in one context cannot be correlated with participation in another.",
+        regulatory: "Enforces the property actually required, which is uniqueness, without collecting identity in order to obtain it. This is the narrower alternative that an evaluation should establish before considering identity itself.",
+        public: "The mechanism that makes one-person-one-vote, equitable distribution and quadratic funding enforceable by any party, with no operator and no trusted coordinator."
+      },
+      skip: "Uniqueness must instead be enforced by collecting and comparing identity data, which is precisely the data the institution sought to avoid holding.",
+      note: null
+    },
+    {
+      id: "gateway", layer: "status", ref: "11", name: "Verification", tags: ["Privacy"],
+      what: "Verifies a holder's proof that they hold a valid, unrevoked credential from a specified issuer, and consumes their one-time uniqueness value. Both operations occur within consensus.",
+      deps: ["tree", "nullifier"], effort: "High", replaces: "Verification services and their contracts",
+      lens: {
+        business: "No verification provider, no per-check commercial agreement, and no service level to negotiate, as the architecture contains no verification service.",
+        technical: "A pairing check over a standard proof format, which allows existing prover tooling to be used without modification. Revocation is enforced by requiring the proof to reference a recent tree root.",
+        regulatory: "A verifier structurally incapable of logging, profiling or discriminating between subjects, because it is a mathematical check rather than an organisation with commercial interests and legal exposure.",
+        public: "Infrastructure that cannot become unavailable, be acquired, be compelled, or determine that it no longer wishes to serve a given participant."
+      },
+      skip: "Verification must be operated by some party, which means some party is able to log every check, price it, and be subject to pressure regarding whom it serves.",
+      note: "Uniqueness values are namespaced per calling application. Without that separation, a third party could copy a pending proof and consume the holder's one-time value, excluding a legitimate holder from that context permanently."
+    },
+    {
+      id: "verifier", layer: "account", ref: "12", name: "Verifier Accountability", tags: [],
+      what: "The issuer directory applied in the opposite direction: the parties collecting data become discoverable, capable of accreditation, and accountable.",
+      deps: ["did"], effort: "Low", replaces: "Unregistered, anonymous relying parties",
+      lens: {
+        business: "Accreditation becomes a commercial asset. Wallets are able to prefer accredited verifiers, and excessive data requests become visible and attributable to a named party.",
+        technical: "Structurally the mirror of the issuer directory. Endorsement is provided by the accreditation registry and the scope of requests by the policy registry, which keeps three separable concerns separate.",
+        regulatory: "Maps closely onto eIDAS relying-party registration requirements, with the register maintained by no single administrator and available to every jurisdiction on equal terms.",
+        public: "Addresses the longest-standing asymmetry in identity systems: the party collecting the data becomes at least as identifiable as the person disclosing it."
+      },
+      skip: "Holders continue to be subject to extensive verification while the parties collecting their data remain unregistered and unaccountable.",
+      note: null
+    },
+    {
+      id: "policy", layer: "account", ref: "13", name: "Disclosure Policy", tags: [],
+      what: "Verifiers publish immutable, versioned commitments describing what they request and what they retain. Wallets record the version to which the holder consented.",
+      deps: ["did"], effort: "Low", replaces: "Privacy notices, retention attestations",
+      lens: {
+        business: "Demonstrable data-minimisation compliance, published once and verifiable by any party, without an audit cycle to establish it.",
+        technical: "Immutable versioned fingerprints. A wallet records the version to which it consented and re-prompts the holder when the active version changes.",
+        regulatory: "Moves GDPR and eIDAS 2.0 minimisation from retrospective audit to refusal at the point of request. Every amendment is a permanent, timestamped public record available to regulators and researchers.",
+        public: "An organisation cannot quietly expand its collection. The complete history of what it has requested remains permanently inspectable."
+      },
+      skip: "Minimisation remains enforceable only through audit, which is to say only after excessive collection has already occurred.",
+      note: "Policies are recorded and compared here rather than interpreted. A machine-readable format is what would allow wallets to evaluate them automatically rather than merely detect that they have changed."
+    },
+    {
+      id: "payment", layer: "account", ref: "14", name: "Settlement", tags: ["Economics"],
+      what: "Issuers publish a per-verification price; verifiers pre-fund a balance and settle per verification against an opaque reference. No credential data is involved in settlement.",
+      deps: ["did"], effort: "Low", replaces: "Bilateral contracts, invoicing, reconciliation",
+      lens: {
+        business: "Addresses the economic asymmetry in which issuers bear the cost of issuance and revocation infrastructure while verifiers capture the value. Settlement occurs per verification, without invoicing, foreign exchange, or bilateral agreements.",
+        technical: "Balances are held against the identifier rather than the key, so an issuer that has rotated or recovered its key retains its funds. A price cap on each settlement prevents unilateral fee revision.",
+        regulatory: "Fee flows are public and auditable, and receipts reference an opaque session identifier rather than credential data or any subject.",
+        public: "Credential ecosystems typically fail economically before they fail technically. This is the mechanism by which public issuance remains funded."
+      },
+      skip: "Issuance remains a cost centre sustained by whichever party is able to afford it, which is the pattern by which most credential ecosystems have quietly ceased operation.",
+      note: "Settlement is asserted by the verifier rather than proven. No mechanism currently compels a verifier to settle for a verification performed off the ledger. Closing that loop is an open design question rather than an implementation task."
+    }
+  ];
+
+  var LENS_LABEL = {
+    business: "Business case",
+    technical: "Technical case",
+    regulatory: "Regulatory case",
+    public: "Public good case"
+  };
+  var LENS_ORDER = ["business", "technical", "regulatory", "public"];
+
+  var byId = {};
+  COMPONENTS.forEach(function (c) { byId[c.id] = c; });
+
+  // dependents
+  COMPONENTS.forEach(function (c) { c.unlocks = []; });
+  COMPONENTS.forEach(function (c) {
+    c.deps.forEach(function (d) { if (byId[d]) byId[d].unlocks.push(c.id); });
+  });
+
+  var state = { lens: "business", phase: PHASES.length - 1, selected: null };
+
+  var stackEl  = document.getElementById("stack");
+  var detailEl = document.getElementById("detail");
+  var stepEl   = document.querySelector(".stepper");
+  var noteEl   = document.getElementById("phaseNote");
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (m) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[m];
+    });
+  }
+
+  /* ---------- stack ---------- */
+  function buildStack() {
+    var html = "";
+    LAYERS.forEach(function (layer) {
+      var comps = COMPONENTS.filter(function (c) { return c.layer === layer.id; });
+      if (!comps.length) return;
+      html += '<div class="layer">' +
+        '<div class="layer-head">' +
+          '<span class="lnum">' + esc(layer.num) + '</span>' +
+          '<h3>' + esc(layer.name) + '</h3>' +
+          '<span class="lblurb">' + esc(layer.blurb) + '</span>' +
+        '</div><div class="cards">';
+
+      comps.forEach(function (c) {
+        html += '<button class="card" data-comp="' + c.id + '" aria-pressed="false">' +
+          '<span class="cid">' + esc(c.ref) + ' · ' + esc(c.id) + '</span>' +
+          '<span class="cname">' + esc(c.name) + '</span>' +
+          '<span class="cval" data-val="' + c.id + '"></span>' +
+          (c.tags.length
+            ? '<span class="tagrow">' + c.tags.map(function (t) {
+                return '<span class="tag' + (t === "Keystone" ? " keystone" : "") + '">' + esc(t) + '</span>';
+              }).join("") + '</span>'
+            : "") +
+          '</button>';
+      });
+
+      html += "</div></div>";
+    });
+    stackEl.innerHTML = html;
+
+    stackEl.querySelectorAll(".card").forEach(function (btn) {
+      btn.addEventListener("click", function () { select(btn.getAttribute("data-comp")); });
+    });
+  }
+
+  function paintLens() {
+    COMPONENTS.forEach(function (c) {
+      var el = stackEl.querySelector('[data-val="' + c.id + '"]');
+      if (el) el.textContent = c.lens[state.lens];
+    });
+  }
+
+  function paintPhase() {
+    var active = PHASES[state.phase].comps;
+    stackEl.querySelectorAll(".card").forEach(function (card) {
+      var id = card.getAttribute("data-comp");
+      card.classList.toggle("dim", active.indexOf(id) === -1);
+    });
+  }
+
+  function paintSelection() {
+    var sel = state.selected ? byId[state.selected] : null;
+    stackEl.querySelectorAll(".card").forEach(function (card) {
+      var id = card.getAttribute("data-comp");
+      var isSel = sel && id === sel.id;
+      card.setAttribute("aria-pressed", isSel ? "true" : "false");
+      card.classList.toggle("prereq", !!(sel && !isSel && sel.deps.indexOf(id) !== -1));
+
+      var row = card.querySelector(".tagrow");
+      var existing = card.querySelector(".tag.req");
+      if (existing) existing.remove();
+      if (sel && !isSel && sel.deps.indexOf(id) !== -1) {
+        var t = document.createElement("span");
+        t.className = "tag req";
+        t.textContent = "Prerequisite";
+        if (row) row.appendChild(t);
+        else {
+          var r = document.createElement("span");
+          r.className = "tagrow";
+          r.appendChild(t);
+          card.appendChild(r);
+        }
+      }
+    });
+  }
+
+  /* ---------- detail ---------- */
+  function chip(id) {
+    var c = byId[id];
+    return '<button class="chip" data-goto="' + id + '">' + esc(c.name) + "</button>";
+  }
+
+  function renderDetail() {
+    var c = state.selected ? byId[state.selected] : null;
+    if (!c) return;
+
+    var inPhase = PHASES[state.phase].comps.indexOf(c.id) !== -1;
+    var firstStage = null;
+    for (var i = 0; i < PHASES.length; i++) {
+      if (PHASES[i].comps.indexOf(c.id) !== -1) { firstStage = PHASES[i]; break; }
+    }
+
+    var html = "";
+    html += '<span class="dsub">' + esc(c.ref) + " · " + esc(c.layer) + "</span>";
+    html += "<h3>" + esc(c.name) + "</h3>";
+    html += '<p class="dwhat">' + esc(c.what) + "</p>";
+
+    // lenses — current first, then the rest
+    var order = [state.lens].concat(LENS_ORDER.filter(function (l) { return l !== state.lens; }));
+    order.forEach(function (l, idx) {
+      html += '<div class="lens-block' + (idx === 0 ? "" : " muted") + '">' +
+        '<div class="lk">' + esc(LENS_LABEL[l]) + "</div>" +
+        "<p>" + esc(c.lens[l]) + "</p></div>";
+    });
+
+    // dependencies
+    html += '<div class="lens-block"><div class="lk">Prerequisites</div>';
+    html += c.deps.length
+      ? '<div class="flow">' + c.deps.map(chip).join('<span class="arrow">+</span>') + "</div>"
+      : '<p class="none">None. This component may be deployed independently.</p>';
+    html += "</div>";
+
+    if (c.unlocks.length) {
+      html += '<div class="lens-block"><div class="lk">Enables</div><div class="flow">' +
+        c.unlocks.map(chip).join('<span class="arrow">+</span>') + "</div></div>";
+    }
+
+    html += '<div class="lens-block"><div class="lk">If omitted</div><p>' + esc(c.skip) + "</p></div>";
+
+    if (c.note) {
+      html += '<div class="callout"><div class="ck">Considerations</div><p>' + esc(c.note) + "</p></div>";
+    }
+
+    html += '<div class="meta-grid">' +
+      '<div><div class="mk">Replaces</div><div class="mv">' + esc(c.replaces) + "</div></div>" +
+      '<div><div class="mk">Implementation effort</div><div class="mv">' + esc(c.effort) + "</div></div>" +
+      '<div><div class="mk">Introduced at</div><div class="mv">' + esc(firstStage ? firstStage.n + " — " + firstStage.t : "—") + "</div></div>" +
+      '<div><div class="mk">In selected stage</div><div class="mv">' + (inPhase ? "Deployed" : "Not yet deployed") + "</div></div>" +
+      "</div>";
+
+    detailEl.innerHTML = html;
+
+    detailEl.querySelectorAll("[data-goto]").forEach(function (b) {
+      b.addEventListener("click", function () { select(b.getAttribute("data-goto"), true); });
+    });
+  }
+
+  function select(id, scroll) {
+    state.selected = id;
+    paintSelection();
+    renderDetail();
+    if (scroll) {
+      var card = stackEl.querySelector('[data-comp="' + id + '"]');
+      if (card) card.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+  }
+
+  /* ---------- phases ---------- */
+  function buildSteps() {
+    stepEl.innerHTML = PHASES.map(function (p, i) {
+      return '<button class="step" data-phase="' + i + '" aria-pressed="' + (i === state.phase) + '">' +
+        '<span class="n">' + esc(p.n) + "</span>" +
+        '<span class="t">' + esc(p.t) + "</span></button>";
+    }).join("");
+
+    stepEl.querySelectorAll(".step").forEach(function (b) {
+      b.addEventListener("click", function () {
+        state.phase = parseInt(b.getAttribute("data-phase"), 10);
+        stepEl.querySelectorAll(".step").forEach(function (x) {
+          x.setAttribute("aria-pressed", x === b ? "true" : "false");
+        });
+        renderNote();
+        paintPhase();
+        if (state.selected) renderDetail();
+      });
+    });
+  }
+
+  function renderNote() {
+    var p = PHASES[state.phase];
+    noteEl.innerHTML = "<p>" + p.body + "</p>" +
+      '<div class="metric"><span class="v">' + p.comps.length + "/" + COMPONENTS.length +
+      '</span><span class="k">components deployed</span></div>';
+  }
+
+  /* ---------- lens ---------- */
+  document.querySelectorAll(".lens-opt").forEach(function (b) {
+    b.addEventListener("click", function () {
+      state.lens = b.getAttribute("data-lens");
+      document.querySelectorAll(".lens-opt").forEach(function (x) {
+        x.setAttribute("aria-pressed", x === b ? "true" : "false");
+      });
+      paintLens();
+      if (state.selected) renderDetail();
+    });
+  });
+
+  /* ---------- init ---------- */
+  buildStack();
+  buildSteps();
+  paintLens();
+  renderNote();
+  paintPhase();
+})();
+</script>
