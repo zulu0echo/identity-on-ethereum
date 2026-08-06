@@ -397,7 +397,9 @@
   .specrow .nm span { display: block; font-size: 13px; font-weight: 400; color: var(--ink-3); margin-top: 2px; }
   .specrow .ds { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
   .specrow .go { font-family: var(--mono); font-size: 13px; color: var(--ink-3); white-space: nowrap; text-decoration: none; border: 1px solid var(--line); border-radius: 6px; padding: 6px 11px; background: var(--surface-2); }
+  a.go { text-decoration: none; }
   a.go:hover { border-color: var(--brand); color: var(--brand-deep); }
+  .go.read { font-weight: 600; color: var(--brand-deep); background: var(--brand-wash); border-color: var(--brand); }
 
   @media (max-width: 860px) {
     .specrow { grid-template-columns: 46px 1fr; gap: 12px; }
@@ -1344,6 +1346,7 @@
   /* Set this to the repository URL to turn every specification reference into a
      working link. Left empty, references render as plain paths. */
   var SPEC_BASE = "";
+  var ANNEX_URL = "https://claude.ai/code/artifact/7e50ec3f-688c-4ba2-a53c-637bb2569ede";
 
   var LAYERS = [
     { id: "control", num: "Layer 1", name: "Control",  sub: "Which key controls an identifier at present" },
@@ -1750,11 +1753,8 @@
   }
 
   function specRef(c) {
-    var path = "identity-stack/specs/" + c.spec;
-    var inner = "<b>Specification</b> " + esc(c.spec);
-    return SPEC_BASE
-      ? '<a class="specref" href="' + esc(SPEC_BASE.replace(/\/$/, "") + "/" + path) + '" target="_blank" rel="noopener">' + inner + "</a>"
-      : '<span class="specref" title="' + esc(path) + '">' + inner + "</span>";
+    var inner = "<b>Specification</b> Read " + esc(c.spec) + " in full →";
+    return '<a class="specref" href="' + esc(ANNEX_URL) + "#" + esc(c.ref) + '" target="_blank" rel="noopener">' + inner + "</a>";
   }
 
   function renderDetail() {
@@ -1899,9 +1899,7 @@
   function buildSpecs() {
     document.getElementById("speclist").innerHTML = SPECS.map(function (s) {
       var path = "identity-stack/specs/" + s.file;
-      var link = SPEC_BASE
-        ? '<a class="go" href="' + esc(SPEC_BASE.replace(/\/$/, "") + "/" + path) + '" target="_blank" rel="noopener">' + esc(s.file) + "</a>"
-        : '<span class="go" title="' + esc(path) + '">' + esc(s.file) + "</span>";
+      var link = '<a class="go read" href="' + esc(ANNEX_URL) + "#" + esc(s.n) + '" target="_blank" rel="noopener">Read it →</a>';
       return '<div class="specrow">' +
                '<div class="num">' + esc(s.n) + "</div>" +
                '<div class="nm">' + esc(s.name) + "<span>" + esc(s.contract) + "</span></div>" +
@@ -1911,7 +1909,7 @@
     }).join("");
     document.getElementById("specnote").textContent = SPEC_BASE
       ? "Each entry links to the document in the repository."
-      : "All fifteen live in identity-stack/specs/ alongside the reference implementation. Set SPEC_BASE at the top of this page's script to the repository URL and every entry becomes a working link.";
+      : "Each links to its full text and research assessment in the annex.";
   }
 
   /* ---------------- population fields ---------------- */
