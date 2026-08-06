@@ -450,6 +450,71 @@
   .colophon p { margin: 0; max-width: 60ch; line-height: 1.55; }
   .colophon .mono { font-family: var(--mono); font-size: 11px; letter-spacing: .07em; }
 
+  /* ============ figures ============ */
+  .fig {
+    margin: 28px 0 0;
+    border: 1px solid var(--rule);
+    border-radius: var(--r);
+    background: var(--paper-2);
+    padding: 20px 24px 16px;
+  }
+
+  .fig-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .fig-lede { font-size: 14px; color: var(--ink-2); margin: 0 0 16px; max-width: 74ch; line-height: 1.5; }
+
+  .fig-scroll { overflow-x: auto; }
+  .fig svg { display: block; width: 100%; min-width: 560px; height: auto; }
+
+  .fig figcaption {
+    margin-top: 14px;
+    padding-top: 11px;
+    border-top: 1px solid var(--rule-soft);
+    font-family: var(--serif);
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-3);
+    max-width: 78ch;
+  }
+
+  /* svg primitives — themed through the same tokens as the page */
+  svg .s-box   { fill: var(--paper);   stroke: var(--rule); stroke-width: 1; }
+  svg .s-box-a { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1; }
+  svg .s-box-w { fill: var(--signal-soft); stroke: var(--signal); stroke-width: 1; }
+  svg .s-plinth{ fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1; }
+  svg .s-zone  { fill: none; stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 4; }
+  svg .s-edge  { stroke: var(--rule);   stroke-width: 1.25; fill: none; }
+  svg .s-edge-a{ stroke: var(--accent); stroke-width: 1.4;  fill: none; }
+  svg .s-edge-w{ stroke: var(--signal); stroke-width: 1.4;  fill: none; }
+  svg .s-rule  { stroke: var(--rule-soft); stroke-width: 1; }
+
+  svg .s-t     { fill: var(--ink);    font-family: var(--sans); font-size: 12.5px; }
+  svg .s-t-b   { fill: var(--ink);    font-family: var(--serif); font-size: 13.5px; font-weight: 600; }
+  svg .s-t-s   { fill: var(--ink-2);  font-family: var(--sans); font-size: 11px; }
+  svg .s-t-m   { fill: var(--ink-3);  font-family: var(--mono); font-size: 9px; letter-spacing: .1em; }
+  svg .s-t-a   { fill: var(--accent); font-family: var(--mono); font-size: 9px; letter-spacing: .1em; }
+  svg .s-t-w   { fill: var(--signal); font-family: var(--mono); font-size: 9px; letter-spacing: .1em; }
+  svg .s-dot   { fill: var(--ink-3); }
+  svg .s-dot-a { fill: var(--accent); }
+  svg .s-arrow   { fill: var(--rule); }
+  svg .s-arrow-a { fill: var(--accent); }
+  svg .s-arrow-w { fill: var(--signal); }
+
+  /* clickable nodes in the architecture map */
+  svg .s-node { cursor: pointer; }
+  svg .s-node rect { transition: fill .14s, stroke .14s; }
+  svg .s-node:hover rect { stroke: var(--accent); }
+  svg .s-node.on rect { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.6; }
+  svg .s-node.dep rect { stroke: var(--signal); stroke-width: 1.6; }
+  svg .s-node:focus-visible rect { stroke: var(--accent); stroke-width: 2; }
+
   /* ============ responsive ============ */
   @media (max-width: 1000px) {
     .explorer { grid-template-columns: 1fr; }
@@ -569,6 +634,88 @@
           <p class="why">A public ledger is permanent. Personal data recorded on one cannot be withdrawn, corrected or erased, which constitutes both a compliance failure and an ethical one.</p>
         </div>
       </div>
+
+      <figure class="fig">
+        <div class="fig-title">Figure 1 — Where each party sits</div>
+        <p class="fig-lede">
+          The three roles of a credential system, and the line between what passes between them
+          directly and what is recorded on the shared ledger.
+        </p>
+        <div class="fig-scroll">
+          <svg viewBox="0 0 860 350" role="img" aria-labelledby="f1t f1d">
+            <title id="f1t">Issuer, holder and verifier exchange credentials off-chain while reading shared coordination state on-chain</title>
+            <desc id="f1d">The issuer issues a credential to the holder, and the holder presents a proof to the verifier. Both exchanges happen directly between the parties. Separately, all three read and write a shared band of on-chain coordination state containing control, definitions, accreditation, status, uniqueness, policy and settlement. The credential itself never reaches the ledger.</desc>
+
+            <!-- zone labels -->
+            <text class="s-t-m" x="0" y="14">OFF-CHAIN — DIRECT BETWEEN PARTIES</text>
+            <text class="s-t-a" x="0" y="222">ON-CHAIN — SHARED BY ALL THREE</text>
+
+            <!-- roles -->
+            <g>
+              <rect class="s-box" x="24"  y="34" width="190" height="62" rx="3"/>
+              <text class="s-t-b" x="119" y="60" text-anchor="middle">Issuer</text>
+              <text class="s-t-s" x="119" y="80" text-anchor="middle">Bank, ministry, university</text>
+            </g>
+            <g>
+              <rect class="s-box" x="335" y="34" width="190" height="62" rx="3"/>
+              <text class="s-t-b" x="430" y="60" text-anchor="middle">Holder</text>
+              <text class="s-t-s" x="430" y="80" text-anchor="middle">Citizen, customer, agent</text>
+            </g>
+            <g>
+              <rect class="s-box" x="646" y="34" width="190" height="62" rx="3"/>
+              <text class="s-t-b" x="741" y="60" text-anchor="middle">Verifier</text>
+              <text class="s-t-s" x="741" y="80" text-anchor="middle">Relying party</text>
+            </g>
+
+            <!-- horizontal exchanges -->
+            <path class="s-edge" d="M214 65 H323" marker-end="url(#a1)"/>
+            <text class="s-t-m" x="268" y="55" text-anchor="middle">ISSUES CREDENTIAL</text>
+            <path class="s-edge" d="M525 65 H634" marker-end="url(#a1)"/>
+            <text class="s-t-m" x="580" y="55" text-anchor="middle">PRESENTS PROOF</text>
+
+            <!-- boundary rule -->
+            <line class="s-rule" x1="0" y1="196" x2="860" y2="196"/>
+
+            <!-- drops to the chain -->
+            <path class="s-zone" d="M119 96 V236"/>
+            <text class="s-t-m" x="126" y="150">WRITES STATUS,</text>
+            <text class="s-t-m" x="126" y="163">HOLDS ACCREDITATION</text>
+
+            <path class="s-zone" d="M430 96 V236"/>
+            <text class="s-t-m" x="437" y="150">READS, PROVES</text>
+            <text class="s-t-m" x="437" y="163">AGAINST STATE</text>
+
+            <path class="s-zone" d="M741 96 V236"/>
+            <text class="s-t-m" x="748" y="150">CHECKS TRUST,</text>
+            <text class="s-t-m" x="748" y="163">PUBLISHES POLICY</text>
+
+            <!-- chain band -->
+            <rect class="s-plinth" x="24" y="236" width="812" height="86" rx="3"/>
+            <text class="s-t-a" x="44" y="259">SHARED COORDINATION STATE</text>
+            <g class="s-t-s">
+              <text x="44"  y="288">Control</text>
+              <text x="150" y="288">Definitions</text>
+              <text x="275" y="288">Accreditation</text>
+              <text x="415" y="288">Status</text>
+              <text x="510" y="288">Uniqueness</text>
+              <text x="635" y="288">Policy</text>
+              <text x="730" y="288">Settlement</text>
+            </g>
+            <text class="s-t-m" x="44" y="309">NON-PERSONAL · IDENTICAL FOR EVERY PARTICIPANT · AVAILABLE WITHOUT ANY OF THEM</text>
+
+            <defs>
+              <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path class="s-arrow" d="M0 0 L10 5 L0 10 z"/>
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <figcaption>
+          The credential never reaches the ledger. What is recorded is the state the three parties
+          must agree on, and because that state is held in common rather than by any one of them,
+          a verification does not require the issuer to be reachable at the moment it occurs.
+        </figcaption>
+      </figure>
     </div>
   </section>
 
@@ -615,6 +762,131 @@
           </p>
         </div>
       </div>
+
+      <figure class="fig" style="margin-bottom:34px">
+        <div class="fig-title">Figure 2 — Dependency map</div>
+        <p class="fig-lede">
+          Which components require which. Selecting any component here, or in the index below,
+          opens its full case. Prerequisites are outlined in the colour used for caveats throughout.
+        </p>
+        <div class="fig-scroll">
+          <svg id="archmap" viewBox="0 0 860 430" role="img" aria-labelledby="f2t f2d">
+            <title id="f2t">Dependency map of the fourteen registries across four layers</title>
+            <desc id="f2d">Four layers stacked above a foundation. The Key Registry forms a full-width base that every other registry resolves control through. Credential Definitions is required by Issuer Directory, Accreditation and Public Claims. Private Credentials and Uniqueness are both required by Verification.</desc>
+
+            <!-- ---------- layer bands ---------- -->
+            <text class="s-t-m" x="0" y="16">L4 · ACCOUNTABILITY &amp; ECONOMICS</text>
+            <line class="s-rule" x1="0" y1="24" x2="860" y2="24"/>
+
+            <text class="s-t-m" x="0" y="122">L3 · STATUS &amp; PRIVACY</text>
+            <line class="s-rule" x1="0" y1="130" x2="860" y2="130"/>
+
+            <text class="s-t-m" x="0" y="250">L2 · TRUST</text>
+            <line class="s-rule" x1="0" y1="258" x2="860" y2="258"/>
+
+            <text class="s-t-m" x="0" y="336">L1 · CONTROL</text>
+            <line class="s-rule" x1="0" y1="344" x2="860" y2="344"/>
+
+            <!-- ---------- L4 ---------- -->
+            <g class="s-node" data-node="verifier" tabindex="0" role="button" aria-label="Verifier Accountability">
+              <rect class="s-box" x="0" y="36" width="200" height="52" rx="3"/>
+              <text class="s-t" x="14" y="58">Verifier</text>
+              <text class="s-t" x="14" y="75">Accountability</text>
+            </g>
+            <g class="s-node" data-node="policy" tabindex="0" role="button" aria-label="Disclosure Policy">
+              <rect class="s-box" x="216" y="36" width="200" height="52" rx="3"/>
+              <text class="s-t" x="230" y="58">Disclosure</text>
+              <text class="s-t" x="230" y="75">Policy</text>
+            </g>
+            <g class="s-node" data-node="payment" tabindex="0" role="button" aria-label="Settlement">
+              <rect class="s-box" x="432" y="36" width="200" height="52" rx="3"/>
+              <text class="s-t" x="446" y="66">Settlement</text>
+            </g>
+
+            <!-- ---------- L3 ---------- -->
+            <g class="s-node" data-node="status" tabindex="0" role="button" aria-label="Revocation Status">
+              <rect class="s-box" x="0" y="142" width="200" height="52" rx="3"/>
+              <text class="s-t" x="14" y="164">Revocation</text>
+              <text class="s-t" x="14" y="181">Status</text>
+            </g>
+            <g class="s-node" data-node="tree" tabindex="0" role="button" aria-label="Private Credentials">
+              <rect class="s-box" x="216" y="142" width="200" height="52" rx="3"/>
+              <text class="s-t" x="230" y="164">Private</text>
+              <text class="s-t" x="230" y="181">Credentials</text>
+            </g>
+            <g class="s-node" data-node="nullifier" tabindex="0" role="button" aria-label="Uniqueness">
+              <rect class="s-box" x="432" y="142" width="200" height="52" rx="3"/>
+              <text class="s-t" x="446" y="172">Uniqueness</text>
+            </g>
+            <g class="s-node" data-node="gateway" tabindex="0" role="button" aria-label="Verification">
+              <rect class="s-box" x="648" y="142" width="200" height="52" rx="3"/>
+              <text class="s-t" x="662" y="172">Verification</text>
+            </g>
+
+            <!-- tree + nullifier -> gateway -->
+            <path class="s-edge-a" d="M416 168 H470" marker-end="url(#a2a)"/>
+            <path class="s-edge-a" d="M632 168 H636" marker-end="url(#a2a)"/>
+            <text class="s-t-a" x="470" y="134">REQUIRES BOTH</text>
+
+            <!-- ---------- L2 ---------- -->
+            <g class="s-node" data-node="schema" tabindex="0" role="button" aria-label="Credential Definitions">
+              <rect class="s-box" x="0" y="270" width="200" height="52" rx="3"/>
+              <text class="s-t" x="14" y="292">Credential</text>
+              <text class="s-t" x="14" y="309">Definitions</text>
+            </g>
+            <g class="s-node" data-node="issuer" tabindex="0" role="button" aria-label="Issuer Directory">
+              <rect class="s-box" x="216" y="270" width="200" height="52" rx="3"/>
+              <text class="s-t" x="230" y="300">Issuer Directory</text>
+            </g>
+            <g class="s-node" data-node="trust" tabindex="0" role="button" aria-label="Accreditation, the keystone component">
+              <rect class="s-box-a" x="432" y="270" width="200" height="52" rx="3"/>
+              <text class="s-t" x="446" y="294">Accreditation</text>
+              <text class="s-t-a" x="446" y="311">KEYSTONE</text>
+            </g>
+            <g class="s-node" data-node="attestation" tabindex="0" role="button" aria-label="Public Claims">
+              <rect class="s-box" x="648" y="270" width="200" height="52" rx="3"/>
+              <text class="s-t" x="662" y="300">Public Claims</text>
+            </g>
+
+            <!-- schema -> issuer / trust / attestation -->
+            <path class="s-edge-a" d="M200 296 H204 M204 296 V236 H316 V264" marker-end="url(#a2a)"/>
+            <path class="s-edge-a" d="M204 236 H532 V264" marker-end="url(#a2a)"/>
+            <path class="s-edge-a" d="M204 236 H748 V264" marker-end="url(#a2a)"/>
+            <text class="s-t-a" x="212" y="230">DEFINITIONS REQUIRED BY ALL THREE</text>
+
+            <!-- ---------- L1 ---------- -->
+            <g class="s-node" data-node="recovery" tabindex="0" role="button" aria-label="Guardian Recovery">
+              <rect class="s-box" x="0" y="356" width="200" height="44" rx="3"/>
+              <text class="s-t" x="14" y="383">Guardian Recovery</text>
+            </g>
+            <g class="s-node" data-node="delegation" tabindex="0" role="button" aria-label="Scoped Delegation">
+              <rect class="s-box" x="216" y="356" width="200" height="44" rx="3"/>
+              <text class="s-t" x="230" y="383">Scoped Delegation</text>
+            </g>
+
+            <!-- foundation plinth -->
+            <g class="s-node" data-node="did" tabindex="0" role="button" aria-label="Key Registry, the foundation">
+              <rect class="s-plinth" x="432" y="356" width="416" height="44" rx="3"/>
+              <text class="s-t" x="446" y="383">Key Registry</text>
+              <text class="s-t-a" x="838" y="383" text-anchor="end">FOUNDATION</text>
+            </g>
+
+            <text class="s-t-m" x="0" y="422">EVERY REGISTRY ABOVE RESOLVES CONTROL THROUGH THE KEY REGISTRY — EDGES OMITTED FOR LEGIBILITY</text>
+
+            <defs>
+              <marker id="a2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path class="s-arrow-a" d="M0 0 L10 5 L0 10 z"/>
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <figcaption>
+          Only two dependency clusters are genuinely constraining: definitions must exist before
+          anyone can declare or accredit against them, and the privacy path needs both a credential
+          tree and a uniqueness register before verification can run. Everything else rests on the
+          key registry alone, which is why most components can be deployed in isolation.
+        </figcaption>
+      </figure>
 
       <div class="explorer">
         <div id="stack"></div>
@@ -672,6 +944,90 @@
           </p>
         </div>
       </div>
+
+      <figure class="fig">
+        <div class="fig-title">Figure 3 — The same verification, two architectures</div>
+        <p class="fig-lede">
+          A verifier establishes that a person holds a valid credential. The conclusion is identical
+          in both cases; what differs is who learns what in order to reach it.
+        </p>
+        <div class="fig-scroll">
+          <svg viewBox="0 0 860 320" role="img" aria-labelledby="f3t f3d">
+            <title id="f3t">Comparison of a conventional credential check against an on-chain proof</title>
+            <desc id="f3d">In the conventional flow the holder sends a full credential to the verifier, which then contacts the issuer's status endpoint; the verifier receives every attribute and the issuer learns when and where the credential was used. In the on-chain flow the holder sends a proof to a contract that performs the check in consensus; the verifier learns only whether the credential is valid, and the issuer learns nothing.</desc>
+
+            <line class="s-rule" x1="430" y1="0" x2="430" y2="320"/>
+
+            <!-- ================= conventional ================= -->
+            <text class="s-t-m" x="0" y="14">CONVENTIONAL</text>
+
+            <rect class="s-box" x="0" y="30" width="118" height="44" rx="3"/>
+            <text class="s-t" x="59" y="57" text-anchor="middle">Holder</text>
+
+            <path class="s-edge" d="M118 52 H176" marker-end="url(#a3)"/>
+            <rect class="s-box-w" x="176" y="30" width="118" height="44" rx="3"/>
+            <text class="s-t" x="235" y="57" text-anchor="middle">Verifier</text>
+
+            <path class="s-edge" d="M235 74 V126" marker-end="url(#a3)"/>
+            <rect class="s-box-w" x="176" y="132" width="118" height="44" rx="3"/>
+            <text class="s-t" x="235" y="159" text-anchor="middle">Issuer</text>
+
+            <text class="s-t-w" x="0" y="100">FULL CREDENTIAL</text>
+            <text class="s-t-s" x="0" y="118">Name, date of birth,</text>
+            <text class="s-t-s" x="0" y="134">document number, photograph</text>
+
+            <text class="s-t-w" x="302" y="152">STATUS CHECK</text>
+
+            <line class="s-rule" x1="0" y1="200" x2="400" y2="200"/>
+            <text class="s-t-w" x="0" y="222">VERIFIER LEARNS</text>
+            <text class="s-t-s" x="0" y="240">Every attribute on the document</text>
+            <text class="s-t-w" x="0" y="266">ISSUER LEARNS</text>
+            <text class="s-t-s" x="0" y="284">That this credential was used,</text>
+            <text class="s-t-s" x="0" y="300">when, and by which verifier</text>
+
+            <!-- ================= on-chain ================= -->
+            <text class="s-t-a" x="460" y="14">THIS ARCHITECTURE</text>
+
+            <rect class="s-box" x="460" y="30" width="118" height="44" rx="3"/>
+            <text class="s-t" x="519" y="57" text-anchor="middle">Holder</text>
+
+            <path class="s-edge-a" d="M578 52 H636" marker-end="url(#a3a)"/>
+            <rect class="s-plinth" x="636" y="30" width="160" height="44" rx="3"/>
+            <text class="s-t" x="716" y="50" text-anchor="middle">Contract</text>
+            <text class="s-t-a" x="716" y="65" text-anchor="middle">CHECK IN CONSENSUS</text>
+
+            <text class="s-t-a" x="460" y="100">PROOF ONLY</text>
+            <text class="s-t-s" x="460" y="118">A valid, unrevoked credential exists</text>
+            <text class="s-t-s" x="460" y="134">from an accredited issuer</text>
+
+            <rect class="s-box" x="636" y="132" width="160" height="44" rx="3"/>
+            <text class="s-t" x="716" y="159" text-anchor="middle">Verifier</text>
+            <path class="s-edge-a" d="M716 74 V126" marker-end="url(#a3a)"/>
+            <text class="s-t-a" x="856" y="106" text-anchor="end">VALID / NOT</text>
+
+            <line class="s-rule" x1="460" y1="200" x2="860" y2="200"/>
+            <text class="s-t-a" x="460" y="222">VERIFIER LEARNS</text>
+            <text class="s-t-s" x="460" y="240">One bit: the credential is valid</text>
+            <text class="s-t-a" x="460" y="266">ISSUER LEARNS</text>
+            <text class="s-t-s" x="460" y="284">Nothing. It is not contacted and</text>
+            <text class="s-t-s" x="460" y="300">need not be operating at all</text>
+
+            <defs>
+              <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path class="s-arrow" d="M0 0 L10 5 L0 10 z"/>
+              </marker>
+              <marker id="a3a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path class="s-arrow-a" d="M0 0 L10 5 L0 10 z"/>
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <figcaption>
+          Both routes answer the same question. The difference is the volume of personal data
+          disclosed to reach the answer, and whether a third party acquires a record of the
+          transaction as a side effect of it happening.
+        </figcaption>
+      </figure>
     </div>
   </section>
 
@@ -747,6 +1103,57 @@
           </p>
         </div>
       </div>
+
+      <figure class="fig">
+        <div class="fig-title">Figure 4 — Propagation of a withdrawal</div>
+        <p class="fig-lede">
+          An authority withdraws an accreditation, or an issuer revokes a credential. The interval
+          between that decision and its universal effect is where the operational risk sits.
+        </p>
+        <div class="fig-scroll">
+          <svg viewBox="0 0 860 230" role="img" aria-labelledby="f4t f4d">
+            <title id="f4t">Timeline comparing trusted-list distribution against on-chain revocation</title>
+            <desc id="f4d">Under list distribution, a decision is published, then downloaded on a polling cycle, then cached copies expire, leaving an interval of hours to days during which relying parties still treat the credential as valid. On-chain, the decision and its universal effect occur in the same block, approximately twelve seconds.</desc>
+
+            <!-- conventional -->
+            <text class="s-t-m" x="0" y="14">LIST DISTRIBUTION, STATUS ENDPOINT, OR CRL</text>
+
+            <line class="s-edge" x1="0" y1="66" x2="800" y2="66"/>
+            <rect class="s-box-w" x="0" y="46" width="640" height="40" rx="2" opacity="0.28"/>
+
+            <circle class="s-dot" cx="0" cy="66" r="4"/>
+            <text class="s-t-s" x="0" y="38">Decision taken</text>
+            <circle class="s-dot" cx="210" cy="66" r="4"/>
+            <text class="s-t-s" x="210" y="38">Published</text>
+            <circle class="s-dot" cx="430" cy="66" r="4"/>
+            <text class="s-t-s" x="430" y="38">Polled by relying parties</text>
+            <circle class="s-dot" cx="640" cy="66" r="4"/>
+            <text class="s-t-s" x="640" y="38">Caches expire</text>
+
+            <text class="s-t-w" x="0" y="108">STALE-ACCEPTANCE WINDOW — HOURS TO DAYS</text>
+            <text class="s-t-s" x="0" y="128">Relying parties continue to accept a credential the issuer has already withdrawn.</text>
+
+            <line class="s-rule" x1="0" y1="150" x2="860" y2="150"/>
+
+            <!-- onchain -->
+            <text class="s-t-a" x="0" y="174">ON-CHAIN</text>
+
+            <line class="s-edge-a" x1="0" y1="204" x2="800" y2="204"/>
+            <circle class="s-dot-a" cx="0" cy="204" r="4"/>
+            <rect class="s-plinth" x="0" y="192" width="24" height="24" rx="2"/>
+            <text class="s-t-s" x="36" y="200">Decision taken and universally effective</text>
+            <text class="s-t-a" x="36" y="216">SAME BLOCK — APPROXIMATELY 12 SECONDS</text>
+
+            <text class="s-t-m" x="820" y="70">t →</text>
+            <text class="s-t-m" x="820" y="208">t →</text>
+          </svg>
+        </div>
+        <figcaption>
+          The interval, not the mechanism, is what an evaluator should examine. Every distribution
+          architecture has one; its length is a function of polling and caching behaviour across
+          parties the issuer does not control, and it cannot be shortened by the issuer acting alone.
+        </figcaption>
+      </figure>
     </div>
   </section>
 
@@ -822,6 +1229,56 @@
           </p>
         </div>
       </div>
+
+      <figure class="fig">
+        <div class="fig-title">Figure 5 — Anonymity sets, the limitation most often overlooked</div>
+        <p class="fig-lede">
+          A membership proof conceals which member of a credential tree the holder is. It cannot
+          conceal more than the population of that tree affords.
+        </p>
+        <div class="fig-scroll">
+          <svg viewBox="0 0 860 250" role="img" aria-labelledby="f5t f5d">
+            <title id="f5t">The effect of credential tree size on the privacy a proof provides</title>
+            <desc id="f5d">A tree segmented by cohort containing twelve members narrows the holder to one in twelve. A single tree of fifty thousand members narrows the holder to one in fifty thousand. The cryptography is identical in both cases; only the population differs.</desc>
+
+            <!-- left: small segmented tree -->
+            <text class="s-t-w" x="0" y="14">SEGMENTED BY COHORT</text>
+            <text class="s-t-s" x="0" y="34">&#8220;Q1 2026 applicants, Germany&#8221; — 12 members</text>
+            <g>
+              <circle class="s-dot" cx="10"  cy="66" r="5"/><circle class="s-dot" cx="38" cy="66" r="5"/>
+              <circle class="s-dot" cx="66"  cy="66" r="5"/><circle class="s-dot" cx="94" cy="66" r="5"/>
+              <circle class="s-dot" cx="122" cy="66" r="5"/><circle class="s-dot" cx="150" cy="66" r="5"/>
+              <circle class="s-dot" cx="10"  cy="94" r="5"/><circle class="s-dot" cx="38" cy="94" r="5"/>
+              <circle class="s-dot-a" cx="66" cy="94" r="6"/>
+              <circle class="s-dot" cx="94"  cy="94" r="5"/>
+              <circle class="s-dot" cx="122" cy="94" r="5"/><circle class="s-dot" cx="150" cy="94" r="5"/>
+            </g>
+            <text class="s-t-w" x="0" y="136">NARROWS THE HOLDER TO 1 IN 12</text>
+            <text class="s-t-s" x="0" y="160">Combined with the tree's own meaning —</text>
+            <text class="s-t-s" x="0" y="176">a jurisdiction, a date, a programme —</text>
+            <text class="s-t-s" x="0" y="192">membership becomes the disclosure the</text>
+            <text class="s-t-s" x="0" y="208">proof was adopted to prevent.</text>
+
+            <line class="s-rule" x1="330" y1="0" x2="330" y2="250"/>
+
+            <!-- right: large single tree -->
+            <text class="s-t-a" x="366" y="14">SINGLE POPULATION</text>
+            <text class="s-t-s" x="366" y="34">All credentials of this type — 50,000 members</text>
+            <g id="f5grid"></g>
+            <text class="s-t-a" x="366" y="136">NARROWS THE HOLDER TO 1 IN 50,000</text>
+            <text class="s-t-s" x="366" y="160">The proof, the circuit and the gas cost are</text>
+            <text class="s-t-s" x="366" y="176">identical to those on the left. Only the size</text>
+            <text class="s-t-s" x="366" y="192">of the population differs, and the population</text>
+            <text class="s-t-s" x="366" y="208">is an operational decision, not a technical one.</text>
+          </svg>
+        </div>
+        <figcaption>
+          This is the failure mode an evaluation should test for, because a deployment can satisfy
+          every technical requirement and still not be private. Responsibility for maintaining large
+          populations is currently unassigned; the practical answer is that wallets should decline to
+          prove against trees below a stated size, which requires a norm that does not yet exist.
+        </figcaption>
+      </figure>
     </div>
   </section>
 
@@ -1178,6 +1635,55 @@
         }
       }
     });
+
+    // keep the architecture map in step with the index
+    document.querySelectorAll("#archmap .s-node").forEach(function (node) {
+      var id = node.getAttribute("data-node");
+      var isSel = sel && id === sel.id;
+      node.classList.toggle("on", !!isSel);
+      node.classList.toggle("dep", !!(sel && !isSel && sel.deps.indexOf(id) !== -1));
+      node.setAttribute("aria-pressed", isSel ? "true" : "false");
+    });
+  }
+
+  /* ---------- architecture map ---------- */
+  function wireArchMap() {
+    document.querySelectorAll("#archmap .s-node").forEach(function (node) {
+      var id = node.getAttribute("data-node");
+      function go() { select(id); }
+      node.addEventListener("click", go);
+      node.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+      });
+    });
+  }
+
+  /* Dense population field for Figure 5 — drawn rather than hand-authored,
+     so the contrast in scale is honest rather than decorative. */
+  function drawPopulationField() {
+    var g = document.getElementById("f5grid");
+    if (!g) return;
+    var COLS = 34, ROWS = 8, x0 = 368, y0 = 56, dx = 13.6, dy = 9.5;
+    var ns = "http://www.w3.org/2000/svg";
+    var frag = document.createDocumentFragment();
+    for (var r = 0; r < ROWS; r++) {
+      for (var c = 0; c < COLS; c++) {
+        var dot = document.createElementNS(ns, "circle");
+        dot.setAttribute("cx", (x0 + c * dx).toFixed(1));
+        dot.setAttribute("cy", (y0 + r * dy).toFixed(1));
+        dot.setAttribute("r", "2");
+        dot.setAttribute("class", "s-dot");
+        frag.appendChild(dot);
+      }
+    }
+    // one holder, indistinguishable in position from the rest
+    var me = document.createElementNS(ns, "circle");
+    me.setAttribute("cx", (x0 + 19 * dx).toFixed(1));
+    me.setAttribute("cy", (y0 + 4 * dy).toFixed(1));
+    me.setAttribute("r", "3");
+    me.setAttribute("class", "s-dot-a");
+    frag.appendChild(me);
+    g.appendChild(frag);
   }
 
   /* ---------- detail ---------- */
@@ -1294,6 +1800,8 @@
   /* ---------- init ---------- */
   buildStack();
   buildSteps();
+  wireArchMap();
+  drawPopulationField();
   paintLens();
   renderNote();
   paintPhase();
