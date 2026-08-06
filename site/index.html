@@ -128,7 +128,7 @@
   .wrap { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
 
   .kicker {
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 600;
     letter-spacing: .08em;
     text-transform: uppercase;
@@ -141,7 +141,7 @@
 
   .topline {
     display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
-    font-size: 12px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
+    font-size: 13.5px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
     color: var(--ink-3); margin-bottom: 30px;
   }
 
@@ -153,7 +153,7 @@
   .scope {
     margin-top: 28px; padding: 14px 18px;
     background: var(--surface-2); border-radius: var(--r-s);
-    font-size: 13.5px; line-height: 1.55; color: var(--ink-2); max-width: 92ch;
+    font-size: 14.5px; line-height: 1.55; color: var(--ink-2); max-width: 92ch;
   }
   .scope b { color: var(--ink); font-weight: 600; }
 
@@ -163,12 +163,12 @@
     max-width: var(--max); margin: 0 auto; padding: 11px 32px;
     display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
   }
-  .lensbar .lab { font-size: 13px; color: var(--ink-3); white-space: nowrap; }
+  .lensbar .lab { font-size: 14px; color: var(--ink-3); white-space: nowrap; }
 
   .seg { display: inline-flex; background: var(--surface-2); border-radius: 999px; padding: 3px; gap: 3px; }
   .seg button {
     appearance: none; border: 0; background: transparent; cursor: pointer;
-    font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--ink-2);
+    font-family: var(--sans); font-size: 15px; font-weight: 500; color: var(--ink-2);
     padding: 7px 18px; border-radius: 999px; transition: background .15s, color .15s, box-shadow .15s;
   }
   .seg button:hover { color: var(--ink); }
@@ -189,7 +189,7 @@
   .fig .fig-sub { font-size: 14.5px; color: var(--ink-2); max-width: 76ch; margin-bottom: 22px; }
   .fig-scroll { overflow-x: auto; }
   .fig svg { display: block; width: 100%; height: auto; }
-  figcaption { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line-soft); font-size: 14px; line-height: 1.6; color: var(--ink-2); max-width: 84ch; }
+  figcaption { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line-soft); font-size: 15px; line-height: 1.6; color: var(--ink-2); max-width: 84ch; }
 
   /* svg primitives */
   svg text { font-family: var(--sans); }
@@ -204,14 +204,14 @@
   svg .ln-wa { stroke: var(--warm);  stroke-width: 1.75; fill: none; }
   svg .hair  { stroke: var(--line); stroke-width: 1; }
 
-  svg .tt    { fill: var(--ink);   font-size: 14px; font-weight: 600; }
-  svg .t     { fill: var(--ink);   font-size: 13.5px; }
-  svg .t2    { fill: var(--ink-2); font-size: 12.5px; }
-  svg .t3    { fill: var(--ink-3); font-size: 12px; }
-  svg .tbr   { fill: var(--brand-deep); font-size: 12px; font-weight: 600; letter-spacing: .05em; }
-  svg .twa   { fill: var(--warm);  font-size: 12px; font-weight: 600; letter-spacing: .05em; }
-  svg .tgr   { fill: var(--green); font-size: 12px; font-weight: 600; letter-spacing: .05em; }
-  svg .cap   { fill: var(--ink-3); font-size: 11.5px; font-weight: 600; letter-spacing: .09em; }
+  svg .tt    { fill: var(--ink);   font-size: 15px; font-weight: 600; }
+  svg .t     { fill: var(--ink);   font-size: 14.5px; }
+  svg .t2    { fill: var(--ink-2); font-size: 14px; }
+  svg .t3    { fill: var(--ink-3); font-size: 13.5px; }
+  svg .tbr   { fill: var(--brand-deep); font-size: 13.5px; font-weight: 600; letter-spacing: .05em; }
+  svg .twa   { fill: var(--warm);  font-size: 13.5px; font-weight: 600; letter-spacing: .05em; }
+  svg .tgr   { fill: var(--green); font-size: 13.5px; font-weight: 600; letter-spacing: .05em; }
+  svg .cap   { fill: var(--ink-3); font-size: 13px; font-weight: 600; letter-spacing: .09em; }
   svg .dot   { fill: var(--ink-3); }
   svg .dot-br{ fill: var(--brand); }
   svg .arw   { fill: var(--ink-3); }
@@ -229,7 +229,7 @@
   .panel.yes { border-top: 3px solid var(--green); }
   .panel.no  { border-top: 3px solid var(--warm); }
   .panel h3 { font-size: 17px; margin-bottom: 3px; }
-  .panel .tag { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; display: block; }
+  .panel .tag { font-size: 13.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; display: block; }
   .panel.yes .tag { color: var(--green); }
   .panel.no  .tag { color: var(--warm); }
   .panel ul { list-style: none; margin: 14px 0 0; padding: 0; }
@@ -237,7 +237,7 @@
   .panel li::before { position: absolute; left: 2px; top: 9px; font-weight: 700; }
   .panel.yes li::before { content: "✓"; color: var(--green); }
   .panel.no  li::before { content: "✕"; color: var(--warm); }
-  .panel .foot { margin-top: 16px; font-size: 13.5px; color: var(--ink-3); line-height: 1.55; }
+  .panel .foot { margin-top: 16px; font-size: 14.5px; color: var(--ink-3); line-height: 1.55; }
 
   /* ============================================================ component explorer */
   .explorer { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 30px; align-items: start; }
@@ -245,9 +245,9 @@
   .layergroup { margin-bottom: 28px; }
   .layergroup:last-child { margin-bottom: 0; }
   .lhead { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
-  .lhead .lnum { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; color: var(--brand); background: var(--brand-wash); padding: 3px 8px; border-radius: 20px; }
+  .lhead .lnum { font-size: 13px; font-weight: 700; letter-spacing: .08em; color: var(--brand); background: var(--brand-wash); padding: 3px 8px; border-radius: 20px; }
   .lhead h3 { font-size: 16px; }
-  .lhead .lsub { font-size: 13px; color: var(--ink-3); margin-left: auto; text-align: right; }
+  .lhead .lsub { font-size: 14px; color: var(--ink-3); margin-left: auto; text-align: right; }
 
   .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
 
@@ -262,14 +262,18 @@
   .card:hover { border-color: var(--brand); box-shadow: var(--shadow-h); transform: translateY(-2px); }
   .card[aria-pressed="true"] { border-color: var(--brand); border-left: 4px solid var(--brand); background: var(--brand-wash); }
   .card.prereq { border-color: var(--warm); border-left: 4px solid var(--warm); }
-  .card .cref { font-size: 11.5px; font-weight: 600; letter-spacing: .06em; color: var(--ink-3); }
+  .card .chead { display: flex; align-items: center; gap: 10px; }
+  .card .ico { width: 30px; height: 30px; flex: none; color: var(--brand); }
+  .card .ico svg { display: block; width: 100%; height: 100%; }
+  .card[aria-pressed="true"] .ico { color: var(--brand-deep); }
+  .card .cref { font-size: 13px; font-weight: 600; letter-spacing: .06em; color: var(--ink-3); }
   .card .cname { font-size: 17px; font-weight: 600; line-height: 1.25; }
-  .card .cval { font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+  .card .cval { font-size: 15px; line-height: 1.5; color: var(--ink-2); }
   .card.dim { opacity: .38; }
   .card.dim:hover { opacity: .8; }
 
   .pills { display: flex; gap: 6px; flex-wrap: wrap; }
-  .pill { font-size: 11px; font-weight: 600; letter-spacing: .05em; padding: 3px 9px; border-radius: 999px; background: var(--surface-2); color: var(--ink-3); }
+  .pill { font-size: 13px; font-weight: 600; letter-spacing: .05em; padding: 3px 9px; border-radius: 999px; background: var(--surface-2); color: var(--ink-3); }
   .pill.key { background: var(--brand-wash); color: var(--brand-deep); }
   .pill.req { background: var(--warm-wash); color: var(--warm); }
 
@@ -278,44 +282,44 @@
   .detail-in { padding: 24px 26px 28px; }
   .detail .ph { color: var(--ink-3); font-size: 15.5px; line-height: 1.6; }
   .detail h3 { font-size: 23px; line-height: 1.2; margin: 4px 0 0; }
-  .detail .dref { font-size: 11.5px; font-weight: 600; letter-spacing: .07em; color: var(--ink-3); text-transform: uppercase; }
+  .detail .dref { font-size: 13px; font-weight: 600; letter-spacing: .07em; color: var(--ink-3); text-transform: uppercase; }
   .detail .dwhat { font-size: 16px; line-height: 1.6; color: var(--ink-2); margin-top: 12px; }
 
   .lens-block { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line-soft); }
-  .lens-block .lk { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); margin-bottom: 6px; }
+  .lens-block .lk { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); margin-bottom: 6px; }
   .lens-block.alt .lk { color: var(--ink-3); }
   .lens-block p { font-size: 15px; line-height: 1.6; color: var(--ink-2); }
 
   .chips { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 9px; }
-  .chip { appearance: none; font-family: var(--sans); font-size: 12.5px; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink-2); cursor: pointer; transition: border-color .15s, color .15s; }
+  .chip { appearance: none; font-family: var(--sans); font-size: 14px; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink-2); cursor: pointer; transition: border-color .15s, color .15s; }
   .chip:hover { border-color: var(--brand); color: var(--brand-deep); }
-  .none { font-size: 14px; color: var(--ink-3); font-style: italic; margin-top: 6px; }
+  .none { font-size: 15px; color: var(--ink-3); font-style: italic; margin-top: 6px; }
 
   /* expandable */
   details.exp { margin-top: 12px; border: 1px solid var(--line); border-radius: var(--r-s); background: var(--surface-2); overflow: hidden; }
   details.exp > summary {
     cursor: pointer; list-style: none; padding: 11px 14px;
-    font-size: 13.5px; font-weight: 600; color: var(--ink-2);
+    font-size: 14.5px; font-weight: 600; color: var(--ink-2);
     display: flex; align-items: center; gap: 9px;
   }
   details.exp > summary::-webkit-details-marker { display: none; }
   details.exp > summary::before { content: "+"; font-size: 15px; color: var(--brand); width: 13px; text-align: center; font-weight: 700; }
   details.exp[open] > summary::before { content: "−"; }
   details.exp > summary:hover { color: var(--ink); }
-  details.exp .body { padding: 0 14px 14px 36px; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+  details.exp .body { padding: 0 14px 14px 36px; font-size: 15px; line-height: 1.6; color: var(--ink-2); }
   details.exp.warn { background: var(--warm-wash); border-color: var(--warm); }
   details.exp.warn > summary { color: var(--warm); }
   details.exp.warn > summary::before { color: var(--warm); }
 
-  .specref { display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; font-family: var(--mono); font-size: 12px; color: var(--ink-3); background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-s); padding: 6px 10px; }
-  .specref b { font-weight: 600; color: var(--ink-2); font-family: var(--sans); letter-spacing: .04em; text-transform: uppercase; font-size: 10.5px; }
+  .specref { display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; font-family: var(--mono); font-size: 13.5px; color: var(--ink-3); background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-s); padding: 6px 10px; }
+  .specref b { font-weight: 600; color: var(--ink-2); font-family: var(--sans); letter-spacing: .04em; text-transform: uppercase; font-size: 13px; }
   a.specref { text-decoration: none; }
   a.specref:hover { border-color: var(--brand); color: var(--brand-deep); }
 
   .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
   .facts div { background: var(--surface-2); border-radius: var(--r-s); padding: 11px 13px; }
-  .facts .fk { font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
-  .facts .fv { font-size: 14px; color: var(--ink); margin-top: 3px; line-height: 1.4; }
+  .facts .fk { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  .facts .fv { font-size: 15px; color: var(--ink); margin-top: 3px; line-height: 1.4; }
 
   /* ============================================================ stepper */
   .steps-bar { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
@@ -328,7 +332,7 @@
   }
   .stepbtn:hover { border-color: var(--brand); }
   .stepbtn[aria-pressed="true"] { background: var(--brand-wash); border-color: var(--brand); box-shadow: var(--shadow-h); }
-  .stepbtn .sn { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: .07em; color: var(--brand); }
+  .stepbtn .sn { display: block; font-size: 13px; font-weight: 700; letter-spacing: .07em; color: var(--brand); }
   .stepbtn .st { display: block; font-size: 14.5px; font-weight: 600; color: var(--ink); margin-top: 4px; line-height: 1.3; }
 
   .stagebox { margin-top: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); padding: 24px 26px; display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: start; }
@@ -336,25 +340,25 @@
   .stagebox strong { color: var(--ink); font-weight: 600; }
   .gauge { text-align: right; white-space: nowrap; }
   .gauge .v { display: block; font-size: 30px; font-weight: 600; color: var(--brand); line-height: 1; font-variant-numeric: tabular-nums; }
-  .gauge .k { font-size: 11.5px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
+  .gauge .k { font-size: 13px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
 
-  .advisory { margin-top: 16px; font-size: 14px; color: var(--ink-3); display: flex; gap: 10px; align-items: baseline; }
-  .advisory b { color: var(--warm); font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+  .advisory { margin-top: 16px; font-size: 15px; color: var(--ink-3); display: flex; gap: 10px; align-items: baseline; }
+  .advisory b { color: var(--warm); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
 
   /* ============================================================ generic grids */
   .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); gap: 18px; }
   .tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 22px 24px 24px; box-shadow: var(--shadow); }
-  .tile .tk { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); }
+  .tile .tk { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); }
   .tile h3 { font-size: 17px; margin: 8px 0 9px; }
   .tile p { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
 
   /* deployments */
   .dep-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); padding: 22px 24px 20px; }
-  .dep-card .where { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); }
+  .dep-card .where { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); }
   .dep-card h3 { font-size: 17.5px; margin: 7px 0 9px; }
   .dep-card p { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
   .dep-card .maps { margin-top: 14px; padding-top: 13px; border-top: 1px solid var(--line-soft); }
-  .dep-card .maps .mk { font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 7px; }
+  .dep-card .maps .mk { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 7px; }
 
   /* worked example */
   .flowlist { list-style: none; counter-reset: st; margin: 0; padding: 0; }
@@ -363,7 +367,7 @@
   .flowlist li::before {
     content: counter(st); position: absolute; left: 0; top: 14px;
     width: 28px; height: 28px; border-radius: 50%; background: var(--brand-wash); color: var(--brand-deep);
-    font-size: 13px; font-weight: 700; display: grid; place-items: center;
+    font-size: 14px; font-weight: 700; display: grid; place-items: center;
   }
   .flowlist strong { color: var(--ink); font-weight: 600; }
 
@@ -375,8 +379,31 @@
 
   /* footer */
   footer { padding: 44px 0 72px; border-top: 1px solid var(--line); }
-  .colophon { display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap; font-size: 13.5px; color: var(--ink-3); line-height: 1.6; }
+  .colophon { display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap; font-size: 14.5px; color: var(--ink-3); line-height: 1.6; }
   .colophon p { max-width: 62ch; }
+
+  /* ============================================================ concepts */
+  .concepts { display: grid; grid-template-columns: repeat(auto-fit, minmax(430px, 1fr)); gap: 22px; }
+  .concept h3 { font-size: 18px; }
+  .concept .fig-sub { margin-bottom: 18px; }
+
+  /* ============================================================ spec index */
+  .speclist { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
+  .specrow { display: grid; grid-template-columns: 52px 1fr 1.5fr auto; gap: 18px; align-items: center; padding: 15px 22px; border-top: 1px solid var(--line-soft); }
+  .specrow:first-child { border-top: 0; }
+  .specrow:hover { background: var(--surface-2); }
+  .specrow .num { font-size: 14px; font-weight: 700; color: var(--brand); background: var(--brand-wash); border-radius: 6px; padding: 5px 0; text-align: center; }
+  .specrow .nm { font-size: 16px; font-weight: 600; color: var(--ink); }
+  .specrow .nm span { display: block; font-size: 13px; font-weight: 400; color: var(--ink-3); margin-top: 2px; }
+  .specrow .ds { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+  .specrow .go { font-family: var(--mono); font-size: 13px; color: var(--ink-3); white-space: nowrap; text-decoration: none; border: 1px solid var(--line); border-radius: 6px; padding: 6px 11px; background: var(--surface-2); }
+  a.go:hover { border-color: var(--brand); color: var(--brand-deep); }
+
+  @media (max-width: 860px) {
+    .specrow { grid-template-columns: 46px 1fr; gap: 12px; }
+    .specrow .ds { grid-column: 2; }
+    .specrow .go { grid-column: 2; justify-self: start; }
+  }
 
   /* ============================================================ responsive */
   @media (max-width: 1000px) {
@@ -542,7 +569,7 @@
               <rect class="b-soft" x="374" y="432" width="172" height="36" rx="6"/>
               <text class="t" x="390" y="455">Scoped delegation</text>
             </g>
-            <text class="t3" x="560" y="455">Everything above resolves control through the key registry</text>
+            <text class="t3" x="560" y="455">Everything above resolves control through this.</text>
 
             <!-- boundary -->
             <line class="hair" x1="0" y1="498" x2="900" y2="498"/>
@@ -670,11 +697,203 @@
     </div>
   </section>
 
+  <!-- ========================= concepts ========================= -->
+  <section>
+    <div class="wrap">
+      <div class="shead">
+        <span class="kicker">03 — The difficult parts</span>
+        <h2>Four ideas, in pictures</h2>
+        <p>
+          Four mechanisms do most of the work, and each sounds harder than it is. Set out plainly
+          here, because an evaluation should not depend on taking the cryptography on trust.
+        </p>
+      </div>
+
+      <div class="concepts">
+
+        <!-- A -->
+        <figure class="fig concept">
+          <h3>Proving something without handing it over</h3>
+          <p class="fig-sub">A service asks one question. There are two ways to answer it.</p>
+          <div class="fig-scroll">
+            <svg viewBox="0 0 420 260" role="img" aria-labelledby="k1t k1d">
+              <title id="k1t">Handing over a document compared with proving a single fact</title>
+              <desc id="k1d">Answering by document transfers four separate facts, all of which the recipient then stores. Answering by proof transfers one fact, and the recipient stores nothing.</desc>
+              <text class="t2" x="0" y="14">Asked: is this person over 18?</text>
+
+              <text class="twa" x="0" y="44">BY DOCUMENT</text>
+              <rect class="b-wa" x="0" y="56" width="176" height="72" rx="6"/>
+              <text class="t3" x="12" y="76">name</text>
+              <text class="t3" x="12" y="94">date of birth</text>
+              <text class="t3" x="96" y="76">document no.</text>
+              <text class="t3" x="96" y="94">photograph</text>
+              <text class="t3" x="12" y="118">all four are transferred</text>
+              <path class="ln-wa" d="M88 132 V158" marker-end="url(#kaw)"/>
+              <rect class="b" x="0" y="164" width="176" height="66" rx="6"/>
+              <text class="t3" x="12" y="182">the recipient now holds</text>
+              <rect x="12" y="190" width="152" height="9" rx="2" fill="var(--warm)" opacity=".85"/>
+              <rect x="12" y="204" width="120" height="9" rx="2" fill="var(--warm)" opacity=".6"/>
+              <rect x="12" y="218" width="140" height="9" rx="2" fill="var(--warm)" opacity=".4"/>
+              <text class="twa" x="0" y="250">Four facts to protect</text>
+
+              <text class="tbr" x="244" y="44">BY PROOF</text>
+              <rect class="b-gr" x="244" y="56" width="176" height="72" rx="6"/>
+              <text class="t" x="256" y="88">Yes — over 18</text>
+              <text class="t3" x="256" y="110">one fact, nothing else</text>
+              <path class="ln-br" d="M332 132 V158" marker-end="url(#kab)"/>
+              <rect class="b" x="244" y="164" width="176" height="66" rx="6"/>
+              <text class="t3" x="256" y="182">the recipient now holds</text>
+              <text class="t3" x="256" y="208" font-style="italic">nothing</text>
+              <text class="tbr" x="244" y="250">Nothing to protect</text>
+
+              <defs>
+                <marker id="kaw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path fill="var(--warm)" d="M0 0 L10 5 L0 10 z"/></marker>
+                <marker id="kab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path fill="var(--brand)" d="M0 0 L10 5 L0 10 z"/></marker>
+              </defs>
+            </svg>
+          </div>
+          <figcaption>Both answers satisfy the requirement. Only one creates a record that can later be breached, subpoenaed or sold.</figcaption>
+        </figure>
+
+        <!-- B -->
+        <figure class="fig concept">
+          <h3>A mark that says “not twice”, not “who”</h3>
+          <p class="fig-sub">How one-per-person is enforced without anyone learning the person.</p>
+          <div class="fig-scroll">
+            <svg viewBox="0 0 420 260" role="img" aria-labelledby="k2t k2d">
+              <title id="k2t">The same person produces a different, unlinkable mark in each context</title>
+              <desc id="k2d">One person taking part in two programmes produces a different mark in each. Neither mark can be traced back to the person, and the two cannot be connected. Presenting the same mark twice in the same programme is refused.</desc>
+
+              <circle class="b-soft" cx="34" cy="86" r="22"/>
+              <circle class="dot" cx="34" cy="79" r="7"/>
+              <path d="M22 100a12 12 0 0 1 24 0" fill="none" stroke="var(--ink-3)" stroke-width="1.6"/>
+              <text class="t3" x="4" y="126">one person</text>
+
+              <path class="ln" d="M62 72 H128" marker-end="url(#kb)"/>
+              <path class="ln" d="M62 100 H128" marker-end="url(#kb)"/>
+
+              <rect class="b" x="134" y="46" width="128" height="50" rx="6"/>
+              <text class="t" x="148" y="70">Programme A</text>
+              <text class="t3" x="148" y="87">benefits</text>
+              <rect class="b" x="134" y="112" width="128" height="50" rx="6"/>
+              <text class="t" x="148" y="136">Programme B</text>
+              <text class="t3" x="148" y="153">consultation</text>
+
+              <path class="ln-br" d="M266 71 H306" marker-end="url(#kbb)"/>
+              <path class="ln-br" d="M266 137 H306" marker-end="url(#kbb)"/>
+
+              <rect class="b-br" x="312" y="54" width="34" height="34" rx="5"/>
+              <text class="t3" x="354" y="76">one mark</text>
+              <path class="b-br" d="M329 120 l17 30 h-34 z"/>
+              <text class="t3" x="354" y="142">another</text>
+
+              <line class="hair" x1="0" y1="188" x2="420" y2="188"/>
+              <text class="t2" x="0" y="210">Two different marks. Neither leads back to the person,</text>
+              <text class="t2" x="0" y="230">and nothing connects one to the other.</text>
+              <text class="twa" x="0" y="252">The same mark cannot be used twice.</text>
+
+              <defs>
+                <marker id="kb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path fill="var(--ink-3)" d="M0 0 L10 5 L0 10 z"/></marker>
+                <marker id="kbb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path fill="var(--brand)" d="M0 0 L10 5 L0 10 z"/></marker>
+              </defs>
+            </svg>
+          </div>
+          <figcaption>The mark is derived from a secret only the person holds, combined with the programme. Same person, different programme, different mark.</figcaption>
+        </figure>
+
+        <!-- C -->
+        <figure class="fig concept">
+          <h3>A wall of sealed boxes</h3>
+          <p class="fig-sub">How a credential can be checked while staying unreadable.</p>
+          <div class="fig-scroll">
+            <svg viewBox="0 0 420 260" role="img" aria-labelledby="k3t k3d">
+              <title id="k3t">Credentials as sealed boxes on a wall with a single summary fingerprint</title>
+              <desc id="k3d">Every credential issued is a sealed box on a shared wall. A holder can prove their box is on the wall without indicating which one. Removing a box changes the wall's fingerprint, so proofs made against the previous fingerprint stop working.</desc>
+
+              <text class="t3" x="0" y="14">every credential issued = one sealed box</text>
+              <g id="wallgrid"></g>
+              <text class="t3" x="0" y="112">the whole wall reduces to one short fingerprint</text>
+              <rect class="b-br" x="0" y="120" width="150" height="30" rx="5"/>
+              <text class="t" x="12" y="140">7f3a · · ·</text>
+
+              <path class="ln-wa" d="M162 135 H206" marker-end="url(#kcw)"/>
+              <text class="twa" x="214" y="130">remove one box</text>
+              <text class="t3" x="214" y="148">(a credential is withdrawn)</text>
+
+              <rect class="b-wa" x="0" y="162" width="150" height="30" rx="5"/>
+              <text class="t" x="12" y="182">b21c · · ·</text>
+              <text class="t3" x="162" y="182">the fingerprint changes</text>
+
+              <line class="hair" x1="0" y1="206" x2="420" y2="206"/>
+              <text class="t2" x="0" y="228">You can show your box is on the wall without pointing at it,</text>
+              <text class="t2" x="0" y="248">and a withdrawn box fails against the new fingerprint.</text>
+
+              <defs>
+                <marker id="kcw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path fill="var(--warm)" d="M0 0 L10 5 L0 10 z"/></marker>
+              </defs>
+            </svg>
+          </div>
+          <figcaption>The boxes are indistinguishable to anyone reading the wall. Only the holder can demonstrate that one of them is theirs.</figcaption>
+        </figure>
+
+        <!-- D -->
+        <figure class="fig concept">
+          <h3>One register, and no one in charge of it</h3>
+          <p class="fig-sub">How several jurisdictions share infrastructure without agreeing on an authority.</p>
+          <div class="fig-scroll">
+            <svg viewBox="0 0 420 260" role="img" aria-labelledby="k4t k4d">
+              <title id="k4t">Three relying parties reading one shared register and reaching different conclusions</title>
+              <desc id="k4d">A single shared register records which authorities vouch for which issuers. Each relying party chooses which authorities it recognises, so the same register supports different and even incompatible trust policies.</desc>
+
+              <rect class="b-gr" x="0" y="0" width="420" height="76" rx="6"/>
+              <text class="tgr" x="14" y="22">ONE SHARED REGISTER — NOBODY OWNS IT</text>
+              <text class="t3" x="14" y="46">A vouches for X</text>
+              <text class="t3" x="14" y="65">B vouches for X</text>
+              <text class="t3" x="220" y="46">C vouches for Y</text>
+              <text class="t3" x="220" y="65">A vouches for Y</text>
+
+              <path class="ln" d="M70 78 V104" marker-end="url(#kd)"/>
+              <path class="ln" d="M210 78 V104" marker-end="url(#kd)"/>
+              <path class="ln" d="M350 78 V104" marker-end="url(#kd)"/>
+
+              <rect class="b" x="0" y="110" width="128" height="96" rx="6"/>
+              <text class="t" x="12" y="132">Ministry 1</text>
+              <text class="t3" x="12" y="154">accepts A only</text>
+              <text class="tgr" x="12" y="180">X ✓</text>
+              <text class="tgr" x="52" y="180">Y ✓</text>
+
+              <rect class="b" x="146" y="110" width="128" height="96" rx="6"/>
+              <text class="t" x="158" y="132">Bank 2</text>
+              <text class="t3" x="158" y="154">accepts B only</text>
+              <text class="tgr" x="158" y="180">X ✓</text>
+              <text class="twa" x="198" y="180">Y ✕</text>
+
+              <rect class="b" x="292" y="110" width="128" height="96" rx="6"/>
+              <text class="t" x="304" y="132">Agency 3</text>
+              <text class="t3" x="304" y="154">accepts C only</text>
+              <text class="twa" x="304" y="180">X ✕</text>
+              <text class="tgr" x="344" y="180">Y ✓</text>
+
+              <text class="t2" x="0" y="232">The same register, three different answers — because trust</text>
+              <text class="t2" x="0" y="252">sits with whoever is reading, not with whoever runs the register.</text>
+
+              <defs>
+                <marker id="kd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path fill="var(--ink-3)" d="M0 0 L10 5 L0 10 z"/></marker>
+              </defs>
+            </svg>
+          </div>
+          <figcaption>This is what allows jurisdictions with incompatible trust policies, or none in common, to operate over one set of records.</figcaption>
+        </figure>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ========================= 3. components ========================= -->
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">03 — The components</span>
+        <span class="kicker">04 — The components</span>
         <h2>What each part does</h2>
         <p>
           Select any component for its case in both readings, what it replaces, what depends on it,
@@ -701,7 +920,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">04 — The person</span>
+        <span class="kicker">05 — The person</span>
         <h2>What changes for the individual</h2>
         <p>
           Institutional benefit is only half the case. The architecture is only worth adopting if it
@@ -837,7 +1056,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">05 — Composition</span>
+        <span class="kicker">06 — Composition</span>
         <h2>How the parts work together</h2>
         <p>
           A worked example. A programme distributes an entitlement once per person rather than once
@@ -886,7 +1105,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">06 — Precedent</span>
+        <span class="kicker">07 — Precedent</span>
         <h2>Where these patterns are already in use</h2>
         <p>
           Governments and multilateral institutions have deployed systems built on the same
@@ -911,7 +1130,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">07 — Adoption</span>
+        <span class="kicker">08 — Adoption</span>
         <h2>It need not be adopted all at once</h2>
         <p>
           Six stages, each producing something useful on its own: a system decommissioned, an
@@ -936,7 +1155,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">08 — Procurement</span>
+        <span class="kicker">09 — Procurement</span>
         <h2>What shared public infrastructure provides</h2>
         <p>
           These are procurement properties rather than positions of principle. Each answers a
@@ -1023,7 +1242,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">09 — Limitations</span>
+        <span class="kicker">10 — Limitations</span>
         <h2>What is unresolved</h2>
         <p>
           Stated directly, because a balanced evaluation requires them. None prevents a pilot; each
@@ -1070,6 +1289,25 @@
           against a group below a stated size — which requires a convention that does not yet exist.
         </figcaption>
       </figure>
+    </div>
+  </section>
+
+  <!-- ========================= specifications ========================= -->
+  <section>
+    <div class="wrap">
+      <div class="shead">
+        <span class="kicker">11 — Reference</span>
+        <h2>The specifications</h2>
+        <p>
+          Fifteen documents, one per contract. Each covers the value case, the interface, the
+          invariants that must hold, and what a production deployment would do differently.
+        </p>
+      </div>
+      <div class="speclist" id="speclist"></div>
+      <p class="advisory" style="margin-top:18px">
+        <b>Location</b>
+        <span id="specnote"></span>
+      </p>
     </div>
   </section>
 
@@ -1379,6 +1617,50 @@
     { t:"Not included", b:"Establishing that someone is a unique person in the first place is out of scope. This architecture consumes such credentials; it does not issue them. Who counts as a unique person remains a decision for whichever issuers an institution chooses to accredit." }
   ];
 
+  /* A small pictogram per component. Each is a literal picture of the idea —
+     a key that turns, a chain of vouching, a bit flipped in a row, a sealed
+     box on a wall — so the grid can be read before any of the prose is. */
+  var ICON = {
+    did:        '<circle cx="8.5" cy="16" r="4.2"/><path d="M12.7 16H22M18.4 16v3.2M21 16v2.4"/><path d="M6.6 8.4A7.4 7.4 0 0 1 18.6 9"/><path d="M18.2 5.2l.8 4-4 .4"/>',
+    recovery:   '<circle cx="6.4" cy="6.8" r="2.3"/><circle cx="13" cy="5.2" r="2.3"/><circle cx="19.6" cy="6.8" r="2.3"/><path d="M13 21.6c4-1.7 5.6-4.5 5.6-7.8v-2.2L13 9.8l-5.6 1.8v2.2c0 3.3 1.6 6.1 5.6 7.8z"/>',
+    delegation: '<rect x="2.4" y="8" width="9.6" height="7.4" rx="1.6"/><path d="M13.6 11.7h5.6"/><path d="M17.2 9.3l2.4 2.4-2.4 2.4"/><circle cx="18.6" cy="19" r="4.2"/><path d="M18.6 16.8v2.4l1.6 1"/>',
+    schema:     '<path d="M6 2.8h8.2L19 7.6V21a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3.8a1 1 0 0 1 1-1z"/><path d="M14 2.8v5h5"/><circle cx="12" cy="14.6" r="1.3"/><path d="M9 17.4a3.8 3.8 0 0 1 6 0"/>',
+    issuer:     '<path d="M12 2.6v18.8"/><path d="M12 5h7.6l-2 2.6 2 2.6H12"/><path d="M12 12.6H4.4l2-2.6-2-2.6H12"/><path d="M8.4 21.4h7.2"/>',
+    trust:      '<circle cx="4.6" cy="12" r="2.7"/><circle cx="12" cy="12" r="2.7"/><circle cx="19.4" cy="12" r="2.7"/><path d="M7.3 12h2M14.7 12h2"/>',
+    attestation:'<rect x="3.2" y="4.6" width="17.6" height="13.2" rx="1.7"/><path d="M8 11.4l2.7 2.7 5.3-5.5"/><path d="M8.4 21.4l1.4-3.6M15.6 21.4l-1.4-3.6"/>',
+    status:     '<rect x="2.2" y="8.8" width="19.6" height="6.4" rx="1.5"/><path d="M7.1 8.8v6.4M11.9 8.8v6.4M16.8 8.8v6.4"/><rect x="11.9" y="8.8" width="4.9" height="6.4" fill="currentColor" stroke="none"/>',
+    tree:       '<circle cx="12" cy="4.4" r="2.1"/><circle cx="6.6" cy="12" r="2.1"/><circle cx="17.4" cy="12" r="2.1"/><path d="M10.6 5.9L8 10.5M13.4 5.9l2.6 4.6"/><rect x="2.6" y="18" width="4.4" height="4.4" rx="1"/><rect x="9.4" y="18" width="4.4" height="4.4" rx="1"/><rect x="16.2" y="18" width="4.4" height="4.4" rx="1"/><path d="M5.7 13.9l-.6 3.6M7.9 13.9l2.6 3.6M17.4 14.1v3.4"/>',
+    nullifier:  '<circle cx="12" cy="9.8" r="6"/><path d="M9.4 9.9l1.9 1.9 3.5-3.7"/><path d="M4.4 19.6h15.2"/><path d="M7.6 19.6l1.2-3.2h6.4l1.2 3.2"/>',
+    gateway:    '<path d="M12 2.4l8 3v6.3c0 5-3.3 8.7-8 10.4-4.7-1.7-8-5.4-8-10.4V5.4z"/><path d="M8.5 11.9l2.7 2.7 4.5-5.1"/>',
+    verifier:   '<circle cx="12" cy="12" r="9.2"/><path d="M6.8 9.4h10.4M6.8 14.6h10.4"/><path d="M9.3 6.9L6.8 9.4l2.5 2.5"/><path d="M14.7 12.1l2.5 2.5-2.5 2.5"/>',
+    policy:     '<path d="M7.6 6.4h8.2l4 4V21a1 1 0 0 1-1 1H8.6a1 1 0 0 1-1-1z" /><path d="M15.8 6.4v4h4"/><path d="M4.4 17.6V3.8a1 1 0 0 1 1-1h7.2"/><path d="M10.6 14.4h6M10.6 17.6h4"/>',
+    payment:    '<circle cx="6.2" cy="12" r="4.2"/><circle cx="19" cy="12" r="4.2"/><path d="M10.8 12h3.4"/><path d="M12.6 9.9l2.2 2.1-2.2 2.1"/>'
+  };
+
+  function iconFor(id) {
+    return ICON[id]
+      ? '<span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+        'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + ICON[id] + "</svg></span>"
+      : "";
+  }
+
+  var SPEC_DESC = {
+    did: "Which key controls an identifier, and how that control survives rotation and loss.",
+    recovery: "Restoring control through chosen guardians, behind a threshold and a public waiting period.",
+    delegation: "Narrow, expiring authority granted to an agent, withdrawable everywhere at once.",
+    schema: "Permanent, content-addressed definitions of what a credential type means.",
+    issuer: "Open self-registration, and a public declaration of what an institution issues.",
+    trust: "Who vouches for whom, in what role, for which credential type — with no global root.",
+    attestation: "Public, non-personal claims recorded openly and consumable by any system.",
+    status: "One bit per credential recording whether it is still valid.",
+    tree: "Commitments that let a holder prove a valid credential without disclosing which.",
+    nullifier: "One action per person per context, enforced without identifying the person.",
+    gateway: "The check itself, run on the ledger, with the one-time value consumed atomically.",
+    verifier: "Making the parties that collect data discoverable and accountable.",
+    policy: "Permanent, versioned commitments on what a verifier requests and retains.",
+    payment: "Settlement per verification between the verifiers who benefit and the issuers who pay."
+  };
+
   var LENS_LABEL = { nontechnical: "Non-technical", technical: "Technical" };
   var LENS_ORDER = ["nontechnical", "technical"];
 
@@ -1409,7 +1691,7 @@
            '</div><div class="cards">';
       items.forEach(function (c) {
         h += '<button class="card" data-comp="' + c.id + '" aria-pressed="false">' +
-               '<span class="cref">' + esc(c.ref) + '</span>' +
+               '<span class="chead">' + iconFor(c.id) + '<span class="cref">' + esc(c.ref) + '</span></span>' +
                '<span class="cname">' + esc(c.name) + '</span>' +
                '<span class="cval" data-val="' + c.id + '"></span>' +
                (c.pills.length ? '<span class="pills">' + c.pills.map(function (p) {
@@ -1599,19 +1881,58 @@
     }).join("");
   }
 
+  /* ---------------- specification index ---------------- */
+  var SPECS = C.map(function (c) {
+    return { n: c.ref, name: c.name, file: c.spec, contract: c.contract, desc: SPEC_DESC[c.id] };
+  }).concat([{
+    n: "15", name: "Worked example", file: "15-gated-airdrop.md", contract: "GatedAirdrop.sol",
+    desc: "The whole stack composed in roughly forty lines: one claim per person, credential-gated, with the claimant unknown to the application."
+  }]);
+
+  function buildSpecs() {
+    document.getElementById("speclist").innerHTML = SPECS.map(function (s) {
+      var path = "identity-stack/specs/" + s.file;
+      var link = SPEC_BASE
+        ? '<a class="go" href="' + esc(SPEC_BASE.replace(/\/$/, "") + "/" + path) + '" target="_blank" rel="noopener">' + esc(s.file) + "</a>"
+        : '<span class="go" title="' + esc(path) + '">' + esc(s.file) + "</span>";
+      return '<div class="specrow">' +
+               '<div class="num">' + esc(s.n) + "</div>" +
+               '<div class="nm">' + esc(s.name) + "<span>" + esc(s.contract) + "</span></div>" +
+               '<div class="ds">' + esc(s.desc) + "</div>" +
+               link +
+             "</div>";
+    }).join("");
+    document.getElementById("specnote").textContent = SPEC_BASE
+      ? "Each entry links to the document in the repository."
+      : "All fifteen live in identity-stack/specs/ alongside the reference implementation. Set SPEC_BASE at the top of this page's script to the repository URL and every entry becomes a working link.";
+  }
+
   /* ---------------- population fields ---------------- */
-  function dots(gid, cols, rows, x0, y0, dx, dy, r, markIdx) {
+  /* Draws a real field of marks rather than a suggestive few, so that a
+     contrast in scale on the page is a contrast in scale in the picture. */
+  function dots(gid, cols, rows, x0, y0, dx, dy, r, markIdx, squares) {
     var g = document.getElementById(gid);
     if (!g) return;
     var ns = "http://www.w3.org/2000/svg", frag = document.createDocumentFragment(), i = 0;
     for (var ry = 0; ry < rows; ry++) {
       for (var cx = 0; cx < cols; cx++, i++) {
-        var d = document.createElementNS(ns, "circle");
-        d.setAttribute("cx", (x0 + cx * dx).toFixed(1));
-        d.setAttribute("cy", (y0 + ry * dy).toFixed(1));
-        d.setAttribute("r", i === markIdx ? r + 1.5 : r);
-        d.setAttribute("class", i === markIdx ? "dot-br" : "dot");
-        frag.appendChild(d);
+        var el;
+        if (squares) {
+          el = document.createElementNS(ns, "rect");
+          el.setAttribute("x", (x0 + cx * dx).toFixed(1));
+          el.setAttribute("y", (y0 + ry * dy).toFixed(1));
+          el.setAttribute("width", (dx - 4).toFixed(1));
+          el.setAttribute("height", (dy - 6).toFixed(1));
+          el.setAttribute("rx", "2");
+          el.setAttribute("class", "b-soft");
+        } else {
+          el = document.createElementNS(ns, "circle");
+          el.setAttribute("cx", (x0 + cx * dx).toFixed(1));
+          el.setAttribute("cy", (y0 + ry * dy).toFixed(1));
+          el.setAttribute("r", i === markIdx ? r + 1.5 : r);
+          el.setAttribute("class", i === markIdx ? "dot-br" : "dot");
+        }
+        frag.appendChild(el);
       }
     }
     g.appendChild(frag);
@@ -1634,7 +1955,10 @@
   buildStages();
   buildDeployments();
   buildLimits();
+  buildSpecs();
   wireMap();
+  // the wall of sealed boxes — drawn so the count is real, not suggested
+  dots("wallgrid", 26, 3, 6, 32, 15, 22, 0, -1, true);
   dots("smallgrid", 6, 2, 12, 66, 30, 30, 6, 8);
   dots("biggrid", 50, 7, 492, 58, 8, 8.5, 2.2, 180);
   paintLens();
