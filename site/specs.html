@@ -1,0 +1,663 @@
+<title>Specification Research Annex — Onchain Identity Infrastructure</title>
+
+<style>
+  :root {
+    --bg:          #F5F8FA;
+    --surface:     #FFFFFF;
+    --surface-2:   #EDF3F7;
+    --surface-3:   #E3ECF2;
+    --ink:         #16242E;
+    --ink-2:       #47606F;
+    --ink-3:       #59707F;
+    --line:        #DCE6EC;
+    --line-soft:   #EBF1F5;
+    --brand:       #1D6E8E;
+    --brand-deep:  #14526B;
+    --brand-wash:  #E8F2F7;
+    --warm:        #96652A;
+    --warm-wash:   #FAF3E8;
+    --green:       #2C7A5E;
+    --green-wash:  #EAF4EF;
+    --sans: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --max: 1200px;
+    --r: 10px; --r-s: 6px;
+    --shadow: 0 1px 2px rgba(22,36,46,.05), 0 4px 14px rgba(22,36,46,.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#131C23; --surface:#1A252E; --surface-2:#21303A; --surface-3:#293A46;
+      --ink:#E9F0F5; --ink-2:#B0C2CE; --ink-3:#859AA8;
+      --line:#2C3D49; --line-soft:#24333D;
+      --brand:#6BB6D2; --brand-deep:#96CFE4; --brand-wash:#1B303C;
+      --warm:#D2A063; --warm-wash:#2C2519;
+      --green:#6BBF9B; --green-wash:#173026;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.22);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:#131C23; --surface:#1A252E; --surface-2:#21303A; --surface-3:#293A46;
+    --ink:#E9F0F5; --ink-2:#B0C2CE; --ink-3:#859AA8;
+    --line:#2C3D49; --line-soft:#24333D;
+    --brand:#6BB6D2; --brand-deep:#96CFE4; --brand-wash:#1B303C;
+    --warm:#D2A063; --warm-wash:#2C2519;
+    --green:#6BBF9B; --green-wash:#173026;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.22);
+  }
+  :root[data-theme="light"] {
+    --bg:#F5F8FA; --surface:#FFFFFF; --surface-2:#EDF3F7; --surface-3:#E3ECF2;
+    --ink:#16242E; --ink-2:#47606F; --ink-3:#59707F;
+    --line:#DCE6EC; --line-soft:#EBF1F5;
+    --brand:#1D6E8E; --brand-deep:#14526B; --brand-wash:#E8F2F7;
+    --warm:#96652A; --warm-wash:#FAF3E8;
+    --green:#2C7A5E; --green-wash:#EAF4EF;
+    --shadow: 0 1px 2px rgba(22,36,46,.05), 0 4px 14px rgba(22,36,46,.04);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16.5px; line-height: 1.62; -webkit-font-smoothing: antialiased; }
+  h1,h2,h3,h4 { margin: 0; font-weight: 600; letter-spacing: -0.015em; text-wrap: balance; }
+  p { margin: 0; }
+  a { color: var(--brand); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 2px; }
+
+  .masthead { background: var(--surface); border-bottom: 1px solid var(--line); }
+  .masthead-inner { max-width: var(--max); margin: 0 auto; padding: 40px 32px 34px; }
+  .topline { font-size: 13px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px; }
+  h1 { font-size: clamp(26px, 3.4vw, 38px); line-height: 1.15; max-width: 26ch; }
+  .deck { font-size: 17px; color: var(--ink-2); max-width: 72ch; margin-top: 14px; }
+  .method {
+    margin-top: 22px; padding: 14px 18px; background: var(--surface-2); border-radius: var(--r-s);
+    font-size: 14px; line-height: 1.6; color: var(--ink-2); max-width: 96ch;
+  }
+  .method b { color: var(--ink); }
+
+  .shell { max-width: var(--max); margin: 0 auto; padding: 36px 32px 80px; display: grid; grid-template-columns: 270px minmax(0,1fr); gap: 34px; align-items: start; }
+
+  /* nav */
+  .nav { position: sticky; top: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; max-height: calc(100vh - 40px); overflow-y: auto; }
+  .nav .nh { padding: 14px 16px 10px; font-size: 13px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
+  .nav button {
+    appearance: none; display: flex; gap: 10px; align-items: baseline; width: 100%; text-align: left;
+    font-family: var(--sans); font-size: 14.5px; color: var(--ink-2); background: transparent;
+    border: 0; border-top: 1px solid var(--line-soft); padding: 10px 16px; cursor: pointer;
+  }
+  .nav button:hover { background: var(--surface-2); color: var(--ink); }
+  .nav button[aria-current="true"] { background: var(--brand-wash); color: var(--brand-deep); font-weight: 600; box-shadow: inset 3px 0 0 var(--brand); }
+  .nav .n { font-size: 13px; font-weight: 700; color: var(--brand); min-width: 20px; }
+  .nav .lay { display: block; padding: 8px 16px 4px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); border-top: 1px solid var(--line); background: var(--surface-2); }
+
+  /* article */
+  .doc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); padding: 34px 38px 40px; }
+  .doc .ref { font-size: 13px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
+  .doc h2 { font-size: clamp(24px, 2.6vw, 32px); margin-top: 6px; }
+  .doc .files { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .doc .file { font-family: var(--mono); font-size: 13px; color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; text-decoration: none; }
+  a.file:hover { border-color: var(--brand); color: var(--brand-deep); }
+
+  .doc .abstract { margin-top: 22px; font-size: 17.5px; line-height: 1.65; color: var(--ink-2); border-left: 3px solid var(--brand); padding-left: 18px; max-width: 76ch; }
+  .doc .abstract b { color: var(--ink); }
+
+  .band { margin-top: 30px; }
+  .band > h3 { font-size: 14px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--brand); margin-bottom: 14px; }
+
+  .diagram { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-s); padding: 22px 20px 14px; overflow-x: auto; }
+  .diagram svg { display: block; width: 100%; min-width: 520px; height: auto; }
+  svg text { font-family: var(--sans); }
+  svg .b   { fill: var(--surface); stroke: var(--line); stroke-width: 1.25; }
+  svg .b-br{ fill: var(--brand-wash); stroke: var(--brand); stroke-width: 1.25; }
+  svg .b-wa{ fill: var(--warm-wash); stroke: var(--warm); stroke-width: 1.25; }
+  svg .b-gr{ fill: var(--green-wash); stroke: var(--green); stroke-width: 1.25; }
+  svg .ln  { stroke: var(--ink-3); stroke-width: 1.5; fill: none; }
+  svg .t   { fill: var(--ink); font-size: 13.5px; }
+  svg .t2  { fill: var(--ink-2); font-size: 13px; }
+  svg .t3  { fill: var(--ink-3); font-size: 13px; }
+  svg .cap { fill: var(--ink-3); font-size: 13px; }
+  svg .arw { fill: var(--ink-3); }
+  .dcap { font-size: 14px; color: var(--ink-2); margin-top: 12px; line-height: 1.55; max-width: 84ch; }
+
+  .rationale p { font-size: 15.5px; line-height: 1.65; color: var(--ink-2); max-width: 76ch; }
+  .rationale p + p { margin-top: 12px; }
+  .rationale strong { color: var(--ink); }
+
+  /* sources */
+  .src { border: 1px solid var(--line); border-radius: var(--r-s); overflow: hidden; }
+  .srow { display: grid; grid-template-columns: 96px 1fr; gap: 16px; padding: 14px 18px; border-top: 1px solid var(--line-soft); }
+  .srow:first-child { border-top: 0; }
+  .srow:hover { background: var(--surface-2); }
+  .badge { align-self: start; justify-self: start; font-size: 11.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .badge.peer { background: var(--green-wash); color: var(--green); }
+  .badge.std  { background: var(--brand-wash); color: var(--brand-deep); }
+  .badge.pre  { background: var(--surface-3); color: var(--ink-2); }
+  .badge.ind  { background: var(--warm-wash); color: var(--warm); }
+  .srow .st { font-size: 15px; font-weight: 600; line-height: 1.4; }
+  .srow .sv { font-size: 13px; color: var(--ink-3); margin-top: 2px; }
+  .srow .sw { font-size: 14px; color: var(--ink-2); margin-top: 6px; line-height: 1.55; max-width: 76ch; }
+
+  /* threats */
+  .threats { display: grid; gap: 10px; }
+  .threat { display: grid; grid-template-columns: 26px 1fr; gap: 12px; background: var(--surface-2); border-radius: var(--r-s); padding: 13px 16px; }
+  .threat .ic { color: var(--warm); font-weight: 700; }
+  .threat .tt { font-size: 15px; font-weight: 600; }
+  .threat .tb { font-size: 14px; color: var(--ink-2); line-height: 1.55; margin-top: 3px; max-width: 78ch; }
+  .threat.ok .ic { color: var(--green); }
+
+  /* guidance */
+  .guide { border-left: 3px solid var(--green); background: var(--green-wash); border-radius: 0 var(--r-s) var(--r-s) 0; padding: 18px 22px; }
+  .guide ul { margin: 0; padding-left: 18px; }
+  .guide li { font-size: 15px; color: var(--ink-2); line-height: 1.6; padding: 4px 0; }
+  .guide li strong { color: var(--ink); }
+  .guide .gh { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+
+  .pager { display: flex; justify-content: space-between; gap: 14px; margin-top: 34px; }
+  .pager button { appearance: none; cursor: pointer; font-family: var(--sans); font-size: 14.5px; color: var(--brand-deep); background: var(--brand-wash); border: 1px solid var(--line); border-radius: 999px; padding: 9px 18px; }
+  .pager button:hover { border-color: var(--brand); }
+  .pager button:disabled { opacity: .4; cursor: default; }
+
+  footer { max-width: var(--max); margin: 0 auto; padding: 0 32px 60px; font-size: 13.5px; color: var(--ink-3); line-height: 1.6; }
+  footer p { max-width: 96ch; }
+
+  @media (max-width: 900px) {
+    .shell { grid-template-columns: 1fr; }
+    .nav { position: static; max-height: none; }
+    .doc { padding: 26px 22px 30px; }
+    .srow { grid-template-columns: 1fr; gap: 6px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="topline">Research annex · Companion to the reference architecture</div>
+    <h1>The specifications, with the research behind them</h1>
+    <p class="deck">
+      Each of the fifteen specifications, assessed the way an implementing institution would assess
+      it: what it does, the published research that bears on it, the threat and privacy models that
+      literature has explored, and what a production implementation should therefore do.
+    </p>
+    <p class="method">
+      <b>Method and provenance.</b> Sources were located and verified in August 2026 and are
+      labelled by type: peer-reviewed venues, standards documents, preprints, and industry analysis.
+      Preprints and industry sources are included where they are the best available treatment of an
+      engineering question, and are labelled so they can be weighted accordingly. Links go to the
+      publisher or archive. This annex is educational material, not legal or procurement advice.
+    </p>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="nav" aria-label="Specifications"><div class="nh">Specifications</div><div id="navlist"></div></nav>
+  <main><article class="doc" id="doc" aria-live="polite"></article>
+    <div class="pager">
+      <button id="prev">← Previous</button>
+      <button id="next">Next →</button>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <p>
+    Companion to the institutional explainer and to the specifications in
+    <span style="font-family:var(--mono);font-size:12.5px">identity-stack/specs/</span>. The
+    implementation described throughout is an unaudited proof of concept; guidance here concerns
+    what a production deployment should do differently, informed by the cited work.
+  </p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var SPEC_BASE = ""; // set to the repository URL to make file chips live links
+
+  /* ============================================================
+     The annex data. Each entry:
+     abstract    — what it is, in one breath
+     flow        — mechanism diagram: alternating node / edge-label
+     rationale   — the institutional case, two short paragraphs
+     sources     — verified August 2026; badge ∈ peer|std|pre|ind
+     threats     — threat & privacy model drawn from that literature
+     guidance    — what production should do, given the above
+     ============================================================ */
+  var S = [
+
+  { id:"01", slug:"did", name:"Key Registry", contract:"DIDRegistry.sol", spec:"01-did-registry.md", layer:"Layer 1 · Control",
+    abstract:"A shared answer to <b>which key controls this identifier right now</b>. Every address is already an identifier at no cost; the registry stores only departures from that default — a rotated controller, an expiring signing delegate — and every other component resolves control through it.",
+    flow:[{n:"Old key",c:"b-wa"},{e:"rotates once"},{n:"Registry",c:"b-br"},{e:"control follows"},{n:"Every record",c:"b"},{cap:"One rotation, recorded once, moves control of every registration in every other component."}],
+    rationale:[
+      "Institutions evaluating decentralised identifiers face a design spectrum documented in the NIST-aligned taxonomy of blockchain identity systems: identifiers anchored in a ledger registry at one end, purely off-ledger keys at the other. The registry pattern assessed here — ERC-1056 — sits deliberately at the light end: no registration transaction, no fee to exist, state only on change.",
+      "The security literature's main observation about this pattern is that its weaknesses are inherited from key management, not from the registry: the contract itself is small enough to audit exhaustively, but a stolen key is total compromise until rotated, and the evaluation literature flags the governance question of who could ever change the registry (here: nobody — it is immutable)."],
+    sources:[
+      {t:"ERC-1056: Ethereum Lightweight Identity", v:"Ethereum Improvement Proposal", b:"std", u:"https://eips.ethereum.org/EIPS/eip-1056", w:"The standard this component implements a subset of: every address an identity, owner rotation, expiring delegates, event-linked resolution."},
+      {t:"Methods for Decentralized Identities: Evaluation and Insights", v:"IACR ePrint 2021/1087", b:"pre", u:"https://eprint.iacr.org/2021/1087", w:"Systematic evaluation of DID methods including did:ethr; flags the unclear creation/revocation semantics and governance questions an implementer must answer."},
+      {t:"Analysis of uPort Open, an Identity Management Blockchain-Based Solution", v:"TrustBus 2020 (Springer LNCS)", b:"peer", u:"https://link.springer.com/chapter/10.1007/978-3-030-58986-8_1", w:"Peer-reviewed analysis of the flagship ERC-1056 deployment; documents where the identity model held and where the surrounding product assumptions failed."},
+      {t:"A Taxonomic Approach to Understanding Emerging Blockchain Identity Management Systems", v:"arXiv 1908.00929 (NIST-affiliated authors)", b:"pre", u:"https://arxiv.org/pdf/1908.00929", w:"Places registry-based identifiers among the alternatives and gives an evaluation frame institutions can reuse."}],
+    threats:[
+      {t:"Key theft is not key loss", b:"Rotation protects against loss. A thief holding the current key can rotate ownership away or silently unset the recovery agent — the literature treats compromise-tolerance as unsolved for single-key control, which is why the recovery module and delegation exist as separate components."},
+      {t:"Resurrection through the zero address", b:"In ERC-1056's model an owner entry of zero means self-owned, so rotating ownership 'to nothing' hands control back to the original key — a footgun for anyone attempting to retire an identifier whose key may be compromised. The specification here documents and guards it."},
+      {t:"Event-history availability", b:"Resolution reconstructs the identifier's document from the event log, which requires archive access; an institution running its own resolver needs an archive node or an indexer it trusts."},
+      {t:"Correlation by design", b:"An address used as a lifelong identifier is a correlation handle. The DID evaluation literature is blunt that registry-based identifiers trade privacy for auditability; pairwise or per-context identifiers are the standard mitigation."}],
+    guidance:[
+      "<strong>Use the canonical deployed registry</strong> rather than redeploying: the ERC-1056 contract already exists at the same address on most networks and inherits years of scrutiny.",
+      "<strong>Treat identifiers as per-context</strong>, not lifelong: derive a fresh identifier per relationship where correlation matters, exactly as the DID privacy literature recommends.",
+      "<strong>Pair it with recovery from day one</strong> — the registry alone answers loss only by prevention; the recovery module is what makes loss survivable.",
+      "<strong>Plan resolver infrastructure</strong>: an archive node or indexer for event-chain resolution is part of the operating cost, not an afterthought."]},
+
+  { id:"02", slug:"recovery", name:"Guardian Recovery", contract:"RecoveryModule.sol", spec:"02-recovery-module.md", layer:"Layer 1 · Control",
+    abstract:"Restores a lost key through <b>a threshold of chosen guardians and a public waiting period</b> — non-custodial, cancellable by the real owner while it waits, and enforced by the protocol rather than a support desk.",
+    flow:[{n:"Guardian proposes",c:"b"},{e:"approvals reach threshold"},{n:"Waiting period",c:"b-wa"},{e:"owner may cancel"},{n:"Key rotated",c:"b-gr"},{cap:"The waiting period is the defence: a legitimate owner sees a hostile attempt and cancels it before it matures."}],
+    rationale:[
+      "Every identity deployment faces the same question: what happens when the key is lost? Custodial answers reintroduce the intermediary the architecture removed, and the account-recovery desk has historically been the softest target in institutional systems. Security reviews of deployed guardian-recovery contracts keep finding the same flaw families — thresholds checked incompletely, approvals replayable across attempts, guardian-set changes racing an active recovery — and each maps to a specific defence in this specification.",
+      "The peer-reviewed smart-contract recovery literature converges on the same mitigations, all present in this specification: per-round approvals that cannot carry over, a timelock the owner can act within, attempt expiry so a lone guardian cannot squat the process, and configuration changes that void in-flight attempts."],
+    sources:[
+      {t:"Smart Contract-Based Social Recovery Wallet Management Scheme for Digital Assets", v:"ACM (RACS 2023)", b:"peer", u:"https://dl.acm.org/doi/10.1145/3564746.3587016", w:"Peer-reviewed treatment of guardian recovery as a smart-contract scheme; the threshold-plus-timelock construction assessed here follows the same shape."},
+      {t:"Identity and Personhood in Digital Democracy", v:"arXiv 2011.02412", b:"pre", u:"https://arxiv.org/pdf/2011.02412", w:"Broader treatment of inclusion and key custody: for populations who cannot carry key-management burden, recovery design decides whether self-sovereignty is real or nominal."}],
+    threats:[
+      {t:"Guardian collusion at threshold", b:"A quorum of guardians can take the identity. The timelock converts this from silent theft into a visible, cancellable event — but only if the owner is monitoring; the literature treats notification infrastructure as part of the security boundary."},
+      {t:"Approval replay across rounds", b:"Documented in audit literature as a recurring production flaw. Mitigated here by round-keyed approvals; the round counter is monotonic and must remain so, because resetting it would resurface stale approvals as lockouts."},
+      {t:"Configuration racing an active attempt", b:"Changing guardians mid-recovery must void the attempt, or a compromised owner-key can defuse a legitimate recovery — and a hostile one can hijack a reconfiguration."},
+      {t:"Guardian enumeration", b:"Public guardian sets let an attacker map who to socially engineer. The production path is hashed guardian commitments, revealed only at proposal time."},
+      {t:"Zero or trivial timelocks", b:"A configuration with no waiting period silently voids the cancel defence. Enforce a floor at the policy layer even though the mechanism permits zero."}],
+    guidance:[
+      "<strong>Enforce a minimum timelock</strong> (days, not blocks) and pair it with monitoring — the cancel window only protects an owner who learns the attempt exists.",
+      "<strong>Commit to guardians as hashes</strong> in production so the set cannot be enumerated and targeted.",
+      "<strong>Choose guardians across trust domains</strong> — the collusion threshold should require compromising unrelated parties, not one household or one employer.",
+      "<strong>Rehearse recovery</strong> before it is needed; the ACM literature notes schemes fail operationally more often than cryptographically.",
+      "<strong>After any recovery, sweep delegations</strong>: rotation restores control but does not undo grants a compromised key issued — revoke-all is part of the runbook."]},
+
+  { id:"03", slug:"delegation", name:"Scoped Delegation", contract:"DelegationRegistry.sol", spec:"03-delegation-registry.md", layer:"Layer 1 · Control",
+    abstract:"A <b>narrow, expiring, revocable grant of authority</b> — this agent may do this specific thing on my behalf until this date — checkable by third parties who trust neither the principal nor the agent, and withdrawable everywhere in one block.",
+    flow:[{n:"Person",c:"b"},{e:"grants scope, expiry"},{n:"Agent",c:"b"},{e:"checked by"},{n:"Any relying party",c:"b-br"},{cap:"One withdrawal — a single counter increment — kills every outstanding grant at once."}],
+    rationale:[
+      "The capability literature — running from 1960s operating-systems research through today's UCAN and ZCAP authorization frameworks — establishes the core distinction this component implements: authority should be a first-class, inspectable object scoped to a capability, not an ambient property of holding a key. The near-term driver is AI agents acting for people and institutions, where 'what exactly may this agent do, and until when' must be answerable by parties who trust nobody involved.",
+      "The unsolved problem in that literature is revocation: a bearer token remains valid wherever it has been copied until it expires, and both UCAN and ZCAP need auxiliary revocation infrastructure that relying parties must remember to consult. A shared registry inverts the default — the grant lives in one place every relying party already reads, so withdrawal is one write with global effect."],
+    sources:[
+      {t:"Authorization Capabilities (ZCAP-LD)", v:"W3C CCG draft specification", b:"std", u:"https://w3c-ccg.github.io/zcap-spec/", w:"The linked-data capability model: delegation chains, caveats, and its revocation design — instructive precisely where registry-based revocation is simpler."},
+      {t:"User Controlled Authorization Network (UCAN)", v:"UCAN working group specification", b:"std", u:"https://ucan.xyz/specification/", w:"The bearer-capability alternative: expressive offline delegation whose revocation requires a separate, consulted-by-convention path."},
+      {t:"Capabilities for Distributed Authorization in Information-Centric Networking", v:"arXiv 2308.04140", b:"pre", u:"https://arxiv.org/pdf/2308.04140", w:"Academic treatment of capability-based authorization in distributed settings, including the revocation-propagation problem this registry addresses."},
+      {t:"Capabilities for Distributed Authorization (IETF draft)", v:"IETF Internet-Draft", b:"std", u:"https://www.ietf.org/archive/id/draft-jfinkhaeuser-caps-for-distributed-auth-01.html", w:"Standards-track articulation of distributed capability requirements — useful as an institutional checklist."}],
+    threats:[
+      {t:"Copied bearer authority", b:"The classic failure this design avoids: signed tokens stay valid in every copy until expiry. Registry grants have exactly one authoritative instance."},
+      {t:"Confused deputy", b:"An agent holding broad authority can be tricked into using it for the wrong principal. Capability scoping — narrow grants naming the action — is the standard mitigation from the OS-security literature; enforcement still belongs to the resource."},
+      {t:"Revocation that resurrects", b:"Withdrawal here orphans grants under an incremented counter rather than deleting them. That counter must be strictly monotonic: any future path that reset it would silently restore every revoked grant. Documented as a load-bearing invariant."},
+      {t:"Public authority graph", b:"Grants are visible: who authorised which agent, for what, until when. For sensitive delegations this is itself a disclosure; hashed scopes reduce it at the cost of third-party legibility."}],
+    guidance:[
+      "<strong>Grant narrowly and expire by default</strong> — scopes should name single capabilities, and open-ended grants should be an explicit policy exception.",
+      "<strong>Keep enforcement at the resource</strong>: the registry states authority; whatever holds the asset or API must check it at time of use, per the capability literature.",
+      "<strong>Wire revoke-all into incident response</strong> — one increment is the whole point; it should be a rehearsed button, not an engineering task.",
+      "<strong>Hash sensitive scopes</strong> where the existence of a delegation is itself confidential, and accept the auditability trade-off knowingly."]},
+
+  { id:"04", slug:"schema", name:"Credential Definitions", contract:"SchemaRegistry.sol", spec:"04-schema-registry.md", layer:"Layer 2 · Trust",
+    abstract:"<b>Permanent, content-addressed definitions of what a credential type means.</b> The document lives off-ledger; its fingerprint and identifier live on it, so the same identifier means the same thing in year ten as at registration — no host can quietly change it.",
+    flow:[{n:"Definition document",c:"b"},{e:"fingerprinted"},{n:"Registry entry",c:"b-br"},{e:"referenced forever by"},{n:"Issuers and verifiers",c:"b"},{cap:"Registration is permissionless and append-only; versioning means registering a new definition, never editing one."}],
+    rationale:[
+      "Interoperability begins with issuer and verifier agreeing on a credential's shape — permanently. The transparency-log literature that produced Certificate Transparency establishes the underlying principle: security-critical reference data should be append-only and publicly auditable, because the alternative — trusting a host not to alter what it serves — fails quietly and retroactively.",
+      "The deliberate absence of any registration gate follows from the same literature: an approval step would make some party the arbiter of which credential types may exist. The accepted cost is junk entries; the mitigation is that filtering belongs to indexers and relying parties, not to the registry."],
+    sources:[
+      {t:"Certificate Transparency (RFC 6962)", v:"IETF RFC", b:"std", u:"https://datatracker.ietf.org/doc/html/rfc6962", w:"The canonical append-only public log design; the auditability argument for content-addressed reference data originates here."},
+      {t:"CertLedger: A New PKI Model with Certificate Transparency Based on Blockchain", v:"arXiv 1806.03914", b:"pre", u:"https://arxiv.org/pdf/1806.03914", w:"Moves the transparency log onto a ledger to eliminate split-view attacks — the same strengthening this registry applies to credential definitions."},
+      {t:"Verifiable Credentials Overview", v:"W3C", b:"std", u:"https://www.w3.org/TR/vc-overview/", w:"The data model these definitions describe; alignment keeps existing wallet and issuer tooling usable."}],
+    threats:[
+      {t:"Mutable reference data", b:"The attack this exists to prevent: a schema host altering a definition after issuance, silently changing what every existing credential attests. Content addressing makes the alteration detectable; the ledger makes the fingerprint undeletable."},
+      {t:"Split views", b:"A malicious log can show different parties different contents. CT mitigates with gossip; a consensus-backed registry removes the vector, which is CertLedger's core argument."},
+      {t:"Availability of the document", b:"The fingerprint is permanent but the document lives off-ledger; if its host dies the definition becomes unverifiable in practice. Content-addressed storage is the standard answer."},
+      {t:"Spam and squatting", b:"Permissionless registration accumulates junk. Identifiers are derived from content, so nothing valuable can be squatted; curation is a relying-party concern by design."}],
+    guidance:[
+      "<strong>Host definitions on content-addressed storage</strong> (or mirror them) so availability matches the permanence of the fingerprint.",
+      "<strong>Treat definitions as write-once</strong> organisationally: version by new registration, and record supersession in the definition document itself.",
+      "<strong>Anchor to the W3C VC data model</strong> so existing verifier tooling consumes your types unchanged.",
+      "<strong>Budget for curation</strong>: an institutional deployment should run or subscribe to an indexer that lists the definitions it recognises."]},
+
+  { id:"05", slug:"issuer", name:"Issuer Directory", contract:"IssuerRegistry.sol", spec:"05-issuer-registry.md", layer:"Layer 2 · Trust",
+    abstract:"<b>Open self-registration plus a public declaration of what an institution issues.</b> Deliberately asserts nothing about trustworthiness — discovery and endorsement are separated so the directory is not a gate anyone can capture.",
+    flow:[{n:"Institution",c:"b"},{e:"registers itself, declares types"},{n:"Directory",c:"b-br"},{e:"consulted by"},{n:"Wallets and verifiers",c:"b"},{cap:"A wallet can flag a credential arriving from an issuer that never declared that credential type."}],
+    rationale:[
+      "The PKI literature's longest-running lesson is that whoever controls admission to a directory controls participation — and becomes a target. The web's chain-of-trust analyses document how conflating 'listed' with 'trusted' produced both capture and brittleness. This directory takes the lesson structurally: listing is open to anyone and means only that an institution has said something about itself; belief is layered on separately by accreditation.",
+      "The declaration mechanism gives verifiers and wallets a cheap, timestamped consistency check — a credential claiming to come from an issuer that never declared its type is anomalous by construction — without any authority having decided who may issue."],
+    sources:[
+      {t:"SoK: Delegation and Revocation, the Missing Links in the Web's Chain of Trust", v:"arXiv 1906.10775", b:"pre", u:"https://arxiv.org/pdf/1906.10775", w:"Systematises how the web PKI's handling of delegation and revocation fails; the separation of discovery from endorsement here is a direct response to that failure class."},
+      {t:"Certificate Transparency (RFC 6962)", v:"IETF RFC", b:"std", u:"https://datatracker.ietf.org/doc/html/rfc6962", w:"Public, append-only visibility of who claims what — the accountability pattern the directory reuses for issuer self-declarations."},
+      {t:"Methods for Decentralized Identities: Evaluation and Insights", v:"IACR ePrint 2021/1087", b:"pre", u:"https://eprint.iacr.org/2021/1087", w:"Evaluates identifier-to-institution binding across DID methods — the practical question a directory entry answers."}],
+    threats:[
+      {t:"Impersonation at registration", b:"Anyone can register any name in metadata. The directory binds identifiers, not legal names; binding a real-world institution to its identifier is accreditation's job, and wallets must treat unaccredited metadata as unverified."},
+      {t:"Directory capture", b:"The historical failure mode of trusted lists. Structurally absent here: there is no admission decision to capture, which is the design's central claim."},
+      {t:"Stale or abandoned entries", b:"Self-registration means nobody prunes. The active flag and declared-type withdrawal give issuers a clean exit; relying parties should treat long-dormant entries with suspicion as a matter of policy."},
+      {t:"Metadata as attack surface", b:"URIs in metadata can dangle or be re-pointed. Fingerprint anything you rely on, as with credential definitions."}],
+    guidance:[
+      "<strong>Register early and declare precisely</strong> — the declaration is a free consistency check your relying parties get automatically.",
+      "<strong>Never treat listing as endorsement</strong> in any user interface; the separation only protects users if wallets render it honestly.",
+      "<strong>Pin metadata by content hash</strong> and host it on content-addressed storage, as with definitions.",
+      "<strong>Use the active flag during key incidents</strong> — pausing issuance visibly is cheaper than explaining silence afterwards."]},
+
+  { id:"06", slug:"trust", name:"Accreditation", contract:"TrustRegistry.sol", spec:"06-trust-registry.md", layer:"Layer 2 · Trust",
+    abstract:"<b>Who vouches for whom, in what role, for which credential type</b> — an open graph with no global root. Every relying party chooses which authorities it recognises, and withdrawal of an accreditation reaches every relying party in the next block.",
+    flow:[{n:"Authority",c:"b"},{e:"accredits"},{n:"Issuer",c:"b"},{e:"chain checked by"},{n:"Relying party's chosen root",c:"b-br"},{cap:"Multi-step hierarchies resolve in one read; different readers may recognise different roots over the same records."}],
+    rationale:[
+      "Today the question 'why believe this issuer?' is answered by closed, jurisdiction-bound trusted lists — signed files published on a schedule, cached by relying parties, with a propagation window during which withdrawn trust keeps working. The revocation-transparency literature documents both the window and the accountability gap: a list maintainer can quietly change history unless the log is public and append-only.",
+      "The structural change here is plurality. There is no root to agree on: any authority may vouch, and each relying party names the authorities it accepts. That is what lets jurisdictions with incompatible — or no — mutual trust operate over one shared record, and it maps closely onto how eIDAS hierarchies are actually shaped, minus the single list at the top."],
+    sources:[
+      {t:"SoK: Delegation and Revocation, the Missing Links in the Web's Chain of Trust", v:"arXiv 1906.10775", b:"pre", u:"https://arxiv.org/pdf/1906.10775", w:"The systematisation of why chain-of-trust revocation fails in practice — the propagation window this design eliminates."},
+      {t:"Postcertificates for Revocation Transparency", v:"arXiv 2203.02280", b:"pre", u:"https://arxiv.org/pdf/2203.02280", w:"Makes revocation itself transparent and auditable; the same property accreditation withdrawal has here by construction."},
+      {t:"Application of Public Ledgers to Revocation in Distributed Access Control", v:"arXiv 1608.06592", b:"pre", u:"https://arxiv.org/pdf/1608.06592", w:"Early formal treatment of ledger-based revocation for access control — the propagation argument in its general form."},
+      {t:"Blockchain-Based Certificate Transparency and Revocation Transparency", v:"Springer (FC workshops)", b:"peer", u:"https://link.springer.com/chapter/10.1007/978-3-662-58820-8_11", w:"Peer-reviewed design for ledger-backed issuance and revocation transparency compatible with existing PKI."}],
+    threats:[
+      {t:"Meaningless accreditations", b:"Anyone may vouch for anyone, so raw entries carry no weight. Security lives entirely in root selection by the relying party — which is a policy artefact institutions must actually write, publish and maintain."},
+      {t:"Root-set capture or coercion", b:"The pressure that captured trusted lists moves to whoever maintains a widely-copied root policy. Plurality reduces the blast radius; it does not remove the incentive."},
+      {t:"Chain confusion", b:"Multi-step accreditation must constrain intermediate hops to the accreditor role for that credential type, or a leaf accreditation can be laundered into authority. Enforced in the chain check here."},
+      {t:"Revocation-history erasure", b:"Re-accrediting after revocation must not erase the record that revocation happened; the permanent trace lives in events, which is what regulators and researchers can rely on."}],
+    guidance:[
+      "<strong>Publish your root policy</strong> as a governed document: which authorities you accept, for which credential types, reviewed on a schedule.",
+      "<strong>Prefer short accreditation lifetimes with renewal</strong> over long ones with revocation — expiry is the cheap, unambiguous path.",
+      "<strong>Monitor the graph around your own entries</strong>: unexpected accreditations naming you are reputational events you want to see first.",
+      "<strong>Keep constraint payloads off-ledger but fingerprinted</strong> (jurisdiction, limits), following the trusted-list practice you are replacing."]},
+
+  { id:"07", slug:"attestation", name:"Public Claims", contract:"AttestationRegistry.sol", spec:"07-attestation-registry.md", layer:"Layer 2 · Trust",
+    abstract:"For claims that are <b>public by nature and contain no personal data</b> — this organisation holds a licence, this system passed an audit — the plainest representation wins: the claim itself, recorded openly, consumable by any system in one call.",
+    flow:[{n:"Issuer",c:"b"},{e:"attests"},{n:"Public claim",c:"b-br"},{e:"one validity call"},{n:"Any consuming system",c:"b"},{cap:"Existence, non-revocation and expiry combine into a single check any contract can gate on."}],
+    rationale:[
+      "Not everything needs the privacy path. Where a claim is already public — licences, audit results, memberships — proof machinery adds cost without adding protection, and the transparency-log tradition applies directly: put the claim where everyone can read it and nobody can quietly amend it.",
+      "The institutional discipline is the boundary, not the mechanism: the moment a claim can identify a natural person it belongs on the privacy-preserving path instead, because a public ledger is permanent and personal data placed on one cannot be withdrawn. The specification enforces this as policy; no contract can."],
+    sources:[
+      {t:"Certificate Transparency (RFC 6962)", v:"IETF RFC", b:"std", u:"https://datatracker.ietf.org/doc/html/rfc6962", w:"The precedent for public, append-only claims about public facts, with accountability through visibility."},
+      {t:"Blockchain-Based Certificate Transparency and Revocation Transparency", v:"Springer (FC workshops)", b:"peer", u:"https://link.springer.com/chapter/10.1007/978-3-662-58820-8_11", w:"Peer-reviewed case for ledger-recorded public claims with revocation that cannot be silently rewritten."},
+      {t:"Verifiable Credentials Overview", v:"W3C", b:"std", u:"https://www.w3.org/TR/vc-overview/", w:"The schema layer public claims reference, keeping them interoperable with credential tooling."}],
+    threats:[
+      {t:"Personal data by accident", b:"The dominant risk is organisational: a claim body that identifies a person, placed on a permanent public record. GDPR erasure rights cannot be honoured retroactively. The boundary must be enforced at issuance review, not assumed."},
+      {t:"Defamation surface", b:"Anyone can attest anything about any subject address. Consumers must filter by issuer — an unendorsed attestation is noise by default, and interfaces should render it that way."},
+      {t:"Revocation semantics", b:"A revoked public claim remains readable, correctly — history is not erased. Consumers must check validity, not existence; the one-call gate exists so they cannot get this wrong cheaply."}],
+    guidance:[
+      "<strong>Adopt the deployed attestation service</strong> in production (this registry exists to keep the proof of concept legible end to end).",
+      "<strong>Put a human review step</strong> in front of any attestation whose body is free-form — the no-personal-data rule needs an owner.",
+      "<strong>Consume through accreditation</strong>: gate on issuer endorsement, never on bare existence of a claim.",
+      "<strong>Prefer expiry over revocation</strong> for anything time-bound; it removes a whole class of stale-cache disputes."]},
+
+  { id:"08", slug:"status", name:"Revocation Status", contract:"StatusListRegistry.sol", spec:"08-status-list-registry.md", layer:"Layer 3 · Status & privacy",
+    abstract:"<b>One bit per credential, answering whether it is still valid.</b> Revocation is one-way by contract invariant; suspension can be lifted. The issuer stops learning where its credentials are presented, and status stays available when the issuer's systems do not.",
+    flow:[{n:"Issuer",c:"b"},{e:"flips one bit"},{n:"Status list",c:"b-br"},{e:"read directly by"},{n:"Any verifier",c:"b"},{cap:"No phone call to the issuer: the check is a read of shared state, so the issuer never learns it happened."}],
+    rationale:[
+      "Revocation checking is where credential systems leak. The W3C bitstring design this ports is explicit about both its economics — one bit per credential, compressed — and its privacy model: 'herd privacy' that depends on the list being large, plus the awkward fact that fetching a status list from the issuer's server tells the issuer a check is happening. Moving the list into shared state removes the phone-home while keeping the format.",
+      "What it does not remove — and the specification is deliberately blunt about — is verifier-side exposure: the checking party necessarily learns which entry it checks, and a check made inside a transaction writes that fact into public data permanently. Recent work on privacy-preserving revocation (padded, non-interactive set representations) exists precisely because bitstring approaches leak; where the fact of the check is sensitive, the accumulator path is the answer."],
+    sources:[
+      {t:"Bitstring Status List v1.0", v:"W3C Technical Report", b:"std", u:"https://www.w3.org/TR/vc-bitstring-status-list/", w:"The standard being ported, including its own herd-privacy analysis and minimum-list-size guidance (131,072 entries)."},
+      {t:"CRSet: Private Non-Interactive Verifiable Credential Revocation", v:"arXiv 2501.17089", b:"pre", u:"https://arxiv.org/pdf/2501.17089", w:"Documents exactly what bitstring lists leak — every individual revocation, plus fetch-time signals — and constructs a padded alternative; the clearest statement of this component's residual exposure."},
+      {t:"Application of Public Ledgers to Revocation in Distributed Access Control", v:"arXiv 1608.06592", b:"pre", u:"https://arxiv.org/pdf/1608.06592", w:"The general argument for ledger-published revocation over issuer-served status endpoints."}],
+    threats:[
+      {t:"Issuer surveillance (removed)", b:"The OCSP-style leak — issuer learns where credentials are used — is the threat this component eliminates; it is the reason to prefer it over an issuer-hosted list of identical format."},
+      {t:"Verifier-side disclosure (remains)", b:"The checking party learns the index; an onchain check publishes it forever. The specification narrows the privacy claim accordingly rather than overclaiming."},
+      {t:"Small-list correlation", b:"Herd privacy collapses when lists are small or sparsely used — the W3C minimum exists for a reason, and per-cohort lists reintroduce exactly the correlation the format tries to dilute."},
+      {t:"Revocation-event linkage", b:"Every flip is a public, timestamped event. Batch or schedule status writes if the timing of a revocation is itself sensitive."}],
+    guidance:[
+      "<strong>Size lists at or above the W3C minimum</strong> and allocate indices randomly — list hygiene is the privacy parameter.",
+      "<strong>Check status via local reads</strong> (your own node or indexer) for offchain verification; reserve in-transaction checks for when composition truly needs them.",
+      "<strong>Batch status writes</strong> on a schedule where revocation timing is sensitive.",
+      "<strong>Carry both status mechanisms</strong> on production credentials — transparent list for cheap checks, accumulator path for private ones — as the specification recommends."]},
+
+  { id:"09", slug:"tree", name:"Private Credentials", contract:"CredentialTreeRegistry.sol", spec:"09-credential-tree-registry.md", layer:"Layer 3 · Status & privacy",
+    abstract:"The privacy path: each issuer maintains <b>an accumulator of credential commitments</b>. Issuance adds one, revocation removes one, and a holder can prove 'I hold a currently-valid credential from this issuer' without revealing which — the ledger never sees a credential or a subject.",
+    flow:[{n:"Issuer",c:"b"},{e:"inserts commitment"},{n:"Accumulator",c:"b-br"},{e:"membership proven from"},{n:"Holder's device",c:"b-gr"},{cap:"Revocation changes the accumulator's fingerprint, so withdrawn credentials fail against fresh state; a rolling window keeps honest proofs alive."}],
+    rationale:[
+      "This is the component with the deepest research lineage. Anonymous credentials descend from Camenisch–Lysyanskaya's constructions, and the revocation problem — how a holder proves their credential is still valid without identifying it — was answered by the dynamic-accumulator line: values can be added and removed from a compact commitment, with membership provable in zero knowledge. The Merkle-tree instantiation here, over a SNARK-friendly hash, is that idea in its currently-deployable form, and the hash itself (Poseidon) is a peer-reviewed design whose cryptanalysis is actively maintained.",
+      "The literature is equally clear about the operational caveat: the mathematics hides you among the members of the accumulator, and no further. Anonymity is a population property — measured in the metrics literature by entropy, not by set size alone — so tree composition is a privacy decision, not an implementation detail."],
+    sources:[
+      {t:"Dynamic Accumulators and Application to Efficient Revocation of Anonymous Credentials", v:"CRYPTO 2002 (Springer LNCS)", b:"peer", u:"https://cs.brown.edu/people/alysyans/papers/camlys02.pdf", w:"The founding result: add and remove members from a compact accumulator with cost independent of population — revocation for anonymous credentials."},
+      {t:"An Efficient System for Non-transferable Anonymous Credentials with Optional Anonymity Revocation", v:"EUROCRYPT 2001 (Springer LNCS)", b:"peer", u:"https://www.iacr.org/archive/eurocrypt2001/20450093.pdf", w:"The anonymous-credential system this whole path descends from."},
+      {t:"An Accumulator Based on Bilinear Maps and Efficient Revocation for Anonymous Credentials", v:"PKC 2009", b:"peer", u:"https://eprint.iacr.org/2008/539", w:"Second-generation accumulator revocation with near-free witness updates — the efficiency frontier this design trades against."},
+      {t:"Accumulators with Applications to Anonymity-Preserving Revocation", v:"IACR ePrint 2017/043", b:"pre", u:"https://eprint.iacr.org/2017/043", w:"Survey and comparison of accumulator families for revocation — the map an implementer should choose from."},
+      {t:"Poseidon: A New Hash Function for Zero-Knowledge Proof Systems", v:"USENIX Security 2021", b:"peer", u:"https://www.usenix.org/conference/usenixsecurity21/presentation/grassi", w:"The SNARK-friendly hash the trees are built over, with its design rationale and cryptanalysis."},
+      {t:"Towards an Information Theoretic Metric for Anonymity", v:"PET 2002", b:"peer", u:"https://bib.mixnetworks.org/pdf/serjantov2002towards.pdf", w:"Why set size alone is the wrong anonymity measure — the entropy view that should inform tree-composition policy."}],
+    threats:[
+      {t:"Small anonymity sets", b:"A membership proof in a twelve-person tree identifies to one-in-twelve, and a cohort-organised tree makes membership itself the disclosure. The entropy literature is the right frame: population and its distribution, not just count."},
+      {t:"Commitment linkage across events", b:"Commitments appear in issuance and revocation events — necessarily, so provers can rebuild the tree. Each commitment is a durable pseudonym linking a credential's lifecycle; a side-channel identification of one commitment reads that lifecycle retroactively."},
+      {t:"Cross-credential linkage", b:"Reusing one identity secret across issuers links the holder's credentials on the public record. Fresh secrets per credential, per the underlying identity model."},
+      {t:"Revocation-latency window", b:"The root-history window that keeps honest proofs alive is exactly the revocation delay — a withdrawn credential proves successfully until the window closes. Tune per tree; do not pretend it away."},
+      {t:"Hash-function cryptanalysis drift", b:"SNARK-friendly hashes are younger than SHA-2 and under active cryptanalysis; parameter choices should track the literature, and the successor design exists when performance demands it."}],
+    guidance:[
+      "<strong>Write tree-composition policy before issuing</strong>: few large trees, never cohort-defined ones, with a wallet-enforced floor on population before proving.",
+      "<strong>Issue fresh identity secrets per credential</strong> so holders' credentials cannot be linked through commitments.",
+      "<strong>Set the root window per credential class</strong> — minutes for high-stakes access, longer where proof-in-flight breakage costs more than revocation delay.",
+      "<strong>Deploy on a layer 2</strong> for issuance economics, checkpointing to layer 1 where permanence demands it, and track Poseidon parameter guidance as cryptanalysis evolves.",
+      "<strong>Consider witness-update UX early</strong> — the PKC 2009 line shows what efficient witness maintenance looks like; naive designs push heavy recomputation onto holders' devices."]},
+
+  { id:"10", slug:"nullifier", name:"Uniqueness", contract:"NullifierRegistry.sol", spec:"10-nullifier-registry.md", layer:"Layer 3 · Status & privacy",
+    abstract:"<b>One action per person per context, without identifying the person.</b> A value derived from the holder's secret and the context, unlinkable to them, consumable exactly once — the mechanism that makes fair distribution and one-person-one-vote enforceable with nothing collected.",
+    flow:[{n:"Holder's secret + context",c:"b"},{e:"derives"},{n:"One-time mark",c:"b-br"},{e:"consumed once by"},{n:"Registry",c:"b-gr"},{cap:"Different contexts derive different, unlinkable marks — acting in one place cannot be correlated with acting in another."}],
+    rationale:[
+      "The Sybil attack — one actor wearing many identities — is the founding problem of open-participation systems, and the literature's honest conclusion has long been that it cannot be solved without some external anchor. The proof-of-personhood line supplies anchors of varying strength; what this component supplies is the other half: given any personhood credential, the nullifier construction turns it into 'at most once per context' without the context learning who acted.",
+      "For an institution the framing matters: many requirements written as identity requirements — one vote, one claim, one account — are uniqueness requirements. Meeting them this way avoids collecting identity data that must then be secured, retained and eventually disposed of, which is the narrower-alternative reasoning the mandate literature asks evaluators to apply first."],
+    sources:[
+      {t:"Semaphore: Zero-Knowledge Signaling on Ethereum", v:"ZKProof community proposal / whitepaper", b:"std", u:"https://docs.zkproof.org/pages/standards/accepted-workshop3/proposal-semaphore.pdf", w:"The construction this implements: identity commitments, external nullifiers, and double-signal prevention."},
+      {t:"Proof-of-Personhood: Redemocratizing Permissionless Cryptocurrencies", v:"IEEE Security & Privacy Workshops 2017", b:"peer", u:"https://berkeley-defi.github.io/assets/material/Proof%20of%20Person.pdf", w:"Introduced proof of personhood: one-per-person tokens from pseudonym parties — the kind of credential this component consumes."},
+      {t:"Identity and Personhood in Digital Democracy", v:"arXiv 2011.02412", b:"pre", u:"https://arxiv.org/pdf/2011.02412", w:"Evaluates personhood mechanisms across inclusion, equality, security and privacy — the assessment frame for whatever credential feeds this registry."},
+      {t:"Who Watches the Watchmen? A Review of Subjective Approaches for Sybil-Resistance in Proof of Personhood Protocols", v:"Frontiers in Blockchain 2020", b:"peer", u:"https://www.frontiersin.org/journals/blockchain/articles/10.3389/fbloc.2020.590171/full", w:"Peer-reviewed survey of Sybil-resistance approaches and their failure modes."}],
+    threats:[
+      {t:"Sybil at issuance", b:"The registry enforces one mark per credential per context; if one person can obtain many credentials, uniqueness fails upstream. The personhood literature is the due-diligence reading for whatever issuers you accredit."},
+      {t:"Cross-context linkage", b:"Prevented by construction — marks in different contexts are unlinkable — but only if contexts are genuinely distinct values; reusing a context across applications collapses their separation."},
+      {t:"Mark burning by observers", b:"A valid proof seen in transit can be consumed by someone else first, permanently locking out the honest holder — the deterministic mark has no second attempt. This drove the per-consumer namespacing in the verification component."},
+      {t:"Secret compromise", b:"A stolen identity secret is the person, for every context. Device-level key protection and per-credential secrets bound the damage."}],
+    guidance:[
+      "<strong>Ask whether uniqueness suffices</strong> before requesting identity — it usually does, and it removes the retention problem entirely.",
+      "<strong>Derive contexts uniquely per programme</strong> (and per epoch for recurring ones); never share a context between unrelated applications.",
+      "<strong>Accredit personhood issuers deliberately</strong>, using the digital-democracy evaluation criteria: inclusion and equality are as load-bearing as security.",
+      "<strong>Consume marks only through consumer-namespaced paths</strong> so observation of a proof is never enough to burn it."]},
+
+  { id:"11", slug:"gateway", name:"Verification", contract:"ProofGateway.sol", spec:"11-proof-gateway.md", layer:"Layer 3 · Status & privacy",
+    abstract:"<b>The check itself, executed in consensus.</b> A holder's proof — valid, unrevoked credential from this issuer, first action in this context — is verified by a pairing equation, not an organisation, so there is no verification service to log, price, fail, or be pressured.",
+    flow:[{n:"Holder's proof",c:"b"},{e:"pairing check + fresh state"},{n:"Verification in consensus",c:"b-br"},{e:"one-time mark consumed"},{n:"Application proceeds",c:"b-gr"},{cap:"The proof commits to its recipient, so one lifted from the network is useless to anyone else."}],
+    rationale:[
+      "The proof system underneath is Groth16 — the most compact and cheapest-to-verify SNARK, which is why it dominates onchain use. The literature an implementer must actually absorb is threefold: the proof of security itself; the per-circuit trusted setup, made acceptable by multi-party ceremonies where one honest participant suffices; and malleability — a Groth16 proof can be re-randomised, so a design must never treat the proof bytes as unique. Uniqueness here comes from the nullifier, never the proof.",
+      "The second body of relevant work is front-running. The blockchain front-running literature documents that anything valuable and visible in transit will be raced; for this design the racing target is the nullifier, and the mitigation — consumption namespaced per consuming application, with the recipient bound inside the proof — turns an observed proof into something worthless to the observer."],
+    sources:[
+      {t:"On the Size of Pairing-Based Non-interactive Arguments", v:"EUROCRYPT 2016 / IACR ePrint 2016/260", b:"peer", u:"https://eprint.iacr.org/2016/260", w:"Groth16 itself — the proof system whose verification the gateway wraps."},
+      {t:"Another Look at Extraction and Randomization of Groth's zk-SNARK", v:"IACR ePrint 2020/811", b:"pre", u:"https://eprint.iacr.org/2020/811", w:"The malleability picture: proofs can be re-randomised, and what simulation-extractability Groth16 does and does not give — why nullifiers, not proof bytes, must carry uniqueness."},
+      {t:"SoK: Understanding zk-SNARKs — The Gap Between Research and Practice", v:"IACR ePrint 2025/172", b:"pre", u:"https://eprint.iacr.org/2025/172", w:"Systematisation of where deployed SNARK systems diverge from their papers; the checklist for anyone operationalising this component."},
+      {t:"Flash Boys 2.0: Frontrunning, Transaction Reordering, and Consensus Instability", v:"IEEE S&P 2020", b:"peer", u:"https://arxiv.org/abs/1904.05234", w:"The canonical study of transaction-level racing — the adversary model behind the nullifier-burning defence."},
+      {t:"SoK: Transparent Dishonesty — Front-Running Attacks on Blockchain", v:"Financial Cryptography 2019", b:"peer", u:"https://arxiv.org/pdf/1902.05164", w:"Taxonomy of front-running attacks; 'suppression by racing the honest transaction' is precisely the burned-nullifier vector."}],
+    threats:[
+      {t:"Trusted-setup subversion", b:"Groth16 requires a per-circuit ceremony; a fully-compromised ceremony can forge proofs. Multi-party setups reduce this to 'at least one participant was honest' — an institution should verify which ceremony its circuit inherits and who participated."},
+      {t:"Proof malleability", b:"Valid proofs can be re-randomised into different valid proofs for the same statement. Any replay protection keyed on proof bytes is broken by construction; key on the nullifier."},
+      {t:"Nullifier burning via observation", b:"A permissionless verifier plus a shared namespace lets an observer consume someone's one-time mark first — permanent exclusion, no theft required. Mitigated here by per-consumer namespacing plus recipient binding inside the proof; regression-tested."},
+      {t:"Stale-state acceptance", b:"Proofs verify against recent accumulator state; the acceptance window is the revocation delay, inherited from the credential-tree component and tuned there."},
+      {t:"Circuit-implementation gap", b:"The SoK literature's core warning: deployed circuits drift from the papers describing them. Audit the circuit and its constraint system, not just the contract."}],
+    guidance:[
+      "<strong>Inherit a public multi-party ceremony</strong> (and record its transcript in your evaluation file) rather than running a private setup.",
+      "<strong>Never use proof bytes as an identifier</strong> — for deduplication, receipts or logging, use the nullifier.",
+      "<strong>Keep verification namespaced per consumer</strong> and bind the recipient into every proof, as the front-running literature demands.",
+      "<strong>Audit at three levels</strong>: circuit constraints, verifier contract, and the integration that calls it — the research-practice gap lives between them.",
+      "<strong>Plan for proof-system succession</strong>: wrap verification behind an interface so a future universal-setup or transparent system can replace Groth16 without migrating consumers."]},
+
+  { id:"12", slug:"verifier", name:"Verifier Accountability", contract:"VerifierRegistry.sol", spec:"12-verifier-registry.md", layer:"Layer 4 · Accountability & economics",
+    abstract:"The directory pointed the other way: <b>the parties collecting data become discoverable, accreditable and accountable.</b> Wallets can refuse to present to a verifier nobody vouches for — reversing identity's oldest asymmetry.",
+    flow:[{n:"Verifier",c:"b"},{e:"registers, gets accredited"},{n:"Directory + accreditation",c:"b-br"},{e:"checked before presenting"},{n:"Holder's wallet",c:"b-gr"},{cap:"The wallet's rule becomes: registered, vouched for by a root I accept, operating under a policy I accept."}],
+    rationale:[
+      "Identity systems have always vetted the holder exhaustively while the party collecting the data stayed anonymous and unaccountable. The eIDAS 2.0 analyses make relying-party registration a central regulatory instrument for exactly this reason: over-collection becomes attributable once the collector is a registered, identifiable party. This component is that instrument in shared-infrastructure form, with no single administrator to capture.",
+      "Its power is composition: registration alone asserts nothing (as with issuers), but combined with accreditation and published disclosure policy it gives wallets a mechanical pre-presentation check that today's ecosystems cannot express at all."],
+    sources:[
+      {t:"Self-Sovereign Identity and eIDAS 2.0: An Analysis of Control, Privacy, and Legal Implications", v:"arXiv 2601.19837", b:"pre", u:"https://arxiv.org/pdf/2601.19837", w:"Analyses the regulation's relying-party controls and where wallet-side enforcement needs infrastructure like this."},
+      {t:"The impact of zero-knowledge proofs on data minimisation compliance of digital identity wallets", v:"Internet Policy Review", b:"peer", u:"https://policyreview.info/articles/analysis/impact-zero-knowledge-proofs", w:"Connects wallet-side technical enforcement to data-minimisation law — the compliance logic verifier accountability serves."},
+      {t:"SoK: Delegation and Revocation, the Missing Links in the Web's Chain of Trust", v:"arXiv 1906.10775", b:"pre", u:"https://arxiv.org/pdf/1906.10775", w:"Why accountability structures fail when revocation and delegation are afterthoughts — the design pressure behind separating registration, endorsement and policy."}],
+    threats:[
+      {t:"Registration theatre", b:"A registered verifier is not a trustworthy one. As with issuers, the security is in accreditation and in wallets enforcing it — an interface that renders 'registered' as a trust badge recreates the confusion this design removes."},
+      {t:"Root capture, again", b:"Whoever's verifier-accreditation roots are widely adopted becomes a pressure point. Plural roots and published policies are the mitigation here as in the trust registry."},
+      {t:"Enforcement gap", b:"The check only protects holders whose wallets perform it. Until wallet behaviour is standard, accountability is opt-in — a deployment should treat wallet-side enforcement as part of its scope, not an externality."}],
+    guidance:[
+      "<strong>Register and seek accreditation before asking for anything</strong> — being checkable is the price of asking, and it becomes a commercial asset.",
+      "<strong>Ship the wallet-side rule</strong> (registered ∧ accredited ∧ acceptable policy) in any wallet you control or procure; the component is inert without it.",
+      "<strong>Map to eIDAS relying-party registration</strong> where you operate in scope — the structures align nearly one-to-one.",
+      "<strong>Expect and welcome over-ask reporting</strong>: attributable requests mean complaints can name you; that is the system working."]},
+
+  { id:"13", slug:"policy", name:"Disclosure Policy", contract:"PolicyRegistry.sol", spec:"13-policy-registry.md", layer:"Layer 4 · Accountability & economics",
+    abstract:"Verifiers publish <b>permanent, versioned commitments about what they request and retain.</b> Wallets pin the version the person consented to and re-prompt on change — moving data-minimisation from retrospective audit to refusal at the point of request.",
+    flow:[{n:"Verifier",c:"b"},{e:"publishes versioned policy"},{n:"Policy record",c:"b-br"},{e:"pinned + compared by"},{n:"Holder's wallet",c:"b-gr"},{cap:"Every amendment is a permanent public difference; an organisation cannot quietly expand what it collects."}],
+    rationale:[
+      "Machine-readable privacy policies have been tried before: P3P standardised them for the web two decades ago and failed for lack of enforcement pull — sites could publish anything and browsers had nothing to hold them to. The two missing ingredients were immutability of the published policy and a counterparty with the power to refuse. This design supplies both: versions are append-only and permanent, and the wallet — which holds what the verifier wants — can decline mechanically.",
+      "The data-minimisation literature around eIDAS 2.0 and GDPR frames the compliance shift precisely: selective disclosure changes what can be asked; policy pinning changes what happens when the ask grows. Together they move enforcement to before the data moves."],
+    sources:[
+      {t:"The Platform for Privacy Preferences 1.1 (P3P1.1)", v:"W3C", b:"std", u:"https://www.w3.org/TR/P3P11/", w:"The historical precedent: machine-readable privacy policies, and by its abandonment, the lesson that publication without refusal power does not change behaviour."},
+      {t:"The impact of zero-knowledge proofs on data minimisation compliance of digital identity wallets", v:"Internet Policy Review", b:"peer", u:"https://policyreview.info/articles/analysis/impact-zero-knowledge-proofs", w:"The legal analysis connecting wallet-enforced minimisation to GDPR — the enforcement model this registry operationalises."},
+      {t:"Self-Sovereign Identity and eIDAS 2.0: An Analysis of Control, Privacy, and Legal Implications", v:"arXiv 2601.19837", b:"pre", u:"https://arxiv.org/pdf/2601.19837", w:"Documents the regulation's treatment of disclosure and where certification currently leaves selective disclosure optional — the gap public policy records close."},
+      {t:"BLS-MT-ZKP: A novel approach to selective disclosure of claims from digital credentials", v:"arXiv 2402.15447", b:"pre", u:"https://arxiv.org/pdf/2402.15447", w:"Representative of current selective-disclosure constructions — the request formats policies will need to describe."}],
+    threats:[
+      {t:"Policy–practice divergence", b:"A published policy is a commitment, not a guarantee of behaviour. Its force is evidentiary: divergence becomes provable against a permanent record, which is what regulators and litigants lacked under P3P."},
+      {t:"Pinning without parsing", b:"Hashes detect change but cannot evaluate content. Until a machine-readable policy format is adopted, wallets can only re-prompt on change — meaningful, but short of automatic refusal."},
+      {t:"Consent fatigue", b:"Re-prompting on every version change trains users to click through. Wallets should diff and summarise what changed, not merely announce that something did."},
+      {t:"Version rollback games", b:"Switching the active version among published ones is legitimate (and auditable); interfaces must always show which version governed a given interaction."}],
+    guidance:[
+      "<strong>Adopt a machine-readable policy format</strong> (a presentation-definition dialect with retention fields) so wallets can evaluate rather than merely pin.",
+      "<strong>Keep policies small and per-purpose</strong> — one policy per programme beats one omnibus policy amended forever.",
+      "<strong>Wire policy references into settlement receipts</strong> so payments prove which policy governed each verification.",
+      "<strong>Treat the version history as a compliance asset</strong>: it is your demonstrable minimisation record, produced as a side effect of operating."]},
+
+  { id:"14", slug:"payment", name:"Settlement", contract:"PaymentRails.sol", spec:"14-payment-rails.md", layer:"Layer 4 · Accountability & economics",
+    abstract:"<b>The funding model for issuance.</b> Issuers post a per-verification price; verifiers pre-fund and settle per verification against an opaque reference — no invoicing, no bilateral contracts, no credential data anywhere near the payment.",
+    flow:[{n:"Verifier",c:"b"},{e:"settles posted fee"},{n:"Rails",c:"b-br"},{e:"credits"},{n:"Issuer",c:"b-gr"},{cap:"Balances follow the identifier, not the key — a rotated or recovered issuer keeps its earnings."}],
+    rationale:[
+      "Credential ecosystems fail economically before they fail technically: issuers carry the cost of issuance, revocation and infrastructure while verifiers capture the value of every check. The industry analysis of credential monetisation names this the freeloader problem — open standards mean anyone can verify without compensating anyone. A settlement layer is the corrective: per-verification payment, cheap enough (per the micropayment-economics literature) that tiny transactions clear without a billing relationship.",
+      "The honest limitation is stated in the specification rather than hidden: settlement is asserted by the verifier, not proven, and nothing yet compels payment for an off-ledger verification. The candidate couplings — wallets releasing presentations against observed settlement, or verification pulling the fee — each cost something, and the choice is left open deliberately."],
+    sources:[
+      {t:"Blockchain-based micropayment systems: economic impact", v:"IDEAS/ACM (2019)", b:"peer", u:"https://www.researchgate.net/publication/334584292_Blockchain-based_micropayment_systems_economic_impact", w:"The economics of sub-invoice payments on ledgers — why per-verification settlement is viable where card rails are not."},
+      {t:"A Deeper Look at Credential Monetization and Ecosystem Payments", v:"Dock (industry analysis)", b:"ind", u:"https://www.dock.io/post/a-deeper-look-at-credential-monetization-and-ecosystem-payments", w:"Names the freeloader problem and surveys who pays whom in functioning credential ecosystems — the demand side of this component."},
+      {t:"Micropayments and the Future of the Web", v:"Harvard Berkman Center", b:"ind", u:"https://cyber.harvard.edu/fallsem98/final_papers/Worden.html", w:"The classic statement of why micropayments historically failed — mental transaction costs — and thus why settlement here is machine-to-machine, never user-facing."}],
+    threats:[
+      {t:"Unenforced settlement", b:"A verifier can verify off-ledger and never settle. Until coupling closes the loop, the rails measure honest participants and price signals, not compliance — procurement should not assume otherwise."},
+      {t:"Metadata in the money", b:"Payment flows are public: who verifies against which issuer, when, at what volume. Timing correlation against verification events can narrow individuals; batch or delay settlement where volumes are small."},
+      {t:"Fee manipulation", b:"An issuer could front-run a settlement with a price rise; capped settlement (the payer states a maximum) removes the vector and is implemented here."},
+      {t:"Receipt forgery pressure", b:"If receipts feed compliance reporting, zero-value or fabricated references become attractive; requiring a posted fee for settlement keeps the event log meaningful."}],
+    guidance:[
+      "<strong>Treat the rails as economics, not audit</strong> until settlement is coupled to verification — and say so in any reporting built on them.",
+      "<strong>Batch settlement on a schedule</strong> where verification volumes are low enough for timing correlation to matter.",
+      "<strong>Reference the governing policy in each receipt</strong> so the payment record and the disclosure record reinforce each other.",
+      "<strong>Model issuer pricing on infrastructure cost recovery</strong>, not profit-seeking, if the ecosystem is meant to be public infrastructure — the freeloader analysis cuts both ways."]},
+
+  { id:"15", slug:"airdrop", name:"Worked Example — Gated Distribution", contract:"GatedAirdrop.sol", spec:"15-gated-airdrop.md", layer:"Composition",
+    abstract:"The whole stack composed in roughly forty lines: <b>one claim per person</b> — not per account — restricted to holders of credentials from an accredited issuer, with the claimant unknown to the application and a lifted proof useless to its thief.",
+    flow:[{n:"Person + credential",c:"b"},{e:"proof bound to recipient"},{n:"Four checks",c:"b-br"},{e:"context · recipient · accreditation · proof"},{n:"One claim each",c:"b-gr"},{cap:"Withdrawing the issuer's accreditation stops claims in the next block, mid-programme."}],
+    rationale:[
+      "Distribution is where Sybil pressure is measured, not theorised: the empirical airdrop studies document industrial-scale farming — thousands of coordinated addresses, star and chain funding patterns, profitable at scale — and the detection literature is an arms race of behavioural clustering precisely because address-level identity carries no uniqueness. Per-person gating changes the unit of defence from behaviour to personhood.",
+      "As the composition example, it also demonstrates the inheritance argument: the application implements none of identity, trust, revocation, privacy or uniqueness — four checks against the stack buy all five, and every later improvement to any component accrues to it unchanged."],
+    sources:[
+      {t:"Toward Resilient Airdrop Mechanisms: Empirical Measurement of Hunter Profits", v:"arXiv 2503.14316", b:"pre", u:"https://arxiv.org/pdf/2503.14316", w:"Measures real farming operations and their economics on Hop and LayerZero — the adversary this design prices out."},
+      {t:"Detecting Sybil Addresses in Blockchain Airdrops", v:"arXiv 2505.09313", b:"pre", u:"https://arxiv.org/pdf/2505.09313", w:"Transaction-level Sybil detection: what behavioural defence can and cannot catch — the baseline personhood gating replaces."},
+      {t:"TierDrop: Harnessing Airdrop Farmers for User Growth", v:"arXiv 2407.01176", b:"pre", u:"https://arxiv.org/pdf/2407.01176", w:"The mechanism-design view: distributions that anticipate farmers rather than only filtering them."},
+      {t:"Flash Boys 2.0", v:"IEEE S&P 2020", b:"peer", u:"https://arxiv.org/abs/1904.05234", w:"Why every claim transaction must assume it is observed in transit — the recipient-binding requirement."}],
+    threats:[
+      {t:"Sybil at the credential layer", b:"Gating is only as unique as the personhood credential behind it; the empirical studies show what happens when the anchor is weak. Issuer accreditation is the control surface."},
+      {t:"Claim interception", b:"A proof observed in transit must be worthless to the observer: recipient binding inside the proof handles theft, consumer-namespaced nullifiers handle burning. Both are regression-tested in this implementation."},
+      {t:"Anonymity-set erosion", b:"A distribution with few eligible holders identifies its claimants nearly individually — the tree-composition caveat applies with full force to eligibility design."},
+      {t:"Mid-programme trust changes", b:"Live accreditation checks mean a de-accredited issuer stops claims immediately — a feature, but one whose governance (who can pull the trigger, with what notice) belongs in programme terms."}],
+    guidance:[
+      "<strong>Size eligibility populations deliberately</strong> — small eligible sets undo the privacy the proof provides.",
+      "<strong>Use per-epoch contexts for recurring distributions</strong> so each round is one-per-person without linking rounds.",
+      "<strong>Write the de-accreditation procedure into programme terms</strong>: the kill-switch is powerful and should be governed, not discovered.",
+      "<strong>Publish the four checks in plain language</strong> to participants — the legibility of the rule is itself Sybil deterrence."]}
+  ];
+
+  var SPEC_LABEL = { peer:"Peer-reviewed", std:"Standard", pre:"Preprint", ind:"Industry" };
+
+  var docEl = document.getElementById("doc");
+  var navEl = document.getElementById("navlist");
+  var cur = 0;
+
+  function esc(s){return String(s).replace(/[&<>"]/g,function(m){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m];});}
+
+  /* mechanism diagram: alternating node/edge spec -> one-row SVG */
+  function flowSVG(flow){
+    var nodes=flow.filter(function(f){return f.n;});
+    var edges=flow.filter(function(f){return f.e;});
+    var cap=(flow.filter(function(f){return f.cap;})[0]||{}).cap;
+    var W=900, H=cap?150:110, n=nodes.length;
+    var bw=Math.min(210,(W-40*(n-1))/n), gap=(W-bw*n)/(n-1||1);
+    var y=26, bh=54;
+    var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Mechanism diagram">';
+    nodes.forEach(function(nd,i){
+      var x=i*(bw+gap);
+      s+='<rect class="'+(nd.c||"b")+'" x="'+x+'" y="'+y+'" width="'+bw+'" height="'+bh+'" rx="8"/>';
+      // wrap label to two lines if needed
+      var words=nd.n.split(" "), l1=nd.n, l2="";
+      if(nd.n.length>18&&words.length>1){var m=Math.ceil(words.length/2);l1=words.slice(0,m).join(" ");l2=words.slice(m).join(" ");}
+      if(l2){
+        s+='<text class="t" x="'+(x+bw/2)+'" y="'+(y+23)+'" text-anchor="middle">'+esc(l1)+'</text>';
+        s+='<text class="t" x="'+(x+bw/2)+'" y="'+(y+41)+'" text-anchor="middle">'+esc(l2)+'</text>';
+      } else {
+        s+='<text class="t" x="'+(x+bw/2)+'" y="'+(y+33)+'" text-anchor="middle">'+esc(l1)+'</text>';
+      }
+      if(i<n-1){
+        var ex=x+bw, ex2=x+bw+gap;
+        s+='<path class="ln" d="M'+(ex+4)+' '+(y+bh/2)+' H'+(ex2-8)+'" marker-end="url(#fa)"/>';
+        var lbl=edges[i]?edges[i].e:"";
+        if(lbl) s+='<text class="t3" x="'+((ex+ex2)/2)+'" y="'+(y-8)+'" text-anchor="middle">'+esc(lbl)+'</text>';
+      }
+    });
+    if(cap) s+='<text class="cap" x="0" y="'+(H-10)+'">'+esc(cap)+'</text>';
+    s+='<defs><marker id="fa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="arw" d="M0 0 L10 5 L0 10 z"/></marker></defs></svg>';
+    return s;
+  }
+
+  function fileChip(label, path){
+    var full="identity-stack/"+path;
+    return SPEC_BASE
+      ? '<a class="file" href="'+esc(SPEC_BASE.replace(/\/$/,"")+"/"+full)+'" target="_blank" rel="noopener">'+esc(label)+"</a>"
+      : '<span class="file" title="'+esc(full)+'">'+esc(label)+"</span>";
+  }
+
+  function render(i){
+    cur=i;
+    var d=S[i];
+    var h='<span class="ref">'+esc(d.id)+" · "+esc(d.layer)+"</span>"+
+      "<h2>"+esc(d.name)+"</h2>"+
+      '<div class="files">'+fileChip("spec: "+d.spec,"specs/"+d.spec)+fileChip("code: "+d.contract,"src/"+d.contract)+"</div>"+
+      '<p class="abstract">'+d.abstract+"</p>";
+
+    h+='<div class="band"><h3>How it works</h3><div class="diagram">'+flowSVG(d.flow)+"</div></div>";
+
+    h+='<div class="band"><h3>Why it is built this way</h3><div class="rationale">'+
+       d.rationale.map(function(p){return "<p>"+p+"</p>";}).join("")+"</div></div>";
+
+    h+='<div class="band"><h3>Research foundations</h3><div class="src">'+
+       d.sources.map(function(s){
+         return '<div class="srow"><span class="badge '+s.b+'">'+SPEC_LABEL[s.b]+"</span><div>"+
+           '<div class="st"><a href="'+esc(s.u)+'" target="_blank" rel="noopener">'+esc(s.t)+"</a></div>"+
+           '<div class="sv">'+esc(s.v)+"</div>"+
+           '<div class="sw">'+esc(s.w)+"</div></div></div>";
+       }).join("")+"</div></div>";
+
+    h+='<div class="band"><h3>Threat and privacy model</h3><div class="threats">'+
+       d.threats.map(function(t){
+         return '<div class="threat"><span class="ic">!</span><div><div class="tt">'+esc(t.t)+'</div><div class="tb">'+esc(t.b)+"</div></div></div>";
+       }).join("")+"</div></div>";
+
+    h+='<div class="band"><h3>Implementation guidance</h3><div class="guide"><div class="gh">For a production deployment</div><ul>'+
+       d.guidance.map(function(g){return "<li>"+g+"</li>";}).join("")+"</ul></div></div>";
+
+    docEl.innerHTML=h;
+    navEl.querySelectorAll("button").forEach(function(b,bi){b.setAttribute("aria-current", bi===i ? "true":"false");});
+    document.getElementById("prev").disabled = i===0;
+    document.getElementById("next").disabled = i===S.length-1;
+    if(location.hash!=="#"+d.id) history.replaceState(null,"","#"+d.id);
+  }
+
+  /* nav grouped by layer */
+  (function(){
+    var h="", lastLayer="";
+    S.forEach(function(d,i){
+      if(d.layer!==lastLayer){h+='<span class="lay">'+esc(d.layer)+"</span>";lastLayer=d.layer;}
+      h+='<button data-i="'+i+'"><span class="n">'+esc(d.id)+"</span><span>"+esc(d.name)+"</span></button>";
+    });
+    navEl.innerHTML=h;
+    navEl.querySelectorAll("button").forEach(function(b){
+      b.addEventListener("click",function(){render(parseInt(b.getAttribute("data-i"),10));window.scrollTo({top:0,behavior:"smooth"});});
+    });
+  })();
+
+  document.getElementById("prev").addEventListener("click",function(){if(cur>0){render(cur-1);window.scrollTo({top:0,behavior:"smooth"});}});
+  document.getElementById("next").addEventListener("click",function(){if(cur<S.length-1){render(cur+1);window.scrollTo({top:0,behavior:"smooth"});}});
+
+  window.addEventListener("hashchange",function(){
+    var id=location.hash.replace("#","");
+    var i=S.findIndex(function(d){return d.id===id;});
+    if(i>=0&&i!==cur)render(i);
+  });
+
+  var initial=S.findIndex(function(d){return d.id===location.hash.replace("#","");});
+  render(initial>=0?initial:0);
+})();
+</script>
