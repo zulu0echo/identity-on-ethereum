@@ -26,11 +26,7 @@ stated in full.
 
 # Status of This Memo
 
-This document is a **draft cryptographic profile prepared for ratification** by the
-implementing organisation's cryptography reviewers. It is not an IETF document. The values
-below are the recommended defaults, chosen to match the deployed Semaphore v4 / zk-kit
-toolchain the reference implementation already uses; they are presented as decisions rather
-than options precisely so that reviewers can accept, reject, or amend each one explicitly.
+These parameters are **adopted as the mandatory-to-implement profile** for this proof of concept: the choices below are decided, not open options, and the component specifications reference this profile normatively. It is not an IETF document. An independent cryptographic audit of the circuits and verifying keys is still RECOMMENDED before any production deployment; adoption here fixes the parameters for interoperability, it does not substitute for that review.
 
 Changes are made by pull request against the source repository. Where this profile and the
 reference circuits disagree, the circuits and their verifying keys are authoritative and

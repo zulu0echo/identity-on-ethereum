@@ -183,6 +183,10 @@ Revocation:
 - **Hash-function cryptanalysis drift.** SNARK-friendly hashes are younger than SHA-2 and
   under active cryptanalysis; parameter choices SHOULD track the literature, and a
   successor design (Poseidon2) exists when performance demands it.
+- **Proof-system ceiling (curve and post-quantum).** Membership proofs against these trees are
+  verified under Groth16/BN254, whose ~100-bit classical security and absence of post-quantum
+  security bound the entire ZK path; the tree and hash choices are not the weak point. See
+  16/CRYPTO-PARAMETERS.
 
 ## Cost
 

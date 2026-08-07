@@ -145,6 +145,9 @@ flowchart TD
 - **Mid-campaign trust changes.** Live accreditation checks mean a de-accredited issuer
   stops claims immediately — powerful, but its governance (who may pull the trigger, with
   what notice) belongs in programme terms, not left to be discovered.
+- **Inherited cryptographic ceiling.** A claim's soundness and privacy rest on the ZK path, and
+  therefore on Groth16/BN254 — roughly 100-bit classical security, and not post-quantum. See
+  16/CRYPTO-PARAMETERS.
 
 ## Privacy
 

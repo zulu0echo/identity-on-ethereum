@@ -166,6 +166,14 @@ sequenceDiagram
   09/CREDENTIAL-TREE-REGISTRY.
 - **Circuit-implementation gap.** Deployed circuits drift from the papers describing them;
   audit the circuit and its constraint system, not only the contract.
+- **Curve security below 128 bits.** The mandatory curve BN254 is estimated at ~100-bit
+  security, not the 128 bits sometimes assumed, and is mandated for EVM verification economics
+  rather than for margin. Implementations MUST NOT advertise 128-bit security for the ZK path.
+  See 16/CRYPTO-PARAMETERS.
+- **No post-quantum security.** Groth16 over BN254 is not post-quantum; a cryptographically
+  relevant quantum computer would forge proofs and break soundness. This is a recorded
+  end-of-life condition requiring a proving-system migration, not a residual risk. See
+  16/CRYPTO-PARAMETERS.
 
 ## Privacy
 
