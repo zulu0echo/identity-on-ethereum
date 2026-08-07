@@ -12,27 +12,40 @@ requires: 01/DID-REGISTRY
 
 # Settlement (Payment Rails) Specification
 
-# Change Process
-
-This document specifies one component of the identity-stack proof of concept, derived from
-`src/PaymentRails.sol`. That implementation and its test suite are normative where this
-prose is ambiguous.
-
-# Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
-NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as described in
-[RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-
 # Abstract
 
-The Payment Rails are the funding model for issuance. Issuers post a **per-verification
-fee**; verifiers **pre-fund** a balance and **settle** per verification against an opaque
+The Payment Rails are the funding model for issuance. Issuers post a per-verification
+fee; verifiers pre-fund a balance and settle per verification against an opaque
 reference. Balances belong to the identifier, not the key, so a rotated or recovered issuer
 keeps its earnings. No credential data touches the chain — only the payment and an opaque
 reference. This is the missing settlement layer in roughly sixty lines.
 
-# Motivation
+# Status of This Memo
+
+This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+
+Changes are made by pull request against the source repository. The reference implementation in `src/PaymentRails.sol` and its test suite are normative where this prose is ambiguous.
+
+# Copyright Notice
+
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+
+# Conventions and Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
+NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+capitals, as shown here.
+
+## Terminology
+
+- **Fee.** The per-verification price an issuer posts.
+- **Settlement.** Moving a capped fee from a verifier's balance to an issuer's, with a
+  receipt.
+- **Reference (`ref`).** An opaque hash tying a settlement to a verification without
+  disclosing it.
+
+# Introduction
 
 Credential ecosystems fail economically before they fail technically: issuers bear the
 cost of issuance and revocation infrastructure while verifiers capture the value of every
@@ -159,17 +172,17 @@ the verification.
 - **Future work:** ERC-20 support, fee splitting, holder-side rewards (paying subjects for
   data use), streaming for subscription-style relationships.
 
-# References
+# IANA Considerations
+
+This document requests no IANA actions.
+
+# Normative References
+
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
+
+# Informative References
 
 - Blockchain-based micropayment systems: economic impact, IEEE/ACM 2019 — https://www.researchgate.net/publication/334584292_Blockchain-based_micropayment_systems_economic_impact
 - A Deeper Look at Credential Monetization and Ecosystem Payments (industry analysis) — https://www.dock.io/post/a-deeper-look-at-credential-monetization-and-ecosystem-payments
 - Micropayments and the Future of the Web, Harvard Berkman Center — https://cyber.harvard.edu/fallsem98/final_papers/Worden.html
-- RFC 2119 — https://www.ietf.org/rfc/rfc2119.txt
-
-# Glossary
-
-- **Fee.** The per-verification price an issuer posts.
-- **Settlement.** Moving a capped fee from a verifier's balance to an issuer's, with a
-  receipt.
-- **Reference (`ref`).** An opaque hash tying a settlement to a verification without
-  disclosing it.

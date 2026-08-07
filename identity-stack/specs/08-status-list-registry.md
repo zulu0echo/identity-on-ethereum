@@ -12,29 +12,41 @@ requires: 01/DID-REGISTRY
 
 # Revocation Status Registry Specification
 
-# Change Process
-
-This document specifies one component of the identity-stack proof of concept, derived from
-`src/StatusListRegistry.sol`. That implementation and its test suite are normative where
-this prose is ambiguous.
-
-# Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
-NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as described in
-[RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-
 # Abstract
 
 The Revocation Status Registry is an on-chain port of the
-[W3C Bitstring Status List](https://www.w3.org/TR/vc-bitstring-status-list/): **one bit
-per credential, 256 bits per storage word**, answering whether a credential is still
-valid. A credential carries `(issuer, listId, index)`; a verifier reads its status with a
-single `SLOAD`. Revocation lists are one-way by contract invariant; suspension lists can be
+W3C Bitstring Status List: one bit
+per credential, 256 bits per storage word, answering whether a credential is still
+valid. A credential carries (issuer, listId, index); a verifier reads its status with a
+single SLOAD. Revocation lists are one-way by contract invariant; suspension lists can be
 cleared to reinstate. Because the list lives in shared state, the issuer is never contacted
 at check time and so never learns where a credential is used.
 
-# Motivation
+# Status of This Memo
+
+This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+
+Changes are made by pull request against the source repository. The reference implementation in `src/StatusListRegistry.sol` and its test suite are normative where this prose is ambiguous.
+
+# Copyright Notice
+
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+
+# Conventions and Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
+NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+capitals, as shown here.
+
+## Terminology
+
+- **Status list.** A bitstring in which each credential owns one bit.
+- **Purpose.** Revocation (one-way) or suspension (reversible).
+- **Herd privacy.** The property that a large, well-populated list hides which specific
+  credential a check concerns.
+
+# Introduction
 
 Revocation is where off-chain credential systems quietly leak trust: certificate
 revocation lists (CRLs) go stale, and OCSP-style status endpoints go down or log who is
@@ -147,16 +159,19 @@ minimum list size (131,072 entries) SHOULD be treated as a floor for herd privac
   cheap checks and a tree commitment (09) for private ones.
 - **Future work:** batched word writes, L2 deployment with L1 root checkpoints.
 
-# References
+# IANA Considerations
 
+This document is not currently on the IETF stream and requests no IANA actions at this time.
+
+Were it submitted, it would establish a **Status Purpose registry**, replacing the enumeration that is presently defined inline — namely the status-purpose values `Revocation` and `Suspension`, aligned with the W3C statusPurpose values. A companion registry proposal specifies the registry's contents, allocation policy (Specification Required or Expert Review), and initial entries; until that proposal is adopted these values are defined in this document and are not IANA-managed.
+
+# Normative References
+
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
 - Bitstring Status List v1.0, W3C — https://www.w3.org/TR/vc-bitstring-status-list/
+
+# Informative References
+
 - CRSet: Private Non-Interactive Verifiable Credential Revocation, arXiv:2501.17089 — https://arxiv.org/pdf/2501.17089
 - Application of Public Ledgers to Revocation in Distributed Access Control, arXiv:1608.06592 — https://arxiv.org/pdf/1608.06592
-- RFC 2119 — https://www.ietf.org/rfc/rfc2119.txt
-
-# Glossary
-
-- **Status list.** A bitstring in which each credential owns one bit.
-- **Purpose.** Revocation (one-way) or suspension (reversible).
-- **Herd privacy.** The property that a large, well-populated list hides which specific
-  credential a check concerns.

@@ -12,29 +12,40 @@ requires: 01/DID-REGISTRY
 
 # Verifier Accountability Registry Specification
 
-# Change Process
-
-This document specifies one component of the identity-stack proof of concept, derived from
-`src/VerifierRegistry.sol`. That implementation and its test suite are normative where this
-prose is ambiguous.
-
-# Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
-NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as described in
-[RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-
 # Abstract
 
 The Verifier Accountability Registry is the issuer directory pointed the other way: it
-makes the parties that *collect* data discoverable, accreditable, and accountable. It is
-structurally the mirror of [05/ISSUER-REGISTRY](#references) — permissionless
+makes the parties that collect data discoverable, accreditable, and accountable. It is
+structurally the mirror of 05/ISSUER-REGISTRY — permissionless
 self-registration of an identity with a metadata URI and an active flag. Combined with
-`ROLE_VERIFIER` accreditation in 06/TRUST-REGISTRY and a published policy in
+ROLE_VERIFIER accreditation in 06/TRUST-REGISTRY and a published policy in
 13/POLICY-REGISTRY, it lets a wallet enforce a rule today's ecosystems cannot express:
-*do not present credentials to a verifier nobody vouches for.*
+do not present credentials to a verifier nobody vouches for.
 
-# Motivation
+# Status of This Memo
+
+This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+
+Changes are made by pull request against the source repository. The reference implementation in `src/VerifierRegistry.sol` and its test suite are normative where this prose is ambiguous.
+
+# Copyright Notice
+
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+
+# Conventions and Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
+NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+capitals, as shown here.
+
+## Terminology
+
+- **Verifier / relying party.** The party requesting and collecting credential data.
+- **Composite rule.** Registered ∧ accredited ∧ acceptable policy — the wallet's
+  pre-presentation check.
+
+# Introduction
 
 Identity systems have always vetted the holder exhaustively while the party collecting the
 data stayed anonymous and unaccountable — identity's oldest asymmetry. The eIDAS 2.0
@@ -127,15 +138,17 @@ equal terms.
 - **Future work:** a single wallet-facing helper folding registration, accreditation, and
   policy into `shouldIPresentTo(verifier, schema, myRoots[]) → bool`.
 
-# References
+# IANA Considerations
+
+This document requests no IANA actions.
+
+# Normative References
+
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
+
+# Informative References
 
 - Self-Sovereign Identity and eIDAS 2.0: An Analysis of Control, Privacy, and Legal Implications, arXiv:2601.19837 — https://arxiv.org/pdf/2601.19837
 - The impact of zero-knowledge proofs on data minimisation compliance of digital identity wallets, Internet Policy Review — https://policyreview.info/articles/analysis/impact-zero-knowledge-proofs
 - SoK: Delegation and Revocation, the Missing Links in the Web's Chain of Trust, arXiv:1906.10775 — https://arxiv.org/pdf/1906.10775
-- RFC 2119 — https://www.ietf.org/rfc/rfc2119.txt
-
-# Glossary
-
-- **Verifier / relying party.** The party requesting and collecting credential data.
-- **Composite rule.** Registered ∧ accredited ∧ acceptable policy — the wallet's
-  pre-presentation check.

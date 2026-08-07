@@ -12,29 +12,41 @@ requires: 06/TRUST-REGISTRY, 09/CREDENTIAL-TREE-REGISTRY, 11/PROOF-GATEWAY
 
 # Worked Example: Gated Distribution Specification
 
-# Change Process
-
-This document specifies the composability demonstration of the identity-stack proof of
-concept, derived from `src/GatedAirdrop.sol`. It is Informational: it standardises no new
-primitive, but shows how the others compose. The implementation and its test suite are
-normative where this prose is ambiguous.
-
-# Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
-NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as described in
-[RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-
 # Abstract
 
 Gated Distribution is the payoff of the stack in roughly forty lines of application code:
-**one claim per person** (not per address), restricted to holders of a credential from an
+one claim per person (not per address), restricted to holders of a credential from an
 issuer that a chosen authority has accredited, with the claimant unknown to the contract
 and a proof lifted from the mempool useless to its thief. It implements none of identity,
-trust, revocation, privacy, or uniqueness itself — it *inherits* all five through calls
+trust, revocation, privacy, or uniqueness itself — it inherits all five through calls
 into the stack.
 
-# Motivation
+# Status of This Memo
+
+This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+
+Changes are made by pull request against the source repository. The reference implementation in `src/GatedAirdrop.sol` and its test suite are normative where this prose is ambiguous.
+
+# Copyright Notice
+
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+
+# Conventions and Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
+NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+capitals, as shown here.
+
+## Terminology
+
+- **Campaign scope.** The nullifier context for one distribution; makes claims
+  one-per-person within it and unlinkable across scopes.
+- **Recipient binding.** Committing the claimant's address inside the proof.
+- **Inheritance.** Gaining identity, trust, revocation, privacy, and uniqueness by
+  composition rather than implementation.
+
+# Introduction
 
 Distribution is where Sybil pressure is measured, not theorised: empirical airdrop studies
 (see [References](#references)) document industrial-scale farming — thousands of
@@ -156,18 +168,18 @@ for federated trust.
 - **Publish the four checks in plain language** to participants — the legibility of the
   rule is itself Sybil deterrence.
 
-# References
+# IANA Considerations
+
+This document requests no IANA actions.
+
+# Normative References
+
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
+
+# Informative References
 
 - Toward Resilient Airdrop Mechanisms: Empirical Measurement of Hunter Profits, arXiv:2503.14316 — https://arxiv.org/pdf/2503.14316
 - Detecting Sybil Addresses in Blockchain Airdrops, arXiv:2505.09313 — https://arxiv.org/pdf/2505.09313
 - TierDrop: Harnessing Airdrop Farmers for User Growth, arXiv:2407.01176 — https://arxiv.org/pdf/2407.01176
 - Flash Boys 2.0, IEEE S&P 2020 — https://arxiv.org/abs/1904.05234
-- RFC 2119 — https://www.ietf.org/rfc/rfc2119.txt
-
-# Glossary
-
-- **Campaign scope.** The nullifier context for one distribution; makes claims
-  one-per-person within it and unlinkable across scopes.
-- **Recipient binding.** Committing the claimant's address inside the proof.
-- **Inheritance.** Gaining identity, trust, revocation, privacy, and uniqueness by
-  composition rather than implementation.

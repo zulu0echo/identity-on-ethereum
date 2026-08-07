@@ -12,28 +12,41 @@ requires: 01/DID-REGISTRY, 04/SCHEMA-REGISTRY
 
 # Issuer Directory Specification
 
-# Change Process
-
-This document specifies one component of the identity-stack proof of concept, derived from
-`src/IssuerRegistry.sol`. That implementation and its test suite are normative where this
-prose is ambiguous.
-
-# Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
-NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as described in
-[RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-
 # Abstract
 
-The Issuer Directory is a **permissionless, self-registered directory of issuers**, each
+The Issuer Directory is a permissionless, self-registered directory of issuers, each
 of which MAY publicly declare the credential types it issues. It is deliberately a
-directory of *discovery and commitment only*: a directory entry asserts nothing about
+directory of discovery and commitment only: a directory entry asserts nothing about
 whether an issuer should be believed. Endorsement is a separate concern, handled by
-[06/TRUST-REGISTRY](#references). The composite predicate `issuesSchema(issuer, schemaId)`
+06/TRUST-REGISTRY. The composite predicate issuesSchema(issuer, schemaId)
 returns true only when the issuer is registered, active, and has declared that schema.
 
-# Motivation
+# Status of This Memo
+
+This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+
+Changes are made by pull request against the source repository. The reference implementation in `src/IssuerRegistry.sol` and its test suite are normative where this prose is ambiguous.
+
+# Copyright Notice
+
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+
+# Conventions and Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
+NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+capitals, as shown here.
+
+## Terminology
+
+- **Directory entry.** A self-registered issuer record: metadata URI, registration time,
+  active flag.
+- **Declaration.** An issuer's public commitment that it issues a given schema.
+- **Discovery vs. endorsement.** Being findable (here) versus being vouched for
+  (06/TRUST-REGISTRY).
+
+# Introduction
 
 Verifiers need to discover issuers and pin their identity over time; issuers need a public
 place to commit to what they issue. Doing this on-chain makes the directory
@@ -134,17 +147,17 @@ resolvers to discover an issuer's presentation and status endpoints from its ent
 - **Pin metadata by content hash** and host on content-addressed storage.
 - **Future work:** fee or stake as spam control, and enumeration events for indexers.
 
-# References
+# IANA Considerations
+
+This document requests no IANA actions.
+
+# Normative References
+
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
+
+# Informative References
 
 - SoK: Delegation and Revocation, the Missing Links in the Web's Chain of Trust, arXiv:1906.10775 — https://arxiv.org/pdf/1906.10775
 - Certificate Transparency, RFC 6962 — https://datatracker.ietf.org/doc/html/rfc6962
 - Methods for Decentralized Identities, IACR ePrint 2021/1087 — https://eprint.iacr.org/2021/1087
-- RFC 2119 — https://www.ietf.org/rfc/rfc2119.txt
-
-# Glossary
-
-- **Directory entry.** A self-registered issuer record: metadata URI, registration time,
-  active flag.
-- **Declaration.** An issuer's public commitment that it issues a given schema.
-- **Discovery vs. endorsement.** Being findable (here) versus being vouched for
-  (06/TRUST-REGISTRY).

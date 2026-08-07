@@ -12,29 +12,42 @@ requires: 01/DID-REGISTRY
 
 # Private Credentials Registry Specification
 
-# Change Process
-
-This document specifies one component of the identity-stack proof of concept, derived from
-`src/CredentialTreeRegistry.sol`. That implementation and its test suite are normative
-where this prose is ambiguous.
-
-# Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
-NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as described in
-[RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-
 # Abstract
 
 The Private Credentials Registry is the privacy-preserving half of issuance and
-revocation. Each issuer maintains one or more **accumulators of credential commitments** —
+revocation. Each issuer maintains one or more accumulators of credential commitments —
 Lean Incremental Merkle Trees (the Semaphore v4 accumulator, over the Poseidon hash).
 Issuance inserts the holder's identity commitment; revocation zeroes the leaf. A holder
 can then prove in zero knowledge that they hold a currently-valid credential from a
-specific issuer, against a recent tree root, **without revealing which credential**. The
+specific issuer, against a recent tree root, without revealing which credential. The
 chain never sees a credential, a subject, or a plaintext attribute.
 
-# Motivation
+# Status of This Memo
+
+This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+
+Changes are made by pull request against the source repository. The reference implementation in `src/CredentialTreeRegistry.sol` and its test suite are normative where this prose is ambiguous.
+
+# Copyright Notice
+
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+
+# Conventions and Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
+NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+capitals, as shown here.
+
+## Terminology
+
+- **Commitment.** A Poseidon hash of a holder-held secret, inserted as a leaf.
+- **Accumulator / LeanIMT.** A compact Merkle structure supporting membership proofs.
+- **Root-history window (`rootDuration`).** How long a superseded root remains provable —
+  equal to the revocation latency.
+- **Anonymity set.** The population a proof hides its author among; here, the tree.
+
+# Introduction
 
 This is the component with the deepest research lineage in the stack. Anonymous credentials
 descend from the Camenisch–Lysyanskaya constructions, and the revocation problem — how a
@@ -198,19 +211,19 @@ Semaphore, so existing prover tooling works unchanged.
 - **Future work:** Semaphore v4 directly, batched revocations, ERC-7812-style unified ZK
   registry.
 
-# References
+# IANA Considerations
+
+This document requests no IANA actions.
+
+# Normative References
+
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
+- Poseidon: A New Hash Function for Zero-Knowledge Proof Systems, USENIX Security 2021 — https://www.usenix.org/conference/usenixsecurity21/presentation/grassi
+
+# Informative References
 
 - Dynamic Accumulators and Application to Efficient Revocation of Anonymous Credentials, CRYPTO 2002 — https://cs.brown.edu/people/alysyans/papers/camlys02.pdf
 - An Accumulator Based on Bilinear Maps and Efficient Revocation for Anonymous Credentials, PKC 2009 / IACR ePrint 2008/539 — https://eprint.iacr.org/2008/539
 - Accumulators with Applications to Anonymity-Preserving Revocation, IACR ePrint 2017/043 — https://eprint.iacr.org/2017/043
-- Poseidon: A New Hash Function for Zero-Knowledge Proof Systems, USENIX Security 2021 — https://www.usenix.org/conference/usenixsecurity21/presentation/grassi
 - Towards an Information Theoretic Metric for Anonymity, PET 2002 — https://bib.mixnetworks.org/pdf/serjantov2002towards.pdf
-- RFC 2119 — https://www.ietf.org/rfc/rfc2119.txt
-
-# Glossary
-
-- **Commitment.** A Poseidon hash of a holder-held secret, inserted as a leaf.
-- **Accumulator / LeanIMT.** A compact Merkle structure supporting membership proofs.
-- **Root-history window (`rootDuration`).** How long a superseded root remains provable —
-  equal to the revocation latency.
-- **Anonymity set.** The population a proof hides its author among; here, the tree.

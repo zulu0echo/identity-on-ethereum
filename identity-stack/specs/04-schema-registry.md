@@ -12,27 +12,38 @@ requires: none
 
 # Credential Definitions Registry Specification
 
-# Change Process
-
-This document specifies one component of the identity-stack proof of concept, derived from
-`src/SchemaRegistry.sol`. That implementation and its test suite are normative where this
-prose is ambiguous.
-
-# Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
-NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as described in
-[RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-
 # Abstract
 
-The Schema Registry publishes **permanent, content-addressed definitions of credential
-types**. The definition document itself lives off-chain; the registry stores its URI, a
+The Schema Registry publishes permanent, content-addressed definitions of credential
+types. The definition document itself lives off-chain; the registry stores its URI, a
 content hash pinning it, and a deterministic identifier derived from both. Registration is
-permissionless and append-only, so a `schemaId` means the same thing in year ten as at the
+permissionless and append-only, so a schemaId means the same thing in year ten as at the
 block it was registered, and no host can silently change what a credential type means.
 
-# Motivation
+# Status of This Memo
+
+This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+
+Changes are made by pull request against the source repository. The reference implementation in `src/SchemaRegistry.sol` and its test suite are normative where this prose is ambiguous.
+
+# Copyright Notice
+
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+
+# Conventions and Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
+NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+capitals, as shown here.
+
+## Terminology
+
+- **Schema / credential definition.** A description of a credential type's shape.
+- **Content hash.** A fingerprint pinning the exact bytes of the off-chain definition.
+- **schemaId.** The deterministic identifier `keccak256(abi.encode(uri, contentHash))`.
+
+# Introduction
 
 A credential is interoperable only if issuer and verifier agree on its shape, and agree on
 it *permanently*. Hosting a schema on a web server makes every credential ever issued
@@ -139,15 +150,17 @@ existing verifier tooling can consume registered types unchanged.
 - **Budget for curation:** run or subscribe to an indexer that lists recognised
   definitions.
 
-# References
+# IANA Considerations
+
+This document requests no IANA actions.
+
+# Normative References
+
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
+- Verifiable Credentials Overview, W3C — https://www.w3.org/TR/vc-overview/
+
+# Informative References
 
 - Certificate Transparency, RFC 6962 — https://datatracker.ietf.org/doc/html/rfc6962
 - CertLedger: A New PKI Model with Certificate Transparency Based on Blockchain, arXiv:1806.03914 — https://arxiv.org/pdf/1806.03914
-- Verifiable Credentials Overview, W3C — https://www.w3.org/TR/vc-overview/
-- RFC 2119 — https://www.ietf.org/rfc/rfc2119.txt
-
-# Glossary
-
-- **Schema / credential definition.** A description of a credential type's shape.
-- **Content hash.** A fingerprint pinning the exact bytes of the off-chain definition.
-- **schemaId.** The deterministic identifier `keccak256(abi.encode(uri, contentHash))`.

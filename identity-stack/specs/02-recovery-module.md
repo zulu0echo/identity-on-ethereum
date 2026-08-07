@@ -12,29 +12,44 @@ requires: 01/DID-REGISTRY
 
 # Guardian Recovery Module Specification
 
-# Change Process
-
-This document specifies one component of the identity-stack proof of concept, derived from
-the reference implementation in `src/RecoveryModule.sol`. That implementation and its test
-suite are normative where this prose is ambiguous.
-
-# Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
-NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
-described in [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-
 # Abstract
 
 The Recovery Module restores control of an identifier whose controlling key has been lost,
-without a custodian. The identifier's owner nominates a set of **guardians**, a
-**threshold**, and a **timelock**, and authorises this module as the identifier's recovery
-agent in [01/DID-REGISTRY](#references). Recovery is then a public, four-step process —
+without a custodian. The identifier's owner nominates a set of guardians, a
+threshold, and a timelock, and authorises this module as the identifier's recovery
+agent in 01/DID-REGISTRY. Recovery is then a public, four-step process —
 propose, approve to threshold, wait out the timelock, execute — during which the genuine
 owner MAY cancel. Because attempts are on-chain events, a hostile recovery is visible to
 the owner before it can complete, and the timelock is the window in which they stop it.
 
-# Motivation
+# Status of This Memo
+
+This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+
+Changes are made by pull request against the source repository. The reference implementation in `src/RecoveryModule.sol` and its test suite are normative where this prose is ambiguous.
+
+# Copyright Notice
+
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+
+# Conventions and Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
+NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+capitals, as shown here.
+
+## Terminology
+
+- **Guardian.** An address nominated by the owner that may participate in recovery.
+- **Threshold.** The minimum number of guardian approvals required to execute.
+- **Timelock.** The mandatory delay between proposal and earliest execution.
+- **Round.** A single recovery attempt's approval epoch; the key that isolates approvals
+  across attempts.
+- **Attempt TTL.** The window after `readyAt` during which execution is permitted before
+  the attempt goes stale.
+
+# Introduction
 
 "What happens when I lose my key?" is the question on which self-sovereign identity
 systems most often fail back to a custodian — reintroducing the very trusted party the
@@ -195,19 +210,17 @@ module for the identifier above it.
 - **Future work:** per-guardian weights, recovery of the guardian set itself, and privacy
   for the guardian list.
 
-# References
+# IANA Considerations
+
+This document requests no IANA actions.
+
+# Normative References
+
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
+- ERC-1056 — https://eips.ethereum.org/EIPS/eip-1056
+
+# Informative References
 
 - Smart Contract-Based Social Recovery Wallet Management Scheme for Digital Assets, ACM RACS 2023 — https://dl.acm.org/doi/10.1145/3564746.3587016
 - Identity and Personhood in Digital Democracy, arXiv:2011.02412 — https://arxiv.org/pdf/2011.02412
-- ERC-1056 — https://eips.ethereum.org/EIPS/eip-1056
-- RFC 2119 — https://www.ietf.org/rfc/rfc2119.txt
-
-# Glossary
-
-- **Guardian.** An address nominated by the owner that may participate in recovery.
-- **Threshold.** The minimum number of guardian approvals required to execute.
-- **Timelock.** The mandatory delay between proposal and earliest execution.
-- **Round.** A single recovery attempt's approval epoch; the key that isolates approvals
-  across attempts.
-- **Attempt TTL.** The window after `readyAt` during which execution is permitted before
-  the attempt goes stale.

@@ -12,30 +12,43 @@ requires: 09/CREDENTIAL-TREE-REGISTRY, 10/NULLIFIER-REGISTRY
 
 # Verification (Proof Gateway) Specification
 
-# Change Process
-
-This document specifies one component of the identity-stack proof of concept, derived from
-`src/ProofGateway.sol`. That implementation and its test suite are normative where this
-prose is ambiguous.
-
-# Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
-NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as described in
-[RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-
 # Abstract
 
-The Proof Gateway performs credential verification **in consensus**: it wraps the
+The Proof Gateway performs credential verification in consensus: it wraps the
 Semaphore v4 Groth16 verifier and checks, for a holder's proof, that (1) the Merkle tree
 depth is in bounds, (2) the proof's root is current-or-recent in 09/CREDENTIAL-TREE-
-REGISTRY (this is where ZK *revocation* bites), and (3) the pairing equation holds over the
+REGISTRY (this is where ZK revocation bites), and (3) the pairing equation holds over the
 public signals. The stateful entry point additionally consumes the proof's nullifier via
 10/NULLIFIER-REGISTRY, namespaced per calling application. Any contract thereby gains "this
 caller holds a valid, unrevoked credential from issuer X and has not acted in this scope
 before" as a composable primitive, with no verification service anywhere.
 
-# Motivation
+# Status of This Memo
+
+This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+
+Changes are made by pull request against the source repository. The reference implementation in `src/ProofGateway.sol` and its test suite are normative where this prose is ambiguous.
+
+# Copyright Notice
+
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+
+# Conventions and Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
+NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+capitals, as shown here.
+
+## Terminology
+
+- **Groth16.** A compact pairing-based zk-SNARK requiring a per-circuit trusted setup.
+- **Public signals.** The inputs the verifier checks the proof against: root, nullifier,
+  hashed message, hashed scope.
+- **Malleability.** The ability to derive a different valid proof of the same statement.
+- **`consumerScope`.** The per-caller nullifier namespace, `keccak256(consumer, scope)`.
+
+# Introduction
 
 Verification is normally a service: a company that can log you, profile you, price the
 check, be pressured about whom it serves, or simply go down. Replacing it with a pairing
@@ -179,19 +192,19 @@ unchanged. Wrapping verification behind this interface allows a future proof sys
 - **Future work:** multiple circuits (disclosure and range proofs — "over 18"),
   aggregated/recursive proofs for batch verification.
 
-# References
+# IANA Considerations
 
+This document requests no IANA actions.
+
+# Normative References
+
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
 - On the Size of Pairing-Based Non-interactive Arguments (Groth16), IACR ePrint 2016/260 — https://eprint.iacr.org/2016/260
+
+# Informative References
+
 - Another Look at Extraction and Randomization of Groth's zk-SNARK, IACR ePrint 2020/811 — https://eprint.iacr.org/2020/811
 - SoK: Understanding zk-SNARKs — The Gap Between Research and Practice, IACR ePrint 2025/172 — https://eprint.iacr.org/2025/172
 - Flash Boys 2.0: Frontrunning, Transaction Reordering, and Consensus Instability, IEEE S&P 2020 — https://arxiv.org/abs/1904.05234
 - SoK: Transparent Dishonesty — Front-Running Attacks on Blockchain, FC 2019 — https://arxiv.org/pdf/1902.05164
-- RFC 2119 — https://www.ietf.org/rfc/rfc2119.txt
-
-# Glossary
-
-- **Groth16.** A compact pairing-based zk-SNARK requiring a per-circuit trusted setup.
-- **Public signals.** The inputs the verifier checks the proof against: root, nullifier,
-  hashed message, hashed scope.
-- **Malleability.** The ability to derive a different valid proof of the same statement.
-- **`consumerScope`.** The per-caller nullifier namespace, `keccak256(consumer, scope)`.

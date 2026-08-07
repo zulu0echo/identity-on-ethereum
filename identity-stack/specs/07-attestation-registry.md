@@ -12,27 +12,38 @@ requires: 01/DID-REGISTRY, 04/SCHEMA-REGISTRY
 
 # Public Claims Registry Specification
 
-# Change Process
-
-This document specifies one component of the identity-stack proof of concept, derived from
-`src/AttestationRegistry.sol`. That implementation and its test suite are normative where
-this prose is ambiguous.
-
-# Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
-NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as described in
-[RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-
 # Abstract
 
-The Public Claims Registry records **claims that are public by nature and contain no
-personal data** — an organisation holds a licence, a contract passed an audit, an address
+The Public Claims Registry records claims that are public by nature and contain no
+personal data — an organisation holds a licence, a contract passed an audit, an address
 is a registered market maker — in the clear, on-chain. Each attestation has a unique id and
-a single validity predicate, `isValid(uid)`, combining existence, non-revocation, and
+a single validity predicate, isValid(uid), combining existence, non-revocation, and
 non-expiry, which any contract can gate on directly. It is an EAS-shaped minimal registry.
 
-# Motivation
+# Status of This Memo
+
+This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+
+Changes are made by pull request against the source repository. The reference implementation in `src/AttestationRegistry.sol` and its test suite are normative where this prose is ambiguous.
+
+# Copyright Notice
+
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+
+# Conventions and Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
+NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+capitals, as shown here.
+
+## Terminology
+
+- **Attestation.** A signed public claim by an issuer about a subject, under a schema.
+- **uid.** The unique identifier of an attestation.
+- **Validity.** Existence and non-revocation and non-expiry, as a pure on-chain predicate.
+
+# Introduction
 
 Not every claim needs the privacy path. When a claim is already public, proof machinery
 adds cost without adding protection, and the transparency-log tradition applies directly:
@@ -134,15 +145,17 @@ registry serving to keep the proof of concept's trust model legible end to end.
 - **Consume through accreditation:** gate on issuer endorsement, never on bare existence.
 - **Prefer expiry over revocation** for time-bound claims to avoid stale-cache disputes.
 
-# References
+# IANA Considerations
+
+This document requests no IANA actions.
+
+# Normative References
+
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
+- Verifiable Credentials Overview, W3C — https://www.w3.org/TR/vc-overview/
+
+# Informative References
 
 - Certificate Transparency, RFC 6962 — https://datatracker.ietf.org/doc/html/rfc6962
 - Blockchain-Based Certificate Transparency and Revocation Transparency, Springer (FC workshops) — https://link.springer.com/chapter/10.1007/978-3-662-58820-8_11
-- Verifiable Credentials Overview, W3C — https://www.w3.org/TR/vc-overview/
-- RFC 2119 — https://www.ietf.org/rfc/rfc2119.txt
-
-# Glossary
-
-- **Attestation.** A signed public claim by an issuer about a subject, under a schema.
-- **uid.** The unique identifier of an attestation.
-- **Validity.** Existence and non-revocation and non-expiry, as a pure on-chain predicate.

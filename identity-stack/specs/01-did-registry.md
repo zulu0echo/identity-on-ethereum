@@ -12,31 +12,43 @@ requires: none
 
 # Key Registry Specification
 
-# Change Process
-
-This document specifies one component of the identity-stack proof of concept. It is a
-working specification derived from a reference implementation, not a ratified standard.
-Changes are made by pull request against the repository; the reference implementation in
-`src/DIDRegistry.sol` and its test suite are normative where this prose is ambiguous.
-
-# Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
-NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
-described in [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-
 # Abstract
 
 The Key Registry is the root of the identity stack. It answers exactly one question, for
-any identifier, at any point in time: **which key controls this identifier right now?**
-It is a minimal subset of [ERC-1056](https://eips.ethereum.org/EIPS/eip-1056) (`did:ethr`)
+any identifier, at any point in time: which key controls this identifier right now?
+It is a minimal subset of ERC-1056 (did:ethr)
 in which every Ethereum address is implicitly a decentralised identifier (DID) at zero
-cost, and the registry stores only *deviations* from the default state of self-ownership.
+cost, and the registry stores only deviations from the default state of self-ownership.
 Every other component in the stack resolves control through a single view call,
-`identityOwner(identity)`, so a single key rotation recorded here propagates control of
+identityOwner(identity), so a single key rotation recorded here propagates control of
 every registration, everywhere, with no per-component migration.
 
-# Motivation
+# Status of This Memo
+
+This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+
+Changes are made by pull request against the source repository. The reference implementation in `src/DIDRegistry.sol` and its test suite are normative where this prose is ambiguous.
+
+# Copyright Notice
+
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+
+# Conventions and Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
+NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+capitals, as shown here.
+
+## Terminology
+
+- **Identifier / DID.** An Ethereum address treated as a decentralised identifier.
+- **Controller / owner.** The address currently authorised to act for an identifier.
+- **Delegate.** A key-typed, expiring capability that does not confer ownership.
+- **Recovery agent.** A pre-authorised contract permitted to rotate ownership along the
+  recovery path.
+
+# Introduction
 
 Every downstream identity function — issuing, accrediting, revoking, delegating, settling
 — must be gated on control of an identifier, and that gate MUST survive the two events
@@ -206,17 +218,19 @@ does not define.
   management and this DID layer are complementary: the account manages its signing key;
   this registry manages the identifier above it.
 
-# References
+# IANA Considerations
 
+This document is not currently on the IETF stream and requests no IANA actions at this time.
+
+Were it submitted, it would establish a **Delegate Type registry**, replacing the enumeration that is presently defined inline — namely the delegate-type values used here (`veriKey`, `sigAuth`), which ERC-1056 already employs. A companion registry proposal specifies the registry's contents, allocation policy (Specification Required or Expert Review), and initial entries; until that proposal is adopted these values are defined in this document and are not IANA-managed.
+
+# Normative References
+
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
 - ERC-1056: Ethereum Lightweight Identity — https://eips.ethereum.org/EIPS/eip-1056
+
+# Informative References
+
 - Methods for Decentralized Identities: Evaluation and Insights, IACR ePrint 2021/1087 — https://eprint.iacr.org/2021/1087
 - A Taxonomic Approach to Understanding Emerging Blockchain Identity Management Systems, arXiv:1908.00929 — https://arxiv.org/pdf/1908.00929
-- RFC 2119 — https://www.ietf.org/rfc/rfc2119.txt
-
-# Glossary
-
-- **Identifier / DID.** An Ethereum address treated as a decentralised identifier.
-- **Controller / owner.** The address currently authorised to act for an identifier.
-- **Delegate.** A key-typed, expiring capability that does not confer ownership.
-- **Recovery agent.** A pre-authorised contract permitted to rotate ownership along the
-  recovery path.

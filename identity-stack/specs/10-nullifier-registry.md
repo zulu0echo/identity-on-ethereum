@@ -12,29 +12,40 @@ requires: none
 
 # Uniqueness Registry Specification
 
-# Change Process
-
-This document specifies one component of the identity-stack proof of concept, derived from
-`src/NullifierRegistry.sol`. That implementation and its test suite are normative where
-this prose is ambiguous.
-
-# Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
-NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as described in
-[RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-
 # Abstract
 
-The Uniqueness Registry enforces **one action per person per context, without identifying
-the person**. A nullifier is a value derived (inside a zero-knowledge circuit) from a
+The Uniqueness Registry enforces one action per person per context, without identifying
+the person. A nullifier is a value derived (inside a zero-knowledge circuit) from a
 holder's secret and a context, deterministic for that pair, unlinkable to the holder, and
 consumable exactly once. Consuming it in shared on-chain state gives "at most once per
 context" with no registration, no biometrics on-chain, and no coordinator. Consumption is
 namespaced by the calling contract, so independent consumers cannot collide with or grief
 each other.
 
-# Motivation
+# Status of This Memo
+
+This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+
+Changes are made by pull request against the source repository. The reference implementation in `src/NullifierRegistry.sol` and its test suite are normative where this prose is ambiguous.
+
+# Copyright Notice
+
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+
+# Conventions and Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
+NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+capitals, as shown here.
+
+## Terminology
+
+- **Nullifier.** A once-consumable, holder-unlinkable value bound to `(secret, scope)`.
+- **Scope / context.** The topic under which a holder may act at most once.
+- **Consumer.** The contract calling `consume`, whose address namespaces the mark.
+
+# Introduction
 
 Anonymity without double-use protection is worthless for identity: an anonymous proof
 could otherwise be replayed forever. The Sybil attack — one actor wearing many identities —
@@ -152,16 +163,18 @@ so Semaphore-compatible provers produce values this registry can consume unchang
 - **Future work:** cross-domain nullifier consistency (one action per person *across*
   chains) is an open research area — spends on two chains must not double-count.
 
-# References
+# IANA Considerations
 
+This document requests no IANA actions.
+
+# Normative References
+
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
 - Semaphore: Zero-Knowledge Signaling on Ethereum — https://docs.zkproof.org/pages/standards/accepted-workshop3/proposal-semaphore.pdf
+
+# Informative References
+
 - Proof-of-Personhood: Redemocratizing Permissionless Cryptocurrencies, IEEE S&PW 2017 — https://berkeley-defi.github.io/assets/material/Proof%20of%20Person.pdf
 - Identity and Personhood in Digital Democracy, arXiv:2011.02412 — https://arxiv.org/pdf/2011.02412
 - Who Watches the Watchmen? A Review of Subjective Approaches for Sybil-Resistance, Frontiers in Blockchain 2020 — https://www.frontiersin.org/journals/blockchain/articles/10.3389/fbloc.2020.590171/full
-- RFC 2119 — https://www.ietf.org/rfc/rfc2119.txt
-
-# Glossary
-
-- **Nullifier.** A once-consumable, holder-unlinkable value bound to `(secret, scope)`.
-- **Scope / context.** The topic under which a holder may act at most once.
-- **Consumer.** The contract calling `consume`, whose address namespaces the mark.
