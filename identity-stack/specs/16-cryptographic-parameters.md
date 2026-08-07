@@ -24,9 +24,9 @@ concrete, ratifiable choice; the rationale, and the known security caveats (nota
 ~100-bit security of the mandatory curve and the absence of post-quantum security), are
 stated in full.
 
-# Status of This Memo
+# Status of This Document
 
-These parameters are **adopted as the mandatory-to-implement profile** for this proof of concept: the choices below are decided, not open options, and the component specifications reference this profile normatively. It is not an IETF document. An independent cryptographic audit of the circuits and verifying keys is still RECOMMENDED before any production deployment; adoption here fixes the parameters for interoperability, it does not substitute for that review.
+These parameters are **adopted as the mandatory-to-implement profile** for this proof of concept: the choices below are decided, not open options, and the component specifications reference this profile normatively. An independent cryptographic audit of the circuits and verifying keys is still RECOMMENDED before any production deployment; adoption here fixes the parameters for interoperability, it does not substitute for that review.
 
 Changes are made by pull request against the source repository. Where this profile and the
 reference circuits disagree, the circuits and their verifying keys are authoritative and
@@ -35,13 +35,13 @@ this document MUST be corrected.
 # Copyright Notice
 
 This specification is published under the MIT license of the repository that contains it
-(see `LICENSE`). A formal IETF submission would instead be governed by BCP 78 and BCP 79.
+(see `LICENSE`).
 
 # Conventions and Terminology
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
 NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
-described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all capitals,
+described in [RFC2119] and [RFC8174] when, and only when, they appear in all capitals,
 as shown here.
 
 ## Terminology
@@ -220,15 +220,15 @@ existing Semaphore wallets and provers MUST NOT deviate from §§1–5.
   concrete parameters profiled above and SHOULD be cited as the canonical instantiation
   until superseded.
 
-# IANA Considerations
+# Registry Considerations
 
-This document requests no IANA actions. It defines cryptographic parameters, not a value
+This document defines no shared value registries. Registries used across the specifications are defined in 00/REGISTRIES. It defines cryptographic parameters, not a value
 namespace; see 00/REGISTRIES for the registries.
 
 # Normative References
 
-- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
-- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
 - [Groth16] Groth, J., "On the Size of Pairing-Based Non-interactive Arguments", EUROCRYPT 2016 / IACR ePrint 2016/260 — https://eprint.iacr.org/2016/260
 - [Poseidon] Grassi, L., Khovratovich, D., Rechberger, C., Roy, A., Schofnegger, M., "Poseidon: A New Hash Function for Zero-Knowledge Proof Systems", USENIX Security 2021 — https://www.usenix.org/conference/usenixsecurity21/presentation/grassi
 - [EIP-196] Reitwiessner, C., "Precompiled contracts for addition and scalar multiplication on the elliptic curve alt_bn128" — https://eips.ethereum.org/EIPS/eip-196

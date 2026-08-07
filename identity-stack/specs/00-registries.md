@@ -5,7 +5,7 @@ name: Onchain Identity Registries
 status: draft
 category: Standards Track
 layer: Cross-cutting
-tags: iana, registries, roles, status-purpose, delegate-type, capability-scope
+tags: registries, roles, status-purpose, delegate-type, capability-scope
 source: (cross-cutting; no single contract)
 requires: 01/DID-REGISTRY, 03/DELEGATION-REGISTRY, 06/TRUST-REGISTRY, 08/STATUS-LIST-REGISTRY
 ---
@@ -20,30 +20,33 @@ trust roles, status purposes, delegate types, and capability scopes — are coll
 registries with defined allocation policies, so that independent implementations agree on
 the meaning of a value without any party controlling which values may exist.
 
-# Status of This Memo
+# Status of This Document
 
-This document is a working specification derived from a reference implementation. It is
-**not** an IETF document and has not been reviewed by any IETF working group; it is
-distributed for evaluation and discussion. It adopts IETF conventions so that institutional
-reviewers can read it against familiar structure, but it claims no IETF status.
+This document is a working specification derived from a reference implementation. It has not
+been reviewed or ratified by any standards body and is distributed for evaluation and
+discussion.
 
 Changes are made by pull request against the source repository.
 
 # Copyright Notice
 
 This specification is published under the MIT license of the repository that contains it
-(see `LICENSE`). A formal IETF submission would instead be governed by the IETF Trust's
-Legal Provisions (BCP 78) and the rights described in BCP 79.
+(see `LICENSE`).
 
 # Conventions and Terminology
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
 NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
-described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all capitals,
+described in [RFC2119] and [RFC8174] when, and only when, they appear in all capitals,
 as shown here.
 
-Registration policies ("Specification Required", "Expert Review", "First Come First
-Served") are as defined in [RFC8126].
+Three registration policies are used in this document:
+
+- **Specification Required.** A registration MUST cite a public document defining the
+  value's semantics.
+- **Expert Review.** A registration MUST be reviewed by a designated expert before listing.
+- **First Come First Served.** A registration is listed on request, subject only to a
+  designated expert rejecting duplicates or misleading names.
 
 ## Terminology
 
@@ -56,7 +59,7 @@ Served") are as defined in [RFC8126].
 
 The identity stack is deliberately permissionless: on-chain, any party may already write
 any role, purpose, delegate type, or capability scope it likes. These registries therefore
-serve a different purpose from a conventional IANA registry. They do **not** gate what may
+serve a different purpose from a conventional protocol registry. They do **not** gate what may
 exist — that would contradict the credible-neutrality property the stack is built to
 preserve. They exist only so that a value which is *intended to be interoperable* carries an
 agreed meaning across wallets, verifiers, and issuers that never coordinated directly.
@@ -74,7 +77,7 @@ Two consequences follow, and implementers MUST internalise both:
 Governs the `role` argument of [06/TRUST-REGISTRY]. Values are `bytes32`, computed as
 `keccak256(<preimage>)` where `<preimage>` is the UTF-8 role name.
 
-- **Allocation policy:** Specification Required [RFC8126]. A registration MUST cite a
+- **Allocation policy:** Specification Required. A registration MUST cite a
   document defining the role's semantics and its treatment in `checkChain`.
 - **On-chain namespace:** permissionless; this registry lists well-known roles only.
 
@@ -89,7 +92,7 @@ Governs the `role` argument of [06/TRUST-REGISTRY]. Values are `bytes32`, comput
 Governs the `purpose` of a status list in [08/STATUS-LIST-REGISTRY]. Values are a small
 unsigned enumeration; `0` is reserved to mean "none / unset".
 
-- **Allocation policy:** Specification Required [RFC8126]. A registration MUST declare the
+- **Allocation policy:** Specification Required. A registration MUST declare the
   write semantics (whether a set bit may ever be cleared) and a mapping to the W3C
   `statusPurpose` value, if one exists.
 
@@ -105,7 +108,7 @@ the values themselves and documents only the mapping onto DID-document verificat
 relationships.
 
 - **Allocation policy:** the value space is that of ERC-1056; this table is a mapping aid,
-  not an independent allocation. New mappings require Expert Review [RFC8126].
+  not an independent allocation. New mappings require Expert Review.
 
 | Delegate Type | DID-document relationship | Reference |
 |---|---|---|
@@ -118,7 +121,7 @@ Governs the `scope` of [03/DELEGATION-REGISTRY]. Values are `bytes32`, computed 
 `keccak256(<scope-string>)`. Scopes are application-defined; the vast majority are private
 to one ecosystem and need no registration.
 
-- **Allocation policy:** First Come First Served [RFC8126] for the human-readable scope
+- **Allocation policy:** First Come First Served for the human-readable scope
   string, with a Designated Expert resolving obvious duplicates or misleading names. Listing
   is only for scopes intended to be recognised across independently-built wallets.
 
@@ -148,18 +151,17 @@ to one ecosystem and need no registration.
 These registries hold only value definitions; they contain no personal data and no
 per-user state.
 
-# IANA Considerations
+# Registry Considerations
 
-If this document series were submitted to the IETF, this document would create the four
-registries defined above (Trust Role, Status Purpose, Delegate Type, Capability Scope) with
-the allocation policies stated in each section, and would populate them with the initial
-entries listed. Absent such a submission, the registries are maintained in this repository.
+This document defines the four registries above — Trust Role, Status Purpose, Delegate Type
+and Capability Scope — with the allocation policies stated in each section and the initial
+entries listed. They are maintained in this repository. Should the specification series
+later be submitted to a standards body, these definitions are intended to transfer intact.
 
 # Normative References
 
-- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
-- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
-- [RFC8126] Cotton, M., Leiba, B., Narten, T., "Guidelines for Writing an IANA Considerations Section in RFCs", BCP 26, RFC 8126, June 2017 — https://www.rfc-editor.org/rfc/rfc8126
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
 - ERC-1056: Ethereum Lightweight Identity — https://eips.ethereum.org/EIPS/eip-1056
 
 # Informative References

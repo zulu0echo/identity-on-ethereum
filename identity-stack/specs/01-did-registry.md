@@ -23,21 +23,21 @@ Every other component in the stack resolves control through a single view call,
 identityOwner(identity), so a single key rotation recorded here propagates control of
 every registration, everywhere, with no per-component migration.
 
-# Status of This Memo
+# Status of This Document
 
-This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+This document is a working specification derived from a reference implementation. It has not been reviewed or ratified by any standards body and is distributed for evaluation and discussion. It follows established specification conventions — requirement keywords, security and privacy considerations, registry definitions, and separated normative and informative references — so that reviewers can read it against a familiar structure.
 
 Changes are made by pull request against the source repository. The reference implementation in `src/DIDRegistry.sol` and its test suite are normative where this prose is ambiguous.
 
 # Copyright Notice
 
-This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms.
 
 # Conventions and Terminology
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
 NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
-described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+described in [RFC2119] and [RFC8174] when, and only when, they appear in all
 capitals, as shown here.
 
 ## Terminology
@@ -218,16 +218,14 @@ does not define.
   management and this DID layer are complementary: the account manages its signing key;
   this registry manages the identifier above it.
 
-# IANA Considerations
+# Registry Considerations
 
-This document is not currently on the IETF stream and requests no IANA actions at this time.
-
-Were it submitted, it would establish a **Delegate Type registry**, replacing the enumeration that is presently defined inline — namely the delegate-type values used here (`veriKey`, `sigAuth`), which ERC-1056 already employs. The registry itself — its contents, allocation policy, and initial entries — is defined in [00/REGISTRIES]; the values remain defined inline here until that document is adopted.
+The values this document defines inline — namely the delegate-type values used here (`veriKey`, `sigAuth`), which ERC-1056 already employs — are catalogued as the **Delegate Type registry** in 00/REGISTRIES, which records their agreed meaning for interoperability and the policy for listing additional values. Listing is advisory: the on-chain namespace remains permissionless.
 
 # Normative References
 
-- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
-- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
 - ERC-1056: Ethereum Lightweight Identity — https://eips.ethereum.org/EIPS/eip-1056
 
 # Informative References

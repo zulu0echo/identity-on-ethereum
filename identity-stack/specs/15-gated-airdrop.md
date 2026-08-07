@@ -21,21 +21,21 @@ and a proof lifted from the mempool useless to its thief. It implements none of 
 trust, revocation, privacy, or uniqueness itself — it inherits all five through calls
 into the stack.
 
-# Status of This Memo
+# Status of This Document
 
-This document is a working specification derived from a reference implementation. It is **not** an IETF document and has not been reviewed by any IETF working group; it is distributed for evaluation and discussion. It adopts IETF conventions — BCP 14 requirement keywords, Security and Privacy Considerations, an IANA Considerations section, and split references — so that institutional reviewers can read it against familiar structure, but it claims no IETF status.
+This document is a working specification derived from a reference implementation. It has not been reviewed or ratified by any standards body and is distributed for evaluation and discussion. It follows established specification conventions — requirement keywords, security and privacy considerations, registry definitions, and separated normative and informative references — so that reviewers can read it against a familiar structure.
 
 Changes are made by pull request against the source repository. The reference implementation in `src/GatedAirdrop.sol` and its test suite are normative where this prose is ambiguous.
 
 # Copyright Notice
 
-This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms. A formal IETF submission would instead be governed by the IETF Trust's Legal Provisions (BCP 78) and the rights described in BCP 79; this notice is provided in their place for a non-IETF document.
+This specification is published under the MIT license of the repository that contains it (see `LICENSE`). Contributors retain copyright in their contributions and license them under those terms.
 
 # Conventions and Terminology
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
 NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
-described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+described in [RFC2119] and [RFC8174] when, and only when, they appear in all
 capitals, as shown here.
 
 ## Terminology
@@ -171,14 +171,14 @@ for federated trust.
 - **Publish the four checks in plain language** to participants — the legibility of the
   rule is itself Sybil deterrence.
 
-# IANA Considerations
+# Registry Considerations
 
-This document requests no IANA actions.
+This document defines no shared value registries. Registries used across the specifications are defined in 00/REGISTRIES.
 
 # Normative References
 
-- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
-- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", RFC 2119, March 1997 — https://www.rfc-editor.org/rfc/rfc2119
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", RFC 8174, May 2017 — https://www.rfc-editor.org/rfc/rfc8174
 
 # Informative References
 
