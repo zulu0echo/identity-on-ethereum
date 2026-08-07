@@ -9,6 +9,18 @@ argument, and an explainer for institutional evaluators.
 | [`POST.md`](POST.md) | The narrative argument: which identity state must be global, live and neutral, and which must never be onchain. |
 | [`site/index.html`](site/index.html) | A self-contained interactive explainer for governments and institutions. Open it directly in a browser; no build step. |
 
+## Open in the browser
+
+<h3><a href="site/index.html" target="_blank" rel="noopener">Onchain Identity Infrastructure for Governments and Institutions</a></h3>
+
+The interactive explainer, under its full title. The link opens the HTML index
+in a new window; the page is self-contained, with no build step.
+
+<h3><a href="site/specs.html" target="_blank" rel="noopener">Specification Research Annex — Onchain Identity Infrastructure</a></h3>
+
+The specification page: every component spec alongside the research that
+shaped it. Also opens in a new window.
+
 ## Running it
 
 ```bash
