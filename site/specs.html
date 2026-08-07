@@ -195,6 +195,16 @@
   footer { max-width: var(--max); margin: 0 auto; padding: 0 32px 60px; font-size: 13.5px; color: var(--ink-3); line-height: 1.6; }
   footer p { max-width: 96ch; }
 
+  /* ============================================================ theme control */
+  .themetog {
+    appearance: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--sans); font-size: 13.5px; font-weight: 600; color: var(--ink-2);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+    padding: 7px 14px; margin-left: auto; white-space: nowrap;
+  }
+  .themetog:hover { border-color: var(--brand); color: var(--brand-deep); }
+  .themetog svg { width: 15px; height: 15px; flex: none; }
+
   @media (max-width: 900px) {
     .shell { grid-template-columns: 1fr; }
     .nav { position: static; max-height: none; }
@@ -221,7 +231,10 @@
       engineering question, and are labelled so they can be weighted accordingly. Links go to the
       publisher or archive. This annex is educational material, not legal or procurement advice.
     </p>
-    <a class="backlink" href="https://claude.ai/code/artifact/b2180cd8-0621-4605-ac5c-683c04e63950">← Back to the overview</a>
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <a class="backlink" href="https://claude.ai/code/artifact/b2180cd8-0621-4605-ac5c-683c04e63950">← Back to the overview</a>
+      <button class="themetog" id="themetog" type="button" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.4a6.6 6.6 0 0 0 0 13.2z" fill="currentColor"/></svg><span class="tlabel">Dark mode</span></button>
+    </div>
     <div class="provenance">
       <div><div class="pk">Published by</div><div class="pv">Technical Foundations Team,<br>Ethereum Foundation</div></div>
       <div><div class="pk">Version</div><div class="pv">1.0 · August 2026</div></div>
@@ -883,5 +896,47 @@
 
   var initial=S.findIndex(function(d){return d.id===location.hash.replace("#","");});
   render(initial>=0?initial:0);
+})();
+</script>
+
+<script>
+/* Explicit theme control. Defaults to the viewer's system preference; an explicit
+   choice is stored and wins thereafter. Runs standalone on either page. */
+(function () {
+  "use strict";
+  var root = document.documentElement, KEY = "oi-theme";
+  function systemDark() {
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  function current() {
+    return root.getAttribute("data-theme") || (systemDark() ? "dark" : "light");
+  }
+  function label() {
+    var b = document.getElementById("themetog");
+    if (!b) return;
+    var dark = current() === "dark";
+    b.setAttribute("aria-pressed", dark ? "true" : "false");
+    b.querySelector(".tlabel").textContent = dark ? "Light mode" : "Dark mode";
+  }
+  try {
+    var saved = localStorage.getItem(KEY);
+    if (saved === "dark" || saved === "light") root.setAttribute("data-theme", saved);
+  } catch (e) {}
+  label();
+  var btn = document.getElementById("themetog");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      var next = current() === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem(KEY, next); } catch (e) {}
+      label();
+    });
+  }
+  if (window.matchMedia) {
+    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+    var onChange = function () { try { if (!localStorage.getItem(KEY)) label(); } catch (e) { label(); } };
+    if (mq.addEventListener) mq.addEventListener("change", onChange);
+    else if (mq.addListener) mq.addListener(onChange);
+  }
 })();
 </script>

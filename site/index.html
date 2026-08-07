@@ -481,6 +481,16 @@
   .faq .ans p + p { margin-top: 10px; }
   .faq .ans strong { color: var(--ink); }
 
+  /* ============================================================ theme control */
+  .themetog {
+    appearance: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--sans); font-size: 13.5px; font-weight: 600; color: var(--ink-2);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+    padding: 7px 14px; margin-left: auto; white-space: nowrap;
+  }
+  .themetog:hover { border-color: var(--brand); color: var(--brand-deep); }
+  .themetog svg { width: 15px; height: 15px; flex: none; }
+
   /* ============================================================ responsive */
   @media (max-width: 1000px) {
     .explorer { grid-template-columns: 1fr; }
@@ -542,6 +552,7 @@
       <button data-lens="technical" aria-pressed="false">Technical</button>
     </div>
     <span class="lab">Every component is written both ways. Both are always available when you open one.</span>
+    <button class="themetog" id="themetog" type="button" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.4a6.6 6.6 0 0 0 0 13.2z" fill="currentColor"/></svg><span class="tlabel">Dark mode</span></button>
   </div>
 </div>
 
@@ -551,16 +562,15 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">01 — In brief</span>
+        <span class="kicker">01 — Summary</span>
         <h2>Executive summary</h2>
         <p>
-          If you read nothing else: what this is, what it is worth, and what it would take to
-          evaluate it properly.
+          The architecture, its institutional value, and the work required to evaluate it.
         </p>
       </div>
 
       <div class="exec">
-        <h3>The proposition</h3>
+        <h3>Overview</h3>
         <p class="lede">
           Identity systems need a small number of records that everyone must see identically —
           who controls an identifier, who vouches for whom, whether a credential is still valid,
@@ -571,10 +581,10 @@
           people's own devices.
         </p>
         <p class="lede" style="margin-top:14px">
-          The case is not ideological. It rests on four procurement properties a hosted or
-          consortium arrangement cannot offer simultaneously: <strong>it outlives any single
-          operator, no party controls admission, withdrawal of trust takes effect everywhere at
-          once, and the cost of leaving is low because the code is open and the data is public.</strong>
+          The evaluation rests on four procurement properties that hosted and consortium
+          arrangements do not provide simultaneously: <strong>continuity independent of any single
+          operator, absence of admission control, immediate propagation of trust withdrawal, and low
+          exit cost arising from open implementation and public data.</strong>
         </p>
 
         <div class="keyfacts">
@@ -612,12 +622,12 @@
         </div>
 
         <p class="lede" style="margin-top:24px">
-          <strong>What it would take to evaluate.</strong> The material below is structured to feed
-          a formal options assessment: an <a href="#criteria">evaluation framework</a>, measured
+          <strong>Evaluation path.</strong> The material below is structured to support a formal
+          options assessment: an <a href="#criteria">evaluation framework</a>, measured
           <a href="#evidence">technical evidence</a> your engineers can reproduce, a
           <a href="#evaluate">due-diligence checklist</a>, and full technical specifications for the
-          engineering reviewer. Stage 1 of adoption touches no personal data and runs alongside existing
-          public-key infrastructure.
+          engineering reviewer. Stage 1 of adoption involves no personal data and operates alongside
+          existing public-key infrastructure.
         </p>
       </div>
     </div>
@@ -860,8 +870,8 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">04 — The difficult parts</span>
-        <h2>Four ideas, in pictures</h2>
+        <span class="kicker">04 — Core mechanisms</span>
+        <h2>The four core mechanisms</h2>
         <p>
           Four mechanisms do most of the work, and each sounds harder than it is. Each is a plain
           picture of one component — named beneath it, and specified in full in the
@@ -874,8 +884,8 @@
 
         <!-- A -->
         <figure class="fig concept">
-          <h3>Proving something without handing it over</h3>
-          <p class="fig-sub">A service asks one question. There are two ways to answer it.</p>
+          <h3>Zero-knowledge proof — verification without disclosure</h3>
+          <p class="fig-sub">A <strong>zero-knowledge proof</strong> establishes that a statement is true without revealing the data that makes it true. A service requires one fact; there are two ways to supply it.</p>
           <div class="fig-scroll">
             <svg viewBox="0 0 420 260" role="img" aria-labelledby="k1t k1d">
               <title id="k1t">Handing over a document compared with proving a single fact</title>
@@ -919,8 +929,8 @@
 
         <!-- B -->
         <figure class="fig concept">
-          <h3>Proving “not again”, without a name</h3>
-          <p class="fig-sub">Like the invisible hand-stamp at an event: it proves you have not already been through, but carries no name.</p>
+          <h3>Nullifier — single use without identification</h3>
+          <p class="fig-sub">A <strong>nullifier</strong> is a single-use value derived from a holder's secret and a context. It functions like an event hand-stamp: it establishes that the holder has not already acted, and carries no identifying information.</p>
           <div class="fig-scroll">
             <svg viewBox="0 0 420 300" role="img" aria-labelledby="k2t k2d">
               <title id="k2t">A hand-stamp that enforces one-per-person without identity, and differs per event</title>
@@ -958,7 +968,7 @@
               <rect class="b-br" x="291" y="232" width="26" height="26" rx="4"/>
 
               <path class="dash" d="M286 194 h64 v72 h-64 z"/>
-              <text class="twa" x="356" y="222">can’t be</text>
+              <text class="twa" x="356" y="222">cannot be</text>
               <text class="twa" x="356" y="240">linked</text>
 
               <defs>
@@ -967,14 +977,14 @@
               </defs>
             </svg>
           </div>
-          <figcaption>The stamp is made from a secret only you hold, combined with the event — so it is the same every time <em>you</em> act in <em>this</em> event (catching repeats), but different in any other event (so your actions can’t be joined up).</figcaption>
+          <figcaption>The nullifier is derived from a secret held only by the holder, combined with a context identifier. It is therefore identical each time that holder acts in that context, which detects repeat use, and different in every other context, so activity cannot be correlated across contexts.</figcaption>
           <p class="relates">In the specification: <a href="https://claude.ai/code/artifact/7e50ec3f-688c-4ba2-a53c-637bb2569ede#10" target="_blank" rel="noopener">Uniqueness (10)</a> — the “one action per person, per context” register.</p>
         </figure>
 
         <!-- C -->
         <figure class="fig concept">
-          <h3>Sealed, identical boxes — and one seal over them</h3>
-          <p class="fig-sub">Every credential is a sealed box on a shared shelf. You can prove one is yours without opening it or pointing to it.</p>
+          <h3>Merkle accumulator — membership without disclosure</h3>
+          <p class="fig-sub">Credentials are recorded as <strong>commitments</strong> in a <strong>Merkle tree</strong> — a structure that reduces many entries to one short value. Each entry behaves like a sealed, identical box: a holder can prove one is theirs without opening it or indicating which.</p>
           <div class="fig-scroll">
             <svg viewBox="0 0 420 312" role="img" aria-labelledby="k3t k3d">
               <title id="k3t">Credentials as sealed identical boxes under a single summary seal</title>
@@ -989,7 +999,7 @@
                 <rect class="b" x="232" y="28" width="46" height="44" rx="5"/><circle class="dot" cx="255" cy="50" r="3.5"/>
                 <rect class="b" x="290" y="28" width="46" height="44" rx="5"/><circle class="dot" cx="313" cy="50" r="3.5"/>
               </g>
-              <text class="t3" x="0" y="92">Identical and sealed — you can’t tell them apart.</text>
+              <text class="t3" x="0" y="92">Identical and sealed — indistinguishable to an observer.</text>
               <text class="tbr" x="0" y="116">You prove one is yours — without showing which. ✓</text>
 
               <line class="hair" x1="0" y1="136" x2="420" y2="136"/>
@@ -1011,14 +1021,14 @@
               <text class="twa" x="0" y="308">Change the seal, and yesterday’s proof no longer fits.</text>
             </svg>
           </div>
-          <figcaption>Nobody reading the shelf can tell the boxes apart or open them; only the holder can demonstrate that one is theirs. The single seal is what makes revocation instant: change it, and yesterday’s proof no longer fits.</figcaption>
+          <figcaption>An observer cannot distinguish between commitments or read their contents; only the holder can demonstrate that one is theirs. The single summary value — the tree root — is what makes revocation immediate: removing an entry changes the root, and proofs constructed against the previous root no longer verify.</figcaption>
           <p class="relates">In the specification: <a href="https://claude.ai/code/artifact/7e50ec3f-688c-4ba2-a53c-637bb2569ede#09" target="_blank" rel="noopener">Private Credentials (09)</a> — the issuer’s tree of credential commitments.</p>
         </figure>
 
         <!-- D -->
         <figure class="fig concept">
-          <h3>Reference letters — you choose whose you trust</h3>
-          <p class="fig-sub">Like recommendation letters on a public noticeboard: anyone may vouch for anyone, no one runs the board, and each reader decides whose word counts.</p>
+          <h3>Accreditation graph — plural roots of trust</h3>
+          <p class="fig-sub">Trust is recorded as an open <strong>accreditation graph</strong> with no single root. Any party may vouch for any other, no party administers the record, and each relying party selects the authorities it recognises.</p>
           <div class="fig-scroll">
             <svg viewBox="0 0 420 268" role="img" aria-labelledby="k4t k4d">
               <title id="k4t">One shared list of vouches that two readers interpret differently</title>
@@ -1053,7 +1063,7 @@
               </defs>
             </svg>
           </div>
-          <figcaption>There is no central authority to capture or coerce. Two organisations can rely on the same public list and still reach opposite conclusions — on purpose — because each names the referees it is willing to believe.</figcaption>
+          <figcaption>There is no central authority to capture or coerce. Two organisations may rely on the same public record and reach opposite conclusions by design, because each designates the authorities it is prepared to recognise as roots.</figcaption>
           <p class="relates">In the specification: <a href="https://claude.ai/code/artifact/7e50ec3f-688c-4ba2-a53c-637bb2569ede#06" target="_blank" rel="noopener">Accreditation (06)</a> — the open graph of who vouches for whom.</p>
         </figure>
 
@@ -1092,8 +1102,8 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">06 — The person</span>
-        <h2>What changes for the individual</h2>
+        <span class="kicker">06 — Individual impact</span>
+        <h2>Effect on the individual</h2>
         <p>
           Institutional benefit is only half the case. The architecture is only worth adopting if it
           also improves the position of the person whose identity is being handled — which, in
@@ -1303,7 +1313,7 @@
     <div class="wrap">
       <div class="shead">
         <span class="kicker">09 — Adoption</span>
-        <h2>It need not be adopted all at once</h2>
+        <h2>Phased adoption</h2>
         <p>
           Six stages, each producing something useful on its own: a system decommissioned, an
           agreement discontinued, or a capability that was not previously available. Select a stage
@@ -1419,8 +1429,8 @@
         <p>
           Shared-record infrastructure can be built several ways: a public network, a consortium
           ledger run by its members, a national or sector-specific chain, or conventional federated
-          databases. Rather than argue for one, these are the questions that separate them — apply
-          them to any option, including this one.
+          databases. The following criteria distinguish these approaches and apply to any option
+          under consideration, including this one.
         </p>
       </div>
 
@@ -1430,19 +1440,19 @@
             <tr>
               <th>Criterion</th>
               <th>What to ask</th>
-              <th>Why it decides the outcome</th>
+              <th>Evaluation significance</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Continuity<span class="q">Survives its operator?</span></td>
               <td>If the operating entity is acquired, defunded, or withdraws, do issued credentials keep verifying — with no action by anyone?</td>
-              <td>Determines whether credentials are an asset of the holder or a liability of the operator. Most arrangements fail here quietly, years later.</td>
+              <td>Determines whether issued credentials constitute an asset of the holder or a liability of the operator. Failure of this property typically becomes apparent only years after deployment.</td>
             </tr>
             <tr>
               <td>Admission control<span class="q">Who can exclude whom?</span></td>
               <td>Who decides which organisations may participate, and by what process can that decision be appealed, changed, or bought?</td>
-              <td>Whoever controls admission controls participation — and becomes the target of pressure. Ask who could exclude <em>you</em>, and under what circumstances.</td>
+              <td>Control of admission is control of participation, and concentrates external pressure on the controlling party. The material question is which parties could exclude the evaluating institution, and under what circumstances.</td>
             </tr>
             <tr>
               <td>Revocation latency<span class="q">How long is trust stale?</span></td>
@@ -1462,17 +1472,17 @@
             <tr>
               <td>Data protection<span class="q">What is permanent?</span></td>
               <td>What exactly is written to the shared layer, and can it ever identify a person? Can it be corrected or erased if it does?</td>
-              <td>Anything personal placed on a permanent shared record cannot be withdrawn. This is the criterion on which an otherwise sound design fails compliance.</td>
+              <td>Personal data written to a permanent shared record cannot be withdrawn, corrected or erased. Non-compliance at this criterion cannot be remediated after deployment.</td>
             </tr>
             <tr>
               <td>Verifiability<span class="q">Who can audit the logic?</span></td>
               <td>Can your own engineers inspect the trust-critical checks and confirm nothing changed, or does assurance arrive as a report about someone else's runtime?</td>
-              <td>Determines whether supervision is technical or contractual, and how quickly a defect can be found by someone other than the vendor.</td>
+              <td>Determines whether supervision is technical or contractual, and how quickly a defect can be identified by a party other than the supplier.</td>
             </tr>
             <tr>
               <td>Operating cost<span class="q">Who pays, forever?</span></td>
               <td>Who funds the infrastructure in year seven, and what happens to it if that funding stops?</td>
-              <td>Credential ecosystems usually fail economically before they fail technically — issuers carry the cost while verifiers capture the value.</td>
+              <td>Credential ecosystems typically fail economically before they fail technically: issuers bear the infrastructure cost while verifiers capture the value.</td>
             </tr>
           </tbody>
         </table>
@@ -1480,9 +1490,10 @@
 
       <p class="advisory" style="margin-top:18px">
         <b>Note</b>
-        <span>These criteria are deliberately neutral: a well-run consortium ledger scores well on
-        several, and this architecture has real weaknesses of its own — set out unsparingly in
-        section 12. The purpose is a comparable assessment, not a predetermined answer.</span>
+        <span>These criteria are deliberately neutral. A well-governed consortium ledger performs
+        well against several of them, and this architecture has substantive weaknesses of its own,
+        set out in the limitations section. The objective is a comparable assessment rather than a
+        predetermined conclusion.</span>
       </p>
     </div>
   </section>
@@ -1545,11 +1556,11 @@
   <section id="objections">
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">13 — Objections</span>
-        <h2>The questions that come up in the room</h2>
+        <span class="kicker">13 — Evaluation questions</span>
+        <h2>Questions raised in evaluation</h2>
         <p>
-          These are the objections raised in nearly every institutional evaluation. Answering them
-          badly costs more credibility than raising them does.
+          The following questions arise in most institutional evaluations of this architecture.
+          Each is addressed directly, including where the answer is unfavourable.
         </p>
       </div>
 
@@ -1558,18 +1569,18 @@
           <summary>Why not run our own chain, or a consortium ledger with partners we already trust?</summary>
           <div class="ans">
             <p>
-              Often you should — and for coordination among parties who already share a legal
-              framework, a consortium ledger is a reasonable answer. The evaluation framework above
-              is written so you can reach that conclusion honestly.
+              For coordination among parties that already share a legal framework, a consortium
+              ledger is frequently the appropriate choice. The evaluation framework above is
+              constructed to permit that conclusion.
             </p>
             <p>
-              The two criteria that usually decide it are <strong>reach and exit</strong>. A
-              consortium serves its members well, which by construction excludes everyone who is not
-              one — a limitation you feel the first time a counterparty in another jurisdiction, with
-              no prior agreement, needs to verify something you issued. And a ledger whose operators
-              are its members has an admission decision at its centre; whoever controls it can
-              exclude, and can be pressured to. Ask specifically: who could exclude <em>us</em>, and
-              what would it cost us to leave?
+              Two criteria typically determine the outcome: <strong>cross-border reach and exit
+              cost</strong>. A consortium serves its members well and, by construction, excludes
+              non-members — a limitation that becomes material when a counterparty in another
+              jurisdiction, with no prior agreement, must verify an issued credential. A ledger
+              operated by its members also has an admission decision at its centre, which can be
+              exercised and can attract external pressure. The specific questions are which parties
+              could exclude the institution, and what migration would cost.
             </p>
           </div>
         </details>
@@ -1577,35 +1588,36 @@
           <summary>Does using a public network mean giving up sovereignty?</summary>
           <div class="ans">
             <p>
-              No — but it does mean giving up <em>exclusive control</em>, which is the point. You
-              retain sovereignty over everything that matters institutionally: which authorities you
-              recognise, which credentials you accept, who you accredit, and what your citizens or
-              customers are asked to disclose. Nobody can overrule those decisions.
+              No. It requires relinquishing <em>exclusive control</em> of the shared layer. The
+              institution retains authority over every decision of consequence: which authorities it
+              recognises as roots, which credentials it accepts, which parties it accredits, and what
+              its citizens or customers are asked to disclose. No other party can override those
+              determinations.
             </p>
             <p>
-              What you give up is the ability to exclude others from the shared layer — and so does
-              everyone else, which is precisely what makes it usable by parties who do not trust one
-              another. Institutions that need a dedicated environment can deploy on a layer&nbsp;2
-              network with their own operating parameters while inheriting the neutrality and
-              permanence of the base layer.
+              What is relinquished is the ability to exclude others from the shared layer, a
+              constraint that applies equally to all participants and is what makes the layer usable
+              between parties that do not trust one another. Institutions requiring a dedicated
+              environment can deploy on a layer&nbsp;2 network under their own operating parameters
+              while inheriting the neutrality and permanence of the base layer.
             </p>
           </div>
         </details>
         <details>
-          <summary>Isn't this a data-protection problem? Public ledgers are permanent.</summary>
+          <summary>Does this create a data-protection problem, given that public ledgers are permanent?</summary>
           <div class="ans">
             <p>
-              It would be, if personal data were written to one — which is why none is. Credentials,
-              attributes, identifiers and presentation records stay off the ledger entirely. What is
-              recorded is coordination state: which key controls an identifier, who vouches for whom,
-              whether a credential is still valid, whether someone has already acted.
+              The concern applies where personal data is written to a permanent ledger. No personal
+              data is written here. Credentials, attributes, identifiers and presentation records
+              remain off the ledger entirely. What is recorded is coordination state: which key
+              controls an identifier, which parties vouch for which, whether a credential remains
+              valid, and whether a given party has already acted in a defined context.
             </p>
             <p>
-              The privacy path goes further: a holder proves a fact without disclosing the
-              credential, so the verifier never receives the data it would otherwise have to protect.
-              The honest residual risks — group sizes, timing correlation, and the fact that a
-              commitment is a durable pseudonym — are set out in the limitations section rather than
-              glossed over.
+              The privacy path extends this: a holder proves an assertion without disclosing the
+              credential, so the verifier does not receive data it would otherwise be obliged to
+              protect. The residual risks — anonymity-set size, timing correlation, and the durable
+              pseudonymity of a commitment — are stated in the limitations section.
             </p>
           </div>
         </details>
@@ -1618,10 +1630,10 @@
               magnitude below both proof-of-work systems and conventional data-centre infrastructure.
             </p>
             <p>
-              For an identity deployment specifically, the relevant figure is smaller still: the
-              operations described here are a handful of small transactions, most of them on a
-              layer&nbsp;2 network. This is no longer the objection it was in 2020, and a current
-              evaluation should say so.
+              For an identity deployment specifically, the relevant consumption is smaller still:
+              the operations described here comprise a small number of transactions, predominantly on
+              a layer&nbsp;2 network. The objection reflects the pre-2022 proof-of-work network and
+              no longer applies.
             </p>
           </div>
         </details>
@@ -1635,9 +1647,10 @@
               the base layer used for checkpointing where permanence matters most.
             </p>
             <p>
-              Note what the institution is <em>not</em> exposed to: none of these components require
-              holding a volatile asset as a reserve or a treasury position. The exposure is a
-              transaction-fee line, and it can be hedged, prepaid, or sponsored on behalf of users.
+              The institution is not exposed to asset price risk: none of these components requires
+              holding a volatile asset as a reserve or treasury position. The exposure is a
+              transaction-fee cost line, which can be hedged, prepaid, or sponsored on behalf of
+              users.
             </p>
           </div>
         </details>
@@ -1662,16 +1675,17 @@
           <summary>What if the Ethereum Foundation disappears, or the ecosystem loses interest?</summary>
           <div class="ans">
             <p>
-              This is the right question, and the honest answer is that it should not matter. The
-              Foundation does not operate the network, cannot change it unilaterally, and holds a
-              small fraction of the asset supply. The network is maintained by independent client
-              teams, several of them unaffiliated.
+              The dependency is limited by design. The Foundation does not operate the network,
+              cannot alter it unilaterally, and holds a small fraction of the asset supply. The
+              network is maintained by multiple independent client teams, several of them
+              unaffiliated with the Foundation.
             </p>
             <p>
-              For your deployment specifically: the implementation is open source and forkable, the
-              data is public, the interfaces are standard, and the registries keep resolving with no
-              action by anyone. That is what the continuity and exit-cost criteria are testing —
-              apply them to every option, including this one.
+              For a specific deployment: the implementation is open source and forkable, the data is
+              public, the interfaces are standard, and the registries continue to resolve without
+              action by any party. These are the properties the continuity and exit-cost criteria
+              are intended to test, and they should be applied to every option under
+              consideration.
             </p>
           </div>
         </details>
@@ -1679,16 +1693,16 @@
           <summary>Is this actually production-ready?</summary>
           <div class="ans">
             <p>
-              <strong>No, and nothing here should be read as claiming otherwise.</strong> The
-              implementation is a proof of concept: unaudited, deliberately minimal, and built to
-              make the mechanisms legible for evaluation. Several components explicitly recommend
-              using an existing production system instead — the canonical identifier registry, an
-              established attestation service, the reference privacy protocol.
+              <strong>No.</strong> The implementation is a proof of concept: unaudited,
+              deliberately minimal, and constructed to make the mechanisms legible for evaluation.
+              Several components explicitly recommend substituting an existing production system —
+              the canonical identifier registry, an established attestation service, and the
+              reference privacy protocol.
             </p>
             <p>
-              What is production-ready is the underlying network and the standards. The appropriate
-              next step is a scoped stage&nbsp;1 pilot with an independent audit budgeted, not a
-              deployment of this code.
+              The underlying network and the standards are production-ready. The appropriate next
+              step is a scoped stage&nbsp;1 pilot with an independent audit budgeted, not deployment
+              of this reference code.
             </p>
           </div>
         </details>
@@ -1701,10 +1715,11 @@
     <div class="wrap">
       <div class="shead">
         <span class="kicker">14 — Technical evidence</span>
-        <h2>What your engineers can check</h2>
+        <h2>Measured implementation characteristics</h2>
         <p>
-          Every figure below is measured from the reference implementation, not estimated. A
-          technical reviewer should reproduce them rather than accept them — the commands are given.
+          The following figures are measured from the reference implementation rather than
+          estimated. Reproduction commands are provided so that a technical reviewer can confirm
+          them independently.
         </p>
       </div>
 
@@ -1717,7 +1732,7 @@
             <dt>Written specifications</dt><dd>17</dd>
             <dt>Tests passing</dt><dd>74</dd>
           </dl>
-          <p class="evnote">Small enough to read end to end in a day — which is itself a security property, not a limitation.</p>
+          <p class="evnote">The implementation is small enough for complete review. Minimising code size and external dependencies is a stated security objective, not a limitation of scope.</p>
         </div>
 
         <div class="evcard">
@@ -1739,7 +1754,7 @@
             <dt>Full gated claim</dt><dd>~238,000</dd>
             <dt>Validity lookup</dt><dd>~2,800</dd>
           </dl>
-          <p class="evnote">Reads are near-free; the cost sits in writes and proofs. On a layer&nbsp;2 network these figures are fractions of a cent.</p>
+          <p class="evnote">Read operations arenear-negligible; cost is concentrated in writes and proof verification. On a layer&nbsp;2 network these figures correspond to fractions of a cent.</p>
         </div>
 
         <div class="evcard">
@@ -1768,11 +1783,11 @@ forge test --gas-report       # the measurements above</pre>
       </div>
 
       <p class="advisory" style="margin-top:18px">
-        <b>Honest gap</b>
+        <b>Verification status</b>
         <span>The source repository is not yet published, so the figures above cannot currently be
-        independently reproduced by a third party. Until it is, treat this section as a statement of
-        what will be verifiable rather than what has been verified externally — and ask for the
-        repository before relying on any of it.</span>
+        reproduced independently by a third party. This section therefore states what will be
+        verifiable rather than what has been verified externally. The repository should be obtained
+        before these figures are relied upon in an assessment.</span>
       </p>
     </div>
   </section>
@@ -1781,12 +1796,11 @@ forge test --gas-report       # the measurements above</pre>
   <section id="evaluate">
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">15 — Next step</span>
+        <span class="kicker">15 — Evaluation path</span>
         <h2>Taking this into an options assessment</h2>
         <p>
-          If this warrants formal evaluation, the following is the shortest path to a defensible
-          conclusion — including the steps that let your own engineers confirm what is claimed here
-          rather than take it on trust.
+          The following steps constitute a defensible evaluation path, including the verification
+          required by an engineering reviewer.
         </p>
       </div>
 
@@ -1799,7 +1813,8 @@ forge test --gas-report       # the measurements above</pre>
               Before evaluating identity infrastructure, confirm what the programme actually needs.
               Many requirements written as identity requirements — one vote each, one claim each,
               one account each — are uniqueness requirements, and can be met without collecting
-              identity at all. This single question often changes the scope of the whole programme.
+              identity at all. Resolving this question frequently alters the scope of the
+              programme.
             </div>
           </div>
         </div>
@@ -1810,8 +1825,8 @@ forge test --gas-report       # the measurements above</pre>
             <div class="cb">
               Score this architecture and its alternatives against the eight criteria in
               <a href="#criteria">evaluation framework</a>. Record the answers, including where this
-              architecture scores poorly — an assessment that finds no weaknesses will not survive
-              review.
+              architecture performs poorly. An assessment recording no weaknesses will not
+              withstand scrutiny.
             </div>
           </div>
         </div>
@@ -1824,7 +1839,7 @@ forge test --gas-report       # the measurements above</pre>
               written specification for each. It builds and tests with one command, and the suite
               includes real zero-knowledge proofs. A reviewer should reproduce the figures under
               <a href="#evidence">technical evidence</a>, read the specifications against the code, and
-              check the honest-limitations section of each. Budget roughly a day.
+              check the stated limitations of each. Estimated effort: one working day.
             </div>
           </div>
         </div>
@@ -1834,9 +1849,9 @@ forge test --gas-report       # the measurements above</pre>
             <div class="ct">Scope stage 1 only</div>
             <div class="cb">
               Stage 1 — identifiers and non-custodial recovery — involves no personal data, requires
-              no user-facing change, and runs alongside existing public-key infrastructure. It is
-              the smallest deployment that produces a real result, and the cheapest to abandon if
-              the assessment concludes against.
+              no user-facing change, and operates alongside existing public-key infrastructure. It
+              is the minimum deployment producing a substantive result, and the least costly to
+              discontinue should the assessment conclude against adoption.
             </div>
           </div>
         </div>
@@ -1847,8 +1862,7 @@ forge test --gas-report       # the measurements above</pre>
             <div class="cb">
               The implementation is unaudited and says so throughout. Any production deployment
               needs a cryptographic audit of the circuits and verifying keys, and a security review
-              of the contracts. Budget for it in the assessment rather than discovering it at
-              approval.
+              of the contracts. This should be budgeted within the assessment.
             </div>
           </div>
         </div>
@@ -1859,8 +1873,8 @@ forge test --gas-report       # the measurements above</pre>
             <div class="cb">
               Which authorities you recognise as roots, who may withdraw an accreditation and with
               what notice, what minimum population a privacy group must have, and what happens to
-              people who cannot manage keys. These are policy decisions, and the architecture makes
-              them explicit rather than deciding them for you.
+              individuals unable to manage keys independently. These are policy determinations; the
+              architecture makes them explicit rather than resolving them implicitly.
             </div>
           </div>
         </div>
@@ -2541,5 +2555,47 @@ forge test --gas-report       # the measurements above</pre>
   paintLens();
   renderStage();
   paintStage();
+})();
+</script>
+
+<script>
+/* Explicit theme control. Defaults to the viewer's system preference; an explicit
+   choice is stored and wins thereafter. Runs standalone on either page. */
+(function () {
+  "use strict";
+  var root = document.documentElement, KEY = "oi-theme";
+  function systemDark() {
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  function current() {
+    return root.getAttribute("data-theme") || (systemDark() ? "dark" : "light");
+  }
+  function label() {
+    var b = document.getElementById("themetog");
+    if (!b) return;
+    var dark = current() === "dark";
+    b.setAttribute("aria-pressed", dark ? "true" : "false");
+    b.querySelector(".tlabel").textContent = dark ? "Light mode" : "Dark mode";
+  }
+  try {
+    var saved = localStorage.getItem(KEY);
+    if (saved === "dark" || saved === "light") root.setAttribute("data-theme", saved);
+  } catch (e) {}
+  label();
+  var btn = document.getElementById("themetog");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      var next = current() === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem(KEY, next); } catch (e) {}
+      label();
+    });
+  }
+  if (window.matchMedia) {
+    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+    var onChange = function () { try { if (!localStorage.getItem(KEY)) label(); } catch (e) { label(); } };
+    if (mq.addEventListener) mq.addEventListener("change", onChange);
+    else if (mq.addListener) mq.addListener(onChange);
+  }
 })();
 </script>
