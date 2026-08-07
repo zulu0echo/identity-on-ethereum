@@ -185,7 +185,7 @@ half for account-scoped actions.
 
 This document is not currently on the IETF stream and requests no IANA actions at this time.
 
-Were it submitted, it would establish a **Capability Scope conventions registry**, replacing the enumeration that is presently defined inline — namely the well-known capability-scope hashes an ecosystem agrees to share. A companion registry proposal specifies the registry's contents, allocation policy (Specification Required or Expert Review), and initial entries; until that proposal is adopted these values are defined in this document and are not IANA-managed.
+Were it submitted, it would establish a **Capability Scope conventions registry**, replacing the enumeration that is presently defined inline — namely the well-known capability-scope hashes an ecosystem agrees to share. The registry itself — its contents, allocation policy, and initial entries — is defined in [00/REGISTRIES]; the values remain defined inline here until that document is adopted.
 
 # Normative References
 

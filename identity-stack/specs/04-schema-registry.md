@@ -136,6 +136,8 @@ without anyone's schema becoming unregistrable. The same reasoning governs
 
 # Interoperability
 
+**Mandatory-to-implement parameters.** The curve, hash instantiation, signal and identifier encodings, and sizing floors this specification depends on are pinned in [16/CRYPTO-PARAMETERS]. Implementations MUST conform to that profile to interoperate.
+
 The URI SHOULD point at a W3C Verifiable Credentials data-model / JSON Schema document, so
 existing verifier tooling can consume registered types unchanged.
 

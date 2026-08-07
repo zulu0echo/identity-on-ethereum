@@ -144,6 +144,8 @@ the check is performed. Where the fact of the check is itself sensitive, use the
 
 # Interoperability
 
+**Mandatory-to-implement parameters.** The curve, hash instantiation, signal and identifier encodings, and sizing floors this specification depends on are pinned in [16/CRYPTO-PARAMETERS]. Implementations MUST conform to that profile to interoperate.
+
 The list mirrors W3C `BitstringStatusList` semantics, so a credential's
 `statusListCredential` field can point at this contract instead of an HTTPS URL. The W3C
 minimum list size (131,072 entries) SHOULD be treated as a floor for herd privacy.
@@ -163,7 +165,7 @@ minimum list size (131,072 entries) SHOULD be treated as a floor for herd privac
 
 This document is not currently on the IETF stream and requests no IANA actions at this time.
 
-Were it submitted, it would establish a **Status Purpose registry**, replacing the enumeration that is presently defined inline — namely the status-purpose values `Revocation` and `Suspension`, aligned with the W3C statusPurpose values. A companion registry proposal specifies the registry's contents, allocation policy (Specification Required or Expert Review), and initial entries; until that proposal is adopted these values are defined in this document and are not IANA-managed.
+Were it submitted, it would establish a **Status Purpose registry**, replacing the enumeration that is presently defined inline — namely the status-purpose values `Revocation` and `Suspension`, aligned with the W3C statusPurpose values. The registry itself — its contents, allocation policy, and initial entries — is defined in [00/REGISTRIES]; the values remain defined inline here until that document is adopted.
 
 # Normative References
 

@@ -192,6 +192,8 @@ class at once.
 
 # Interoperability
 
+**Mandatory-to-implement parameters.** The curve, hash instantiation, signal and identifier encodings, and sizing floors this specification depends on are pinned in [16/CRYPTO-PARAMETERS]. Implementations MUST conform to that profile to interoperate.
+
 Trees are Semaphore v4 groups; the proof shape consumed by 11/PROOF-GATEWAY is stock
 Semaphore, so existing prover tooling works unchanged.
 

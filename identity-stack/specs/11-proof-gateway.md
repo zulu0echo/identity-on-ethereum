@@ -175,6 +175,8 @@ means a proof lifted from the mempool is useless to any other sender.
 
 # Interoperability
 
+**Mandatory-to-implement parameters.** The curve, hash instantiation, signal and identifier encodings, and sizing floors this specification depends on are pinned in [16/CRYPTO-PARAMETERS]. Implementations MUST conform to that profile to interoperate.
+
 `Proof` is exactly Semaphore v4's proof shape, so any Semaphore wallet/prover tooling works
 unchanged. Wrapping verification behind this interface allows a future proof system
 (universal-setup or transparent) to replace Groth16 without migrating consumers.
