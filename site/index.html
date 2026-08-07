@@ -386,6 +386,14 @@
   .concepts { display: grid; grid-template-columns: repeat(auto-fit, minmax(430px, 1fr)); gap: 22px; }
   .concept h3 { font-size: 18px; }
   .concept .fig-sub { margin-bottom: 18px; }
+  .relates { margin-top: 12px; padding-top: 11px; border-top: 1px solid var(--line-soft); font-size: 13px; color: var(--ink-3); }
+  .relates a { font-weight: 600; color: var(--brand-deep); text-decoration: none; }
+  .relates a:hover { text-decoration: underline; }
+  .speclink { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; padding: 11px 18px; border-radius: 999px; background: var(--brand); color: #fff; font-size: 15px; font-weight: 600; text-decoration: none; box-shadow: var(--shadow); }
+  .speclink:hover { background: var(--brand-deep); }
+  @media (prefers-color-scheme: dark) { .speclink { color: var(--bg); } }
+  :root[data-theme="dark"] .speclink { color: var(--bg); }
+  :root[data-theme="light"] .speclink { color: #fff; }
 
   /* ============================================================ spec index */
   .speclist { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
@@ -445,6 +453,7 @@
       This page sets out what those functions are, how they fit together, and
       <strong>why they need not be adopted all at once.</strong>
     </p>
+    <a class="speclink" href="https://claude.ai/code/artifact/7e50ec3f-688c-4ba2-a53c-637bb2569ede" target="_blank" rel="noopener">Read the full technical specifications →</a>
     <p class="scope">
       <b>Note on scope.</b> Provided for general educational and informational purposes. It is not
       legal, regulatory, financial or other professional advice. The implementation described is an
@@ -706,8 +715,10 @@
         <span class="kicker">03 — The difficult parts</span>
         <h2>Four ideas, in pictures</h2>
         <p>
-          Four mechanisms do most of the work, and each sounds harder than it is. Set out plainly
-          here, because an evaluation should not depend on taking the cryptography on trust.
+          Four mechanisms do most of the work, and each sounds harder than it is. Each is a plain
+          picture of one component — named beneath it, and specified in full in the
+          <a href="https://claude.ai/code/artifact/7e50ec3f-688c-4ba2-a53c-637bb2569ede" target="_blank" rel="noopener">specifications</a>
+          — because an evaluation should not depend on taking the cryptography on trust.
         </p>
       </div>
 
@@ -755,44 +766,52 @@
             </svg>
           </div>
           <figcaption>Both answers satisfy the requirement. Only one creates a record that can later be breached, subpoenaed or sold.</figcaption>
+          <p class="relates">In the specification: <a href="https://claude.ai/code/artifact/7e50ec3f-688c-4ba2-a53c-637bb2569ede#11" target="_blank" rel="noopener">Verification (11)</a> — the check that reads a proof instead of a document.</p>
         </figure>
 
         <!-- B -->
         <figure class="fig concept">
-          <h3>A mark that says “not twice”, not “who”</h3>
-          <p class="fig-sub">How one-per-person is enforced without anyone learning the person.</p>
+          <h3>Proving “not again”, without a name</h3>
+          <p class="fig-sub">Like the invisible hand-stamp at an event: it proves you have not already been through, but carries no name.</p>
           <div class="fig-scroll">
-            <svg viewBox="0 0 420 260" role="img" aria-labelledby="k2t k2d">
-              <title id="k2t">The same person produces a different, unlinkable mark in each context</title>
-              <desc id="k2d">One person taking part in two programmes produces a different mark in each. Neither mark can be traced back to the person, and the two cannot be connected. Presenting the same mark twice in the same programme is refused.</desc>
+            <svg viewBox="0 0 420 300" role="img" aria-labelledby="k2t k2d">
+              <title id="k2t">A hand-stamp that enforces one-per-person without identity, and differs per event</title>
+              <desc id="k2d">A person is stamped for a specific event. A checker allows the first appearance of a stamp and refuses a repeat, without ever seeing a name. A different event produces a different stamp, and the two stamps cannot be linked to each other.</desc>
 
-              <circle class="b-soft" cx="34" cy="86" r="22"/>
-              <circle class="dot" cx="34" cy="79" r="7"/>
-              <path d="M22 100a12 12 0 0 1 24 0" fill="none" stroke="var(--ink-3)" stroke-width="1.6"/>
-              <text class="t3" x="4" y="126">one person</text>
+              <text class="t2" x="0" y="16">Once per person — checked by the stamp, not a name</text>
 
-              <path class="ln" d="M62 72 H128" marker-end="url(#kb)"/>
-              <path class="ln" d="M62 100 H128" marker-end="url(#kb)"/>
+              <rect class="b" x="0" y="30" width="80" height="46" rx="6"/>
+              <text class="t" x="40" y="58" text-anchor="middle">You</text>
+              <path class="ln-br" d="M80 53 H120" marker-end="url(#kbb)"/>
+              <rect class="b-br" x="122" y="30" width="180" height="46" rx="6"/>
+              <text class="t" x="212" y="58" text-anchor="middle">Stamp for “this vote”</text>
 
-              <rect class="b" x="134" y="46" width="128" height="50" rx="6"/>
-              <text class="t" x="148" y="70">Programme A</text>
-              <text class="t3" x="148" y="87">benefits</text>
-              <rect class="b" x="134" y="112" width="128" height="50" rx="6"/>
-              <text class="t" x="148" y="136">Programme B</text>
-              <text class="t3" x="148" y="153">consultation</text>
+              <text class="t3" x="0" y="100">The checker only asks: has this stamp appeared before?</text>
+              <text class="t3" x="0" y="118">It never sees a name.</text>
+              <text class="tgr" x="0" y="140">First time → counted once</text>
+              <text class="twa" x="220" y="140">Seen again → refused</text>
 
-              <path class="ln-br" d="M266 71 H306" marker-end="url(#kbb)"/>
-              <path class="ln-br" d="M266 137 H306" marker-end="url(#kbb)"/>
+              <line class="hair" x1="0" y1="158" x2="420" y2="158"/>
 
-              <rect class="b-br" x="312" y="54" width="34" height="34" rx="5"/>
-              <text class="t3" x="354" y="76">one mark</text>
-              <path class="b-br" d="M329 120 l17 30 h-34 z"/>
-              <text class="t3" x="354" y="142">another</text>
+              <text class="t2" x="0" y="182">A different event makes a different stamp:</text>
 
-              <line class="hair" x1="0" y1="188" x2="420" y2="188"/>
-              <text class="t2" x="0" y="210">Two different marks. Neither leads back to the person,</text>
-              <text class="t2" x="0" y="230">and nothing connects one to the other.</text>
-              <text class="twa" x="0" y="252">The same mark cannot be used twice.</text>
+              <rect class="b" x="0" y="196" width="80" height="46" rx="6"/>
+              <text class="t" x="40" y="224" text-anchor="middle">You</text>
+              <path class="ln" d="M80 209 H150" marker-end="url(#kb)"/>
+              <rect class="b" x="152" y="194" width="96" height="30" rx="5"/>
+              <text class="t3" x="200" y="214" text-anchor="middle">Vote 2026</text>
+              <path class="ln" d="M80 245 H150" marker-end="url(#kb)"/>
+              <rect class="b" x="152" y="230" width="96" height="30" rx="5"/>
+              <text class="t3" x="200" y="250" text-anchor="middle">Health survey</text>
+
+              <path class="ln-br" d="M248 209 H286" marker-end="url(#kbb)"/>
+              <circle class="b-br" cx="304" cy="209" r="13"/>
+              <path class="ln-br" d="M248 245 H286" marker-end="url(#kbb)"/>
+              <rect class="b-br" x="291" y="232" width="26" height="26" rx="4"/>
+
+              <path class="dash" d="M286 194 h64 v72 h-64 z"/>
+              <text class="twa" x="356" y="222">can’t be</text>
+              <text class="twa" x="356" y="240">linked</text>
 
               <defs>
                 <marker id="kb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path fill="var(--ink-3)" d="M0 0 L10 5 L0 10 z"/></marker>
@@ -800,91 +819,94 @@
               </defs>
             </svg>
           </div>
-          <figcaption>The mark is derived from a secret only the person holds, combined with the programme. Same person, different programme, different mark.</figcaption>
+          <figcaption>The stamp is made from a secret only you hold, combined with the event — so it is the same every time <em>you</em> act in <em>this</em> event (catching repeats), but different in any other event (so your actions can’t be joined up).</figcaption>
+          <p class="relates">In the specification: <a href="https://claude.ai/code/artifact/7e50ec3f-688c-4ba2-a53c-637bb2569ede#10" target="_blank" rel="noopener">Uniqueness (10)</a> — the “one action per person, per context” register.</p>
         </figure>
 
         <!-- C -->
         <figure class="fig concept">
-          <h3>A wall of sealed boxes</h3>
-          <p class="fig-sub">How a credential can be checked while staying unreadable.</p>
+          <h3>Sealed, identical boxes — and one seal over them</h3>
+          <p class="fig-sub">Every credential is a sealed box on a shared shelf. You can prove one is yours without opening it or pointing to it.</p>
           <div class="fig-scroll">
-            <svg viewBox="0 0 420 260" role="img" aria-labelledby="k3t k3d">
-              <title id="k3t">Credentials as sealed boxes on a wall with a single summary fingerprint</title>
-              <desc id="k3d">Every credential issued is a sealed box on a shared wall. A holder can prove their box is on the wall without indicating which one. Removing a box changes the wall's fingerprint, so proofs made against the previous fingerprint stop working.</desc>
+            <svg viewBox="0 0 420 312" role="img" aria-labelledby="k3t k3d">
+              <title id="k3t">Credentials as sealed identical boxes under a single summary seal</title>
+              <desc id="k3d">Each issued credential is a sealed, identical box. A holder can prove one of the boxes is theirs without revealing which. The whole shelf carries one summary seal. Removing a box (revoking a credential) changes that seal, so any out-of-date proof stops matching.</desc>
 
-              <text class="t3" x="0" y="14">every credential issued = one sealed box</text>
-              <g id="wallgrid"></g>
-              <text class="t3" x="0" y="112">the whole wall reduces to one short fingerprint</text>
-              <rect class="b-br" x="0" y="120" width="150" height="30" rx="5"/>
-              <text class="t" x="12" y="140">7f3a · · ·</text>
+              <text class="t2" x="0" y="16">Each credential is a sealed, identical box</text>
+              <g>
+                <rect class="b" x="0"   y="28" width="46" height="44" rx="5"/><circle class="dot" cx="23"  cy="50" r="3.5"/>
+                <rect class="b" x="58"  y="28" width="46" height="44" rx="5"/><circle class="dot" cx="81"  cy="50" r="3.5"/>
+                <rect class="b" x="116" y="28" width="46" height="44" rx="5"/><circle class="dot" cx="139" cy="50" r="3.5"/>
+                <rect class="b" x="174" y="28" width="46" height="44" rx="5"/><circle class="dot" cx="197" cy="50" r="3.5"/>
+                <rect class="b" x="232" y="28" width="46" height="44" rx="5"/><circle class="dot" cx="255" cy="50" r="3.5"/>
+                <rect class="b" x="290" y="28" width="46" height="44" rx="5"/><circle class="dot" cx="313" cy="50" r="3.5"/>
+              </g>
+              <text class="t3" x="0" y="92">Identical and sealed — you can’t tell them apart.</text>
+              <text class="tbr" x="0" y="116">You prove one is yours — without showing which. ✓</text>
 
-              <path class="ln-wa" d="M162 135 H206" marker-end="url(#kcw)"/>
-              <text class="twa" x="214" y="130">remove one box</text>
-              <text class="t3" x="214" y="148">(a credential is withdrawn)</text>
+              <line class="hair" x1="0" y1="136" x2="420" y2="136"/>
 
-              <rect class="b-wa" x="0" y="162" width="150" height="30" rx="5"/>
-              <text class="t" x="12" y="182">b21c · · ·</text>
-              <text class="t3" x="162" y="182">the fingerprint changes</text>
+              <text class="t2" x="0" y="160">The whole shelf carries one summary seal:</text>
+              <rect class="b-br" x="0" y="172" width="196" height="34" rx="6"/>
+              <text class="t" x="16" y="194">Summary seal — matches ✓</text>
 
-              <line class="hair" x1="0" y1="206" x2="420" y2="206"/>
-              <text class="t2" x="0" y="228">You can show your box is on the wall without pointing at it,</text>
-              <text class="t2" x="0" y="248">and a withdrawn box fails against the new fingerprint.</text>
-
-              <defs>
-                <marker id="kcw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path fill="var(--warm)" d="M0 0 L10 5 L0 10 z"/></marker>
-              </defs>
+              <text class="t2" x="0" y="240">Revoke a credential — remove its box:</text>
+              <g>
+                <rect class="b" x="0"   y="252" width="46" height="40" rx="5"/><circle class="dot" cx="23"  cy="272" r="3.5"/>
+                <rect class="b" x="58"  y="252" width="46" height="40" rx="5"/><circle class="dot" cx="81"  cy="272" r="3.5"/>
+                <rect class="b-wa" x="116" y="252" width="46" height="40" rx="5" opacity="0.4"/>
+                <path class="ln-wa" d="M120 256 L158 288 M158 256 L120 288"/>
+                <rect class="b" x="174" y="252" width="46" height="40" rx="5"/><circle class="dot" cx="197" cy="272" r="3.5"/>
+                <rect class="b" x="232" y="252" width="46" height="40" rx="5"/><circle class="dot" cx="255" cy="272" r="3.5"/>
+                <rect class="b" x="290" y="252" width="46" height="40" rx="5"/><circle class="dot" cx="313" cy="272" r="3.5"/>
+              </g>
+              <text class="twa" x="0" y="308">Change the seal, and yesterday’s proof no longer fits.</text>
             </svg>
           </div>
-          <figcaption>The boxes are indistinguishable to anyone reading the wall. Only the holder can demonstrate that one of them is theirs.</figcaption>
+          <figcaption>Nobody reading the shelf can tell the boxes apart or open them; only the holder can demonstrate that one is theirs. The single seal is what makes revocation instant: change it, and yesterday’s proof no longer fits.</figcaption>
+          <p class="relates">In the specification: <a href="https://claude.ai/code/artifact/7e50ec3f-688c-4ba2-a53c-637bb2569ede#09" target="_blank" rel="noopener">Private Credentials (09)</a> — the issuer’s tree of credential commitments.</p>
         </figure>
 
         <!-- D -->
         <figure class="fig concept">
-          <h3>One register, and no one in charge of it</h3>
-          <p class="fig-sub">How several jurisdictions share infrastructure without agreeing on an authority.</p>
+          <h3>Reference letters — you choose whose you trust</h3>
+          <p class="fig-sub">Like recommendation letters on a public noticeboard: anyone may vouch for anyone, no one runs the board, and each reader decides whose word counts.</p>
           <div class="fig-scroll">
-            <svg viewBox="0 0 420 260" role="img" aria-labelledby="k4t k4d">
-              <title id="k4t">Three relying parties reading one shared register and reaching different conclusions</title>
-              <desc id="k4d">A single shared register records which authorities vouch for which issuers. Each relying party chooses which authorities it recognises, so the same register supports different and even incompatible trust policies.</desc>
+            <svg viewBox="0 0 420 268" role="img" aria-labelledby="k4t k4d">
+              <title id="k4t">One shared list of vouches that two readers interpret differently</title>
+              <desc id="k4d">A public list records that Referee A vouches for Hospital H and Referee B vouches for Clinic C. A Ministry that trusts Referee A accepts Hospital H and not Clinic C. An Insurer that trusts Referee B accepts Clinic C and not Hospital H. The same list yields different answers because each reader chooses whose vouches count.</desc>
 
-              <rect class="b-gr" x="0" y="0" width="420" height="76" rx="6"/>
-              <text class="tgr" x="14" y="22">ONE SHARED REGISTER — NOBODY OWNS IT</text>
-              <text class="t3" x="14" y="46">A vouches for X</text>
-              <text class="t3" x="14" y="65">B vouches for X</text>
-              <text class="t3" x="220" y="46">C vouches for Y</text>
-              <text class="t3" x="220" y="65">A vouches for Y</text>
+              <rect class="b-gr" x="0" y="0" width="420" height="72" rx="6"/>
+              <text class="tgr" x="16" y="24">PUBLIC LIST — anyone may vouch, no one owns it</text>
+              <text class="t3" x="16" y="47">Referee A  vouches for →  Hospital H</text>
+              <text class="t3" x="16" y="66">Referee B  vouches for →  Clinic C</text>
 
-              <path class="ln" d="M70 78 V104" marker-end="url(#kd)"/>
-              <path class="ln" d="M210 78 V104" marker-end="url(#kd)"/>
-              <path class="ln" d="M350 78 V104" marker-end="url(#kd)"/>
+              <path class="ln" d="M105 72 V96" marker-end="url(#kd)"/>
+              <path class="ln" d="M315 72 V96" marker-end="url(#kd)"/>
 
-              <rect class="b" x="0" y="110" width="128" height="96" rx="6"/>
-              <text class="t" x="12" y="132">Ministry 1</text>
-              <text class="t3" x="12" y="154">accepts A only</text>
-              <text class="tgr" x="12" y="180">X ✓</text>
-              <text class="tgr" x="52" y="180">Y ✓</text>
+              <rect class="b" x="0" y="100" width="200" height="120" rx="6"/>
+              <text class="t" x="16" y="126">Ministry</text>
+              <text class="t3" x="16" y="148">trusts Referee A</text>
+              <text class="t3" x="16" y="172">accepts:</text>
+              <text class="tgr" x="16" y="194">Hospital H  ✓</text>
+              <text class="twa" x="110" y="194">Clinic C  ✕</text>
 
-              <rect class="b" x="146" y="110" width="128" height="96" rx="6"/>
-              <text class="t" x="158" y="132">Bank 2</text>
-              <text class="t3" x="158" y="154">accepts B only</text>
-              <text class="tgr" x="158" y="180">X ✓</text>
-              <text class="twa" x="198" y="180">Y ✕</text>
+              <rect class="b" x="220" y="100" width="200" height="120" rx="6"/>
+              <text class="t" x="236" y="126">Insurer</text>
+              <text class="t3" x="236" y="148">trusts Referee B</text>
+              <text class="t3" x="236" y="172">accepts:</text>
+              <text class="twa" x="236" y="194">Hospital H  ✕</text>
+              <text class="tgr" x="330" y="194">Clinic C  ✓</text>
 
-              <rect class="b" x="292" y="110" width="128" height="96" rx="6"/>
-              <text class="t" x="304" y="132">Agency 3</text>
-              <text class="t3" x="304" y="154">accepts C only</text>
-              <text class="twa" x="304" y="180">X ✕</text>
-              <text class="tgr" x="344" y="180">Y ✓</text>
-
-              <text class="t2" x="0" y="232">The same register, three different answers — because trust</text>
-              <text class="t2" x="0" y="252">sits with whoever is reading, not with whoever runs the register.</text>
+              <text class="t2" x="0" y="244">Same list, opposite answers — the reader decides.</text>
 
               <defs>
                 <marker id="kd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path fill="var(--ink-3)" d="M0 0 L10 5 L0 10 z"/></marker>
               </defs>
             </svg>
           </div>
-          <figcaption>This is what allows jurisdictions with incompatible trust policies, or none in common, to operate over one set of records.</figcaption>
+          <figcaption>There is no central authority to capture or coerce. Two organisations can rely on the same public list and still reach opposite conclusions — on purpose — because each names the referees it is willing to believe.</figcaption>
+          <p class="relates">In the specification: <a href="https://claude.ai/code/artifact/7e50ec3f-688c-4ba2-a53c-637bb2569ede#06" target="_blank" rel="noopener">Accreditation (06)</a> — the open graph of who vouches for whom.</p>
         </figure>
 
       </div>
@@ -1962,8 +1984,6 @@
   buildLimits();
   buildSpecs();
   wireMap();
-  // the wall of sealed boxes — drawn so the count is real, not suggested
-  dots("wallgrid", 26, 3, 6, 32, 15, 22, 0, -1, true);
   dots("smallgrid", 6, 2, 12, 66, 30, 30, 6, 8);
   dots("biggrid", 50, 7, 492, 58, 8, 8.5, 2.2, 180);
   paintLens();
