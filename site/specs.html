@@ -71,6 +71,12 @@
     font-size: 14px; line-height: 1.6; color: var(--ink-2); max-width: 96ch;
   }
   .method b { color: var(--ink); }
+  .provenance { display: flex; flex-wrap: wrap; gap: 0 28px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .provenance div { min-width: 150px; }
+  .provenance .pk { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  .provenance .pv { font-size: 14.5px; color: var(--ink); margin-top: 3px; }
+  .backlink { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; padding: 10px 17px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-2); color: var(--brand-deep); font-size: 14.5px; font-weight: 600; text-decoration: none; }
+  .backlink:hover { border-color: var(--brand); }
 
   .shell { max-width: var(--max); margin: 0 auto; padding: 36px 32px 80px; display: grid; grid-template-columns: 270px minmax(0,1fr); gap: 34px; align-items: start; }
 
@@ -215,6 +221,13 @@
       engineering question, and are labelled so they can be weighted accordingly. Links go to the
       publisher or archive. This annex is educational material, not legal or procurement advice.
     </p>
+    <a class="backlink" href="https://claude.ai/code/artifact/b2180cd8-0621-4605-ac5c-683c04e63950">← Back to the overview</a>
+    <div class="provenance">
+      <div><div class="pk">Published by</div><div class="pv">Technical Foundations Team,<br>Ethereum Foundation</div></div>
+      <div><div class="pk">Version</div><div class="pv">1.0 · August 2026</div></div>
+      <div><div class="pk">Status</div><div class="pv">Educational · proof of concept</div></div>
+      <div><div class="pk">Implementation</div><div class="pv">Unaudited · 74 tests passing</div></div>
+    </div>
   </div>
 </header>
 

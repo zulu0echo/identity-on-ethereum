@@ -415,6 +415,72 @@
     .specrow .go { grid-column: 2; justify-self: start; }
   }
 
+  /* ============================================================ provenance */
+  .provenance { display: flex; flex-wrap: wrap; gap: 0 28px; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .provenance div { min-width: 150px; }
+  .provenance .pk { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  .provenance .pv { font-size: 14.5px; color: var(--ink); margin-top: 3px; }
+
+  /* ============================================================ exec summary */
+  .exec { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); padding: 30px 32px 32px; }
+  .exec h3 { font-size: 19px; margin-bottom: 12px; }
+  .exec .lede { font-size: 17.5px; line-height: 1.6; color: var(--ink-2); max-width: 74ch; }
+  .exec .lede strong { color: var(--ink); }
+  .keyfacts { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-s); overflow: hidden; margin-top: 24px; }
+  .keyfacts div { background: var(--surface-2); padding: 14px 16px; }
+  .keyfacts .kv { font-size: 22px; font-weight: 600; color: var(--brand); line-height: 1.1; }
+  .keyfacts .kk { font-size: 13px; color: var(--ink-2); margin-top: 5px; line-height: 1.4; }
+
+  .mandates { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 24px; }
+  .mandate { border: 1px solid var(--line); border-radius: var(--r-s); padding: 18px 20px; background: var(--surface-2); }
+  .mandate .mh { font-size: 12.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--brand); }
+  .mandate p { font-size: 14.5px; line-height: 1.55; color: var(--ink-2); margin-top: 8px; }
+
+  /* ============================================================ criteria table */
+  .crit { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow); }
+  .crit table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 14.5px; }
+  .crit th { text-align: left; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); padding: 14px 18px; border-bottom: 2px solid var(--line); vertical-align: bottom; }
+  .crit td { padding: 14px 18px; border-bottom: 1px solid var(--line-soft); color: var(--ink-2); line-height: 1.5; vertical-align: top; }
+  .crit tr:last-child td { border-bottom: 0; }
+  .crit td:first-child { color: var(--ink); font-weight: 600; width: 24%; }
+  .crit .q { display: block; font-weight: 400; color: var(--ink-3); font-size: 13.5px; margin-top: 4px; }
+
+  /* ============================================================ checklist */
+  .checklist { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+  .checkrow { display: grid; grid-template-columns: 30px 1fr; gap: 14px; padding: 15px 22px; border-bottom: 1px solid var(--line-soft); }
+  .checkrow:last-child { border-bottom: 0; }
+  .checkrow .box { width: 19px; height: 19px; border: 2px solid var(--brand); border-radius: 4px; margin-top: 2px; }
+  .checkrow .ct { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .checkrow .cb { font-size: 14px; color: var(--ink-2); line-height: 1.55; margin-top: 4px; max-width: 82ch; }
+  .checkrow .cb a { font-weight: 600; }
+
+  /* ============================================================ evidence */
+  .evgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+  .evcard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); padding: 20px 22px; }
+  .evcard .eh { font-size: 12.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--brand); margin-bottom: 10px; }
+  .evcard dl { margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 7px 12px; }
+  .evcard dt { font-size: 14px; color: var(--ink-2); }
+  .evcard dd { margin: 0; font-size: 14px; color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+  .evnote { font-size: 13.5px; color: var(--ink-3); line-height: 1.55; margin-top: 12px; }
+
+  .repro { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r); padding: 20px 22px; margin-top: 18px; }
+  .repro .eh { font-size: 12.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--brand); margin-bottom: 10px; }
+  .repro pre { margin: 0 0 12px; font-family: var(--mono); font-size: 13px; line-height: 1.6; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-s); padding: 13px 15px; overflow-x: auto; color: var(--ink); }
+  .repro p { font-size: 14px; color: var(--ink-2); line-height: 1.6; max-width: 84ch; }
+
+  /* ============================================================ objections */
+  .faq { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+  .faq details { border-bottom: 1px solid var(--line-soft); }
+  .faq details:last-child { border-bottom: 0; }
+  .faq summary { cursor: pointer; list-style: none; padding: 16px 22px; font-size: 15.5px; font-weight: 600; color: var(--ink); display: flex; gap: 12px; align-items: baseline; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::before { content: "+"; color: var(--brand); font-weight: 700; font-size: 17px; width: 14px; }
+  .faq details[open] summary::before { content: "−"; }
+  .faq summary:hover { background: var(--surface-2); }
+  .faq .ans { padding: 0 22px 18px 48px; font-size: 14.8px; line-height: 1.65; color: var(--ink-2); max-width: 88ch; }
+  .faq .ans p + p { margin-top: 10px; }
+  .faq .ans strong { color: var(--ink); }
+
   /* ============================================================ responsive */
   @media (max-width: 1000px) {
     .explorer { grid-template-columns: 1fr; }
@@ -439,7 +505,7 @@
   <div class="masthead-inner">
     <div class="topline">
       <span>Reference architecture · Educational and informational</span>
-      <span>14 registries · 4 layers</span>
+      <span>14 registries · 4 layers · 74 tests</span>
     </div>
     <h1>Onchain identity infrastructure for governments and institutions</h1>
     <p class="deck">
@@ -454,6 +520,12 @@
       <strong>why they need not be adopted all at once.</strong>
     </p>
     <a class="speclink" href="https://claude.ai/code/artifact/7e50ec3f-688c-4ba2-a53c-637bb2569ede" target="_blank" rel="noopener">Read the full technical specifications →</a>
+    <div class="provenance">
+      <div><div class="pk">Published by</div><div class="pv">Technical Foundations Team,<br>Ethereum Foundation</div></div>
+      <div><div class="pk">Version</div><div class="pv">1.0 · August 2026</div></div>
+      <div><div class="pk">Status</div><div class="pv">Educational · proof of concept</div></div>
+      <div><div class="pk">Implementation</div><div class="pv">Unaudited · 74 tests passing</div></div>
+    </div>
     <p class="scope">
       <b>Note on scope.</b> Provided for general educational and informational purposes. It is not
       legal, regulatory, financial or other professional advice. The implementation described is an
@@ -475,11 +547,87 @@
 
 <main>
 
+  <!-- ========================= executive summary ========================= -->
+  <section>
+    <div class="wrap">
+      <div class="shead">
+        <span class="kicker">01 — In brief</span>
+        <h2>Executive summary</h2>
+        <p>
+          If you read nothing else: what this is, what it is worth, and what it would take to
+          evaluate it properly.
+        </p>
+      </div>
+
+      <div class="exec">
+        <h3>The proposition</h3>
+        <p class="lede">
+          Identity systems need a small number of records that everyone must see identically —
+          who controls an identifier, who vouches for whom, whether a credential is still valid,
+          and whether someone has already acted. Today each institution builds and operates its
+          own copy of those records, and every pair of institutions integrates bilaterally.
+          <strong>Ethereum lets that layer be built once and shared, without any participant
+          owning it</strong> — while credentials and personal data stay off it entirely, on
+          people's own devices.
+        </p>
+        <p class="lede" style="margin-top:14px">
+          The case is not ideological. It rests on four procurement properties a hosted or
+          consortium arrangement cannot offer simultaneously: <strong>it outlives any single
+          operator, no party controls admission, withdrawal of trust takes effect everywhere at
+          once, and the cost of leaving is low because the code is open and the data is public.</strong>
+        </p>
+
+        <div class="keyfacts">
+          <div><div class="kv">14</div><div class="kk">registries, adoptable independently in six stages</div></div>
+          <div><div class="kv">0</div><div class="kk">items of personal data written to the ledger, by design</div></div>
+          <div><div class="kv">1 block</div><div class="kk">for a withdrawn accreditation to take effect everywhere</div></div>
+          <div><div class="kv">~40 lines</div><div class="kk">of application code to inherit the whole stack</div></div>
+        </div>
+
+        <div class="mandates">
+          <div class="mandate">
+            <div class="mh">Multilateral &amp; humanitarian</div>
+            <p>
+              Credentials that remain valid when a programme, a partner or a country office winds
+              down; beneficiary data never leaves the person's device; disbursement is auditable to
+              donors without a beneficiary register to breach.
+            </p>
+          </div>
+          <div class="mandate">
+            <div class="mh">National &amp; city government</div>
+            <p>
+              A trusted-list equivalent whose revocations propagate immediately, jurisdictional
+              roots without a single global authority, and no supplier able to exclude you or
+              lock you in — the exit path is a documented property, not a negotiation.
+            </p>
+          </div>
+          <div class="mandate">
+            <div class="mh">Central banks &amp; financial institutions</div>
+            <p>
+              Accreditation and revocation as shared settlement-grade records, mapping closely onto
+              eIDAS relying-party structures, with fee flows auditable and the trust-critical checks
+              executing where supervisors can inspect them.
+            </p>
+          </div>
+        </div>
+
+        <p class="lede" style="margin-top:24px">
+          <strong>What it would take to evaluate.</strong> The material below is structured to feed
+          a formal options assessment: an <a href="#criteria">evaluation framework</a>, measured
+          <a href="#evidence">technical evidence</a> your engineers can reproduce, a
+          <a href="#evaluate">due-diligence checklist</a>, and full technical specifications for the
+          engineering reviewer. Stage 1 of adoption touches no personal data and runs alongside existing
+          public-key infrastructure.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- ========================= 1. architecture ========================= -->
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">01 — Orientation</span>
+        <span class="kicker">02 — Orientation</span>
         <h2>The architecture in one picture</h2>
         <p>
           Four layers of shared record, each answering one question. Applications sit above them and
@@ -609,7 +757,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">02 — The dividing line</span>
+        <span class="kicker">03 — The dividing line</span>
         <h2>What is recorded, and what never is</h2>
         <p>
           One question decides placement: is this information only useful if everyone holds the same
@@ -712,7 +860,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">03 — The difficult parts</span>
+        <span class="kicker">04 — The difficult parts</span>
         <h2>Four ideas, in pictures</h2>
         <p>
           Four mechanisms do most of the work, and each sounds harder than it is. Each is a plain
@@ -917,7 +1065,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">04 — The components</span>
+        <span class="kicker">05 — The components</span>
         <h2>What each part does</h2>
         <p>
           Select any component for its case in both readings, what it replaces, what depends on it,
@@ -944,7 +1092,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">05 — The person</span>
+        <span class="kicker">06 — The person</span>
         <h2>What changes for the individual</h2>
         <p>
           Institutional benefit is only half the case. The architecture is only worth adopting if it
@@ -1080,7 +1228,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">06 — Composition</span>
+        <span class="kicker">07 — Composition</span>
         <h2>How the parts work together</h2>
         <p>
           A worked example. A programme distributes an entitlement once per person rather than once
@@ -1129,7 +1277,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">07 — Precedent</span>
+        <span class="kicker">08 — Precedent</span>
         <h2>Where these patterns are already in use</h2>
         <p>
           Governments and multilateral institutions have deployed systems built on the same
@@ -1154,7 +1302,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">08 — Adoption</span>
+        <span class="kicker">09 — Adoption</span>
         <h2>It need not be adopted all at once</h2>
         <p>
           Six stages, each producing something useful on its own: a system decommissioned, an
@@ -1179,7 +1327,7 @@
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">09 — Procurement</span>
+        <span class="kicker">10 — Procurement</span>
         <h2>What shared public infrastructure provides</h2>
         <p>
           These are procurement properties rather than positions of principle. Each answers a
@@ -1262,11 +1410,88 @@
     </div>
   </section>
 
+  <!-- ========================= criteria ========================= -->
+  <section id="criteria">
+    <div class="wrap">
+      <div class="shead">
+        <span class="kicker">11 — Evaluation framework</span>
+        <h2>Assessing the options</h2>
+        <p>
+          Shared-record infrastructure can be built several ways: a public network, a consortium
+          ledger run by its members, a national or sector-specific chain, or conventional federated
+          databases. Rather than argue for one, these are the questions that separate them — apply
+          them to any option, including this one.
+        </p>
+      </div>
+
+      <div class="crit">
+        <table>
+          <thead>
+            <tr>
+              <th>Criterion</th>
+              <th>What to ask</th>
+              <th>Why it decides the outcome</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Continuity<span class="q">Survives its operator?</span></td>
+              <td>If the operating entity is acquired, defunded, or withdraws, do issued credentials keep verifying — with no action by anyone?</td>
+              <td>Determines whether credentials are an asset of the holder or a liability of the operator. Most arrangements fail here quietly, years later.</td>
+            </tr>
+            <tr>
+              <td>Admission control<span class="q">Who can exclude whom?</span></td>
+              <td>Who decides which organisations may participate, and by what process can that decision be appealed, changed, or bought?</td>
+              <td>Whoever controls admission controls participation — and becomes the target of pressure. Ask who could exclude <em>you</em>, and under what circumstances.</td>
+            </tr>
+            <tr>
+              <td>Revocation latency<span class="q">How long is trust stale?</span></td>
+              <td>Between withdrawing trust and every relying party acting on it, how much time passes — and does that interval depend on parties you do not control?</td>
+              <td>Published lists, revocation files and status endpoints all carry a propagation window. It is the interval, not the mechanism, that carries the operational risk.</td>
+            </tr>
+            <tr>
+              <td>Exit cost<span class="q">What does leaving cost?</span></td>
+              <td>Is the implementation open source and forkable, the data public and portable, the interfaces standard? Could you rebuild elsewhere without permission?</td>
+              <td>Exit cost determines negotiating position for the whole life of the system. Proprietary runtimes and bespoke languages make migration a rewrite.</td>
+            </tr>
+            <tr>
+              <td>Cross-border reach<span class="q">Works past your perimeter?</span></td>
+              <td>Can a counterparty in another jurisdiction, with no prior agreement and no shared membership, verify what you issue?</td>
+              <td>Consortium arrangements work well among members who already share legal frameworks — which by definition excludes everyone else.</td>
+            </tr>
+            <tr>
+              <td>Data protection<span class="q">What is permanent?</span></td>
+              <td>What exactly is written to the shared layer, and can it ever identify a person? Can it be corrected or erased if it does?</td>
+              <td>Anything personal placed on a permanent shared record cannot be withdrawn. This is the criterion on which an otherwise sound design fails compliance.</td>
+            </tr>
+            <tr>
+              <td>Verifiability<span class="q">Who can audit the logic?</span></td>
+              <td>Can your own engineers inspect the trust-critical checks and confirm nothing changed, or does assurance arrive as a report about someone else's runtime?</td>
+              <td>Determines whether supervision is technical or contractual, and how quickly a defect can be found by someone other than the vendor.</td>
+            </tr>
+            <tr>
+              <td>Operating cost<span class="q">Who pays, forever?</span></td>
+              <td>Who funds the infrastructure in year seven, and what happens to it if that funding stops?</td>
+              <td>Credential ecosystems usually fail economically before they fail technically — issuers carry the cost while verifiers capture the value.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="advisory" style="margin-top:18px">
+        <b>Note</b>
+        <span>These criteria are deliberately neutral: a well-run consortium ledger scores well on
+        several, and this architecture has real weaknesses of its own — set out unsparingly in
+        section 12. The purpose is a comparable assessment, not a predetermined answer.</span>
+      </p>
+    </div>
+  </section>
+
   <!-- ========================= 9. limits ========================= -->
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">10 — Limitations</span>
+        <span class="kicker">12 — Limitations</span>
         <h2>What is unresolved</h2>
         <p>
           Stated directly, because a balanced evaluation requires them. None prevents a pilot; each
@@ -1316,11 +1541,338 @@
     </div>
   </section>
 
+  <!-- ========================= objections ========================= -->
+  <section id="objections">
+    <div class="wrap">
+      <div class="shead">
+        <span class="kicker">13 — Objections</span>
+        <h2>The questions that come up in the room</h2>
+        <p>
+          These are the objections raised in nearly every institutional evaluation. Answering them
+          badly costs more credibility than raising them does.
+        </p>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>Why not run our own chain, or a consortium ledger with partners we already trust?</summary>
+          <div class="ans">
+            <p>
+              Often you should — and for coordination among parties who already share a legal
+              framework, a consortium ledger is a reasonable answer. The evaluation framework above
+              is written so you can reach that conclusion honestly.
+            </p>
+            <p>
+              The two criteria that usually decide it are <strong>reach and exit</strong>. A
+              consortium serves its members well, which by construction excludes everyone who is not
+              one — a limitation you feel the first time a counterparty in another jurisdiction, with
+              no prior agreement, needs to verify something you issued. And a ledger whose operators
+              are its members has an admission decision at its centre; whoever controls it can
+              exclude, and can be pressured to. Ask specifically: who could exclude <em>us</em>, and
+              what would it cost us to leave?
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>Does using a public network mean giving up sovereignty?</summary>
+          <div class="ans">
+            <p>
+              No — but it does mean giving up <em>exclusive control</em>, which is the point. You
+              retain sovereignty over everything that matters institutionally: which authorities you
+              recognise, which credentials you accept, who you accredit, and what your citizens or
+              customers are asked to disclose. Nobody can overrule those decisions.
+            </p>
+            <p>
+              What you give up is the ability to exclude others from the shared layer — and so does
+              everyone else, which is precisely what makes it usable by parties who do not trust one
+              another. Institutions that need a dedicated environment can deploy on a layer&nbsp;2
+              network with their own operating parameters while inheriting the neutrality and
+              permanence of the base layer.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>Isn't this a data-protection problem? Public ledgers are permanent.</summary>
+          <div class="ans">
+            <p>
+              It would be, if personal data were written to one — which is why none is. Credentials,
+              attributes, identifiers and presentation records stay off the ledger entirely. What is
+              recorded is coordination state: which key controls an identifier, who vouches for whom,
+              whether a credential is still valid, whether someone has already acted.
+            </p>
+            <p>
+              The privacy path goes further: a holder proves a fact without disclosing the
+              credential, so the verifier never receives the data it would otherwise have to protect.
+              The honest residual risks — group sizes, timing correlation, and the fact that a
+              commitment is a durable pseudonym — are set out in the limitations section rather than
+              glossed over.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>What about energy consumption?</summary>
+          <div class="ans">
+            <p>
+              Ethereum moved to proof of stake in 2022, which reduced its electricity consumption by
+              approximately 99.98 per cent. The network's ongoing energy footprint is orders of
+              magnitude below both proof-of-work systems and conventional data-centre infrastructure.
+            </p>
+            <p>
+              For an identity deployment specifically, the relevant figure is smaller still: the
+              operations described here are a handful of small transactions, most of them on a
+              layer&nbsp;2 network. This is no longer the objection it was in 2020, and a current
+              evaluation should say so.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>What if the price of the underlying asset moves, or the network becomes expensive?</summary>
+          <div class="ans">
+            <p>
+              Transaction cost is a real operational consideration and belongs in a budget. It is
+              also the reason the architecture assumes a layer&nbsp;2 network for routine operations,
+              where the measured costs in the evidence section amount to fractions of a cent, with
+              the base layer used for checkpointing where permanence matters most.
+            </p>
+            <p>
+              Note what the institution is <em>not</em> exposed to: none of these components require
+              holding a volatile asset as a reserve or a treasury position. The exposure is a
+              transaction-fee line, and it can be hedged, prepaid, or sponsored on behalf of users.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>What happens when quantum computing breaks the cryptography?</summary>
+          <div class="ans">
+            <p>
+              The zero-knowledge proof system used here is not post-quantum secure, and the
+              specifications say so explicitly rather than leaving it to be discovered. A
+              cryptographically relevant quantum computer would require replacing the proving system.
+            </p>
+            <p>
+              Two things make this manageable: the cryptographic parameters are pinned in a single
+              versioned profile, so a migration is an explicit, reviewable change rather than an
+              archaeology exercise; and verification sits behind an interface, so a successor system
+              can replace it without migrating the applications built on top. Treat it as a planned
+              end-of-life condition with a known migration path.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>What if the Ethereum Foundation disappears, or the ecosystem loses interest?</summary>
+          <div class="ans">
+            <p>
+              This is the right question, and the honest answer is that it should not matter. The
+              Foundation does not operate the network, cannot change it unilaterally, and holds a
+              small fraction of the asset supply. The network is maintained by independent client
+              teams, several of them unaffiliated.
+            </p>
+            <p>
+              For your deployment specifically: the implementation is open source and forkable, the
+              data is public, the interfaces are standard, and the registries keep resolving with no
+              action by anyone. That is what the continuity and exit-cost criteria are testing —
+              apply them to every option, including this one.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>Is this actually production-ready?</summary>
+          <div class="ans">
+            <p>
+              <strong>No, and nothing here should be read as claiming otherwise.</strong> The
+              implementation is a proof of concept: unaudited, deliberately minimal, and built to
+              make the mechanisms legible for evaluation. Several components explicitly recommend
+              using an existing production system instead — the canonical identifier registry, an
+              established attestation service, the reference privacy protocol.
+            </p>
+            <p>
+              What is production-ready is the underlying network and the standards. The appropriate
+              next step is a scoped stage&nbsp;1 pilot with an independent audit budgeted, not a
+              deployment of this code.
+            </p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= evidence ========================= -->
+  <section id="evidence">
+    <div class="wrap">
+      <div class="shead">
+        <span class="kicker">14 — Technical evidence</span>
+        <h2>What your engineers can check</h2>
+        <p>
+          Every figure below is measured from the reference implementation, not estimated. A
+          technical reviewer should reproduce them rather than accept them — the commands are given.
+        </p>
+      </div>
+
+      <div class="evgrid">
+        <div class="evcard">
+          <div class="eh">Implementation size</div>
+          <dl>
+            <dt>Contracts</dt><dd>16</dd>
+            <dt>Lines of Solidity</dt><dd>1,046</dd>
+            <dt>Written specifications</dt><dd>17</dd>
+            <dt>Tests passing</dt><dd>74</dd>
+          </dl>
+          <p class="evnote">Small enough to read end to end in a day — which is itself a security property, not a limitation.</p>
+        </div>
+
+        <div class="evcard">
+          <div class="eh">Measured gas — privacy path</div>
+          <dl>
+            <dt>Groth16 pairing check</dt><dd>214,117</dd>
+            <dt>Full verification</dt><dd>~279,000</dd>
+            <dt>Credential issuance</dt><dd>~133,000</dd>
+            <dt>Batch issuance</dt><dd>~305,000</dd>
+          </dl>
+          <p class="evnote">Average gas from the test suite. Issuance scales with tree depth, so production figures on a large tree will be higher; verification does not.</p>
+        </div>
+
+        <div class="evcard">
+          <div class="eh">Measured gas — registries</div>
+          <dl>
+            <dt>Issuer registration</dt><dd>75,523</dd>
+            <dt>Delegation grant</dt><dd>~55,100</dd>
+            <dt>Full gated claim</dt><dd>~238,000</dd>
+            <dt>Validity lookup</dt><dd>~2,800</dd>
+          </dl>
+          <p class="evnote">Reads are near-free; the cost sits in writes and proofs. On a layer&nbsp;2 network these figures are fractions of a cent.</p>
+        </div>
+
+        <div class="evcard">
+          <div class="eh">Pinned dependencies</div>
+          <dl>
+            <dt>Semaphore contracts</dt><dd>4.14.3</dd>
+            <dt>zk-kit LeanIMT</dt><dd>2.0.1</dd>
+            <dt>poseidon-solidity</dt><dd>0.0.5</dd>
+            <dt>Proof system</dt><dd>Groth16</dd>
+          </dl>
+          <p class="evnote">All versions pinned, all open source. The cryptographic parameters are fixed in a single versioned profile.</p>
+        </div>
+      </div>
+
+      <div class="repro">
+        <div class="eh">Reproducing these figures</div>
+        <pre>./setup.sh                    # toolchain, dependencies, real proof fixtures, tests
+forge test                    # expect: 74 passed, 0 failed
+forge test --gas-report       # the measurements above</pre>
+        <p>
+          The setup script installs the toolchain, generates <em>real</em> Groth16 proof fixtures,
+          and runs the suite. Without the fixtures the zero-knowledge suites skip cleanly and
+          everything else still passes, so a reviewer with no cryptographic tooling can still
+          confirm the registry logic.
+        </p>
+      </div>
+
+      <p class="advisory" style="margin-top:18px">
+        <b>Honest gap</b>
+        <span>The source repository is not yet published, so the figures above cannot currently be
+        independently reproduced by a third party. Until it is, treat this section as a statement of
+        what will be verifiable rather than what has been verified externally — and ask for the
+        repository before relying on any of it.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ========================= evaluate ========================= -->
+  <section id="evaluate">
+    <div class="wrap">
+      <div class="shead">
+        <span class="kicker">15 — Next step</span>
+        <h2>Taking this into an options assessment</h2>
+        <p>
+          If this warrants formal evaluation, the following is the shortest path to a defensible
+          conclusion — including the steps that let your own engineers confirm what is claimed here
+          rather than take it on trust.
+        </p>
+      </div>
+
+      <div class="checklist">
+        <div class="checkrow">
+          <div class="box"></div>
+          <div>
+            <div class="ct">Establish the narrower requirement first</div>
+            <div class="cb">
+              Before evaluating identity infrastructure, confirm what the programme actually needs.
+              Many requirements written as identity requirements — one vote each, one claim each,
+              one account each — are uniqueness requirements, and can be met without collecting
+              identity at all. This single question often changes the scope of the whole programme.
+            </div>
+          </div>
+        </div>
+        <div class="checkrow">
+          <div class="box"></div>
+          <div>
+            <div class="ct">Apply the evaluation framework to every option</div>
+            <div class="cb">
+              Score this architecture and its alternatives against the eight criteria in
+              <a href="#criteria">evaluation framework</a>. Record the answers, including where this
+              architecture scores poorly — an assessment that finds no weaknesses will not survive
+              review.
+            </div>
+          </div>
+        </div>
+        <div class="checkrow">
+          <div class="box"></div>
+          <div>
+            <div class="ct">Have an engineer verify the implementation</div>
+            <div class="cb">
+              The reference implementation is 16 contracts and 1,046 lines of Solidity, with a
+              written specification for each. It builds and tests with one command, and the suite
+              includes real zero-knowledge proofs. A reviewer should reproduce the figures under
+              <a href="#evidence">technical evidence</a>, read the specifications against the code, and
+              check the honest-limitations section of each. Budget roughly a day.
+            </div>
+          </div>
+        </div>
+        <div class="checkrow">
+          <div class="box"></div>
+          <div>
+            <div class="ct">Scope stage 1 only</div>
+            <div class="cb">
+              Stage 1 — identifiers and non-custodial recovery — involves no personal data, requires
+              no user-facing change, and runs alongside existing public-key infrastructure. It is
+              the smallest deployment that produces a real result, and the cheapest to abandon if
+              the assessment concludes against.
+            </div>
+          </div>
+        </div>
+        <div class="checkrow">
+          <div class="box"></div>
+          <div>
+            <div class="ct">Commission independent review before production</div>
+            <div class="cb">
+              The implementation is unaudited and says so throughout. Any production deployment
+              needs a cryptographic audit of the circuits and verifying keys, and a security review
+              of the contracts. Budget for it in the assessment rather than discovering it at
+              approval.
+            </div>
+          </div>
+        </div>
+        <div class="checkrow">
+          <div class="box"></div>
+          <div>
+            <div class="ct">Decide the governance questions the technology does not answer</div>
+            <div class="cb">
+              Which authorities you recognise as roots, who may withdraw an accreditation and with
+              what notice, what minimum population a privacy group must have, and what happens to
+              people who cannot manage keys. These are policy decisions, and the architecture makes
+              them explicit rather than deciding them for you.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ========================= specifications ========================= -->
   <section>
     <div class="wrap">
       <div class="shead">
-        <span class="kicker">11 — Reference</span>
+        <span class="kicker">16 — Reference</span>
         <h2>The specifications</h2>
         <p>
           Fifteen documents, one per contract. Each covers the value case, the interface, the
