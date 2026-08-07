@@ -101,6 +101,14 @@ Authority-gated functions resolve control through `DIDRegistry.identityOwner`. *
 
 ## Protocol Flow
 
+```mermaid
+flowchart LR
+  ROOT["Chosen root authority"] -->|"accredit ROLE_ACCREDITOR"| INT["Intermediate accreditor"]
+  INT -->|"accredit ROLE_ISSUER"| SUB["Issuer / subject"]
+  RP["Relying party"] -->|"checkChain([root, int, subject])"| TR["Trust Registry"]
+  TR -->|"walk hops, verify roles at each"| RP
+```
+
 Direct accreditation:
 
 1. An authority calls `accredit(authority, issuer, ROLE_ISSUER, schemaId, expiry, uri)`.

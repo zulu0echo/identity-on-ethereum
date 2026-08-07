@@ -95,6 +95,21 @@ LeanIMT library. **Events.** `TreeCreated`, `CredentialIssued`, `CredentialsIssu
 
 ## Protocol Flow
 
+```mermaid
+sequenceDiagram
+  participant H as Holder (device)
+  participant I as Issuer
+  participant T as Credential Tree
+  participant GW as Proof Gateway
+  H->>I: identity commitment (secret stays on device)
+  I->>T: issue(treeId, commitment)
+  Note over T: new root recorded
+  H->>T: read recent root, build Merkle proof
+  H->>GW: ZK membership proof (proves valid, not which)
+  I->>T: revoke(treeId, commitment, siblings)
+  Note over T: root changes; revoked leaf fails vs fresh roots
+```
+
 Issuance:
 
 1. The holder generates a secret on-device and derives a commitment.

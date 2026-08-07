@@ -80,6 +80,19 @@ contentHash)`, `ActivePolicyChanged(verifier, policyId)`.
 
 ## Protocol Flow
 
+```mermaid
+sequenceDiagram
+  participant Ver as Verifier
+  participant Reg as Policy Registry
+  participant W as Holder wallet
+  Ver->>Reg: publish(uri, contentHash) auto-activates
+  W->>Reg: read activePolicy(verifier)
+  Note over W: pin the consented contentHash
+  Ver->>Reg: publish(new version)
+  W->>Reg: compare active contentHash
+  Note over W: hash differs, so re-prompt the holder
+```
+
 1. A verifier `publish`es a policy (accepted schemas, trusted roots, retention promise,
    purpose live in the off-chain document; its hash is pinned here).
 2. A wallet, on first interaction, records the active `contentHash` the holder consented

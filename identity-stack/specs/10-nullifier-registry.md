@@ -81,6 +81,13 @@ used:  mapping(address =>            // consumer (msg.sender)
 
 ## Protocol Flow
 
+```mermaid
+flowchart LR
+  C["Consumer contract"] -->|"consume(scope, nullifier)"| N["Nullifier Registry"]
+  N -->|"first use: mark (caller, scope, nullifier)"| OK["action proceeds"]
+  N -.->|"repeat: revert NullifierAlreadyUsed"| X["blocked"]
+```
+
 1. A consumer contract (e.g. 11/PROOF-GATEWAY) verifies a zero-knowledge proof that yields
    a nullifier bound to `(holder secret, scope)`.
 2. The consumer calls `consume(scope, nullifier)`.

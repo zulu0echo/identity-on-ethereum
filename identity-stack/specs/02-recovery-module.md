@@ -100,6 +100,21 @@ replaced), `AttemptExpired`.
 
 ## Protocol Flow
 
+```mermaid
+sequenceDiagram
+  participant G as Guardians
+  participant M as RecoveryModule
+  participant DID as Key Registry
+  participant O as Current owner
+  G->>M: propose(identity, newOwner)
+  Note over M: round opens, readyAt = now + timelock
+  G->>M: approve(identity) until threshold met
+  O-->>M: cancel(identity) at any time in the window
+  Note over M: wait out the timelock
+  M->>DID: changeOwnerFrom(identity, newOwner)
+  Note over DID: owner rotated
+```
+
 1. **Configure (owner).** The owner calls `configure(...)` and, separately, sets this
    module as the identifier's recovery agent in 01/DID-REGISTRY.
 2. **Propose (guardian).** A guardian calls `propose(identity, newOwner)`. This opens a

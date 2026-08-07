@@ -84,6 +84,14 @@ so the full history of every flip is auditable, unlike a CRL file quietly replac
 
 ## Protocol Flow
 
+```mermaid
+flowchart LR
+  I["Issuer"] -->|"createList(purpose)"| SL["Status List (bitstring)"]
+  I -->|"setStatus(index, true)"| SL
+  V["Verifier"] -->|"getStatus(index)"| SL
+  SL -->|"valid / revoked"| V
+```
+
 1. An issuer calls `createList(issuer, listId, Revocation, uri)`.
 2. Credentials are issued carrying `(issuer, listId, index)` in their off-chain body.
 3. To revoke, the issuer calls `setStatus(issuer, listId, index, true)`.

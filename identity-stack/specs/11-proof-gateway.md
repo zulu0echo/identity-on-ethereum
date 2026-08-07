@@ -95,6 +95,23 @@ convention shifting into the SNARK scalar field).
 
 ## Protocol Flow
 
+```mermaid
+sequenceDiagram
+  participant App as Consumer app
+  participant GW as Proof Gateway
+  participant Trees as Credential Tree
+  participant V as Groth16 verifier
+  participant Null as Nullifier Registry
+  App->>GW: validate(treeId, proof)
+  GW->>Trees: isValidRoot(treeId, root)?
+  Trees-->>GW: current or recent
+  GW->>V: verify pairing over public signals
+  V-->>GW: valid
+  GW->>Null: consume(consumerScope(App, scope), nullifier)
+  Note over Null: reverts if already used
+  GW-->>App: success, emits ProofValidated
+```
+
 1. A holder generates a Semaphore v4 proof over the public signals above, choosing
    `message` and `scope` per the consuming application's rules.
 2. The consuming application calls `validate(treeId, proof)`.

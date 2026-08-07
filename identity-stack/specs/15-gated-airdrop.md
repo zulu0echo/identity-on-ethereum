@@ -89,6 +89,18 @@ gateway, invalid-proof / stale-root / reused-nullifier reverts. **Events.**
 
 ## Protocol Flow
 
+```mermaid
+flowchart TD
+  P["claim(proof)"] --> C1{"scope == campaignScope?"}
+  C1 -->|no| R1["revert WrongScope"]
+  C1 -->|yes| C2{"message == msg.sender?"}
+  C2 -->|no| R2["revert ProofNotBoundToCaller"]
+  C2 -->|yes| C3{"issuer accredited by authority?"}
+  C3 -->|no| R3["revert IssuerNotAccredited"]
+  C3 -->|yes| C4["gateway.validate: proof + recent root + nullifier"]
+  C4 --> OK["one claim recorded"]
+```
+
 1. A holder holds a credential whose commitment is in `treeId`.
 2. The holder builds a proof with `scope = campaignScope` and `message =
    uint160(their address)`.

@@ -110,6 +110,14 @@ MUST emit exactly one event and update `changed[identity]` to the current block 
 
 ## Protocol Flow
 
+```mermaid
+flowchart LR
+  O["Current owner"] -->|"changeOwner(newOwner)"| R["Key Registry"]
+  RA["Recovery agent"] -->|"changeOwnerFrom(newOwner)"| R
+  R -->|"identityOwner(id)"| D1["Issuer / Trust / Delegation ..."]
+  R -->|"identityOwner(id)"| D2["Any third-party contract"]
+```
+
 Control resolution, performed by every other component:
 
 1. Call `identityOwner(identity)`.

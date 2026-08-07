@@ -80,6 +80,19 @@ issuer, fee, ref)`.
 
 ## Protocol Flow
 
+```mermaid
+sequenceDiagram
+  participant I as Issuer
+  participant R as Payment Rails
+  participant V as Verifier
+  I->>R: setFee(fee)
+  V->>R: deposit() pre-funds a balance
+  Note over V: performs a verification off-chain
+  V->>R: settle(issuer, ref, maxFee)
+  Note over R: fee moves verifier to issuer; receipt emitted
+  I->>R: withdraw()
+```
+
 1. An issuer calls `setFee(issuer, fee)`.
 2. A verifier calls `deposit{value: ...}(verifier)` to pre-fund.
 3. After a verification, the verifier calls `settle(verifier, issuer, ref, maxFee)`, where

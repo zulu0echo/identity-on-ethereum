@@ -93,6 +93,14 @@ DIDRegistry.identityOwner(identity)`.
 
 ## Protocol Flow
 
+```mermaid
+flowchart LR
+  P["Identity owner"] -->|"grant(agent, scope, validTo)"| REG["Delegation Registry"]
+  P -.->|"revokeAll() advances nonce"| REG
+  RP["Relying party"] -->|"isAuthorized(agent, scope)?"| REG
+  REG -->|"true / false"| RP
+```
+
 Granting and checking:
 
 1. Owner calls `grant(identity, agent, scope, validTo)`.
